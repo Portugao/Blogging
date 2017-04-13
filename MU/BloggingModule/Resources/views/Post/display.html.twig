@@ -37,7 +37,7 @@
                         <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
             {% if post.imageForArticleMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" /></div>
+                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-responsive" /></div>
             {% else %}
                 {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
             {% endif %}
