@@ -137,6 +137,10 @@ div.mubloggingmodule-view .avatar img {
 
 /******************OWN CODE**********************/
 
+#blogger-display-image {
+	float: right;
+	margin: 0 0 15px 15px;
+}
 .blogger-view-item {
 	
 }
