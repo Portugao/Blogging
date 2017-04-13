@@ -1,0 +1,128 @@
+{# purpose of this template: module configuration page #}
+{% extends 'MUBloggingModule::adminBase.html.twig' %}
+{% block title __('Settings') %}
+{% block admin_page_icon 'wrench' %}
+{% block content %}
+    <div class="mubloggingmodule-config">
+        {% form_theme form with [
+            '@MUBloggingModule/Form/bootstrap_3.html.twig',
+            'ZikulaFormExtensionBundle:Form:form_div_layout.html.twig'
+        ] %}
+        {{ form_start(form) }}
+        <div class="zikula-bootstrap-tab-container">
+            <ul class="nav nav-tabs">
+            {% set tabTitle = __('Moderation') %}
+            <li role="presentation" class="active">
+                <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            {% set tabTitle = __('List views') %}
+            <li role="presentation">
+                <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            {% set tabTitle = __('Images') %}
+            <li role="presentation" class=" dropdown">
+                <a id="imagesTabDrop" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-controls="imagesTabDropSections" aria-expanded="false" title="{{ tabTitle|e('html_attr') }}">{{ tabTitle }}<span class="caret"></span></a>
+                <ul id="imagesTabDropSections" class="dropdown-menu" aria-labelledby="imagesTabDrop">
+                <li>
+                    <a id="imagesPostImageForArticleTab" href="#tabImagesPostImageForArticle" role="tab" data-toggle="tab" aria-controls="tabImagesPostImageForArticle">{{ __('Posts image for article') }}</a>
+                </li>
+                <li>
+                    <a id="imagesImageImageForArticleTab" href="#tabImagesImageImageForArticle" role="tab" data-toggle="tab" aria-controls="tabImagesImageImageForArticle">{{ __('Images image for article') }}</a>
+                </li>
+                </ul>
+            </li>
+            {% set tabTitle = __('Integration') %}
+            <li role="presentation">
+                <a id="vars4Tab" href="#tab4" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+            </li>
+            </ul>
+
+            {{ form_errors(form) }}
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="tab1" aria-labelledby="vars1Tab">
+                    {% set tabTitle = __('Moderation') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can assign moderation groups for enhanced workflow actions.')|nl2br }}</p>
+                    
+                        {{ form_row(form.moderationGroupForPosts) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab2" aria-labelledby="vars2Tab">
+                    {% set tabTitle = __('List views') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('Here you can configure parameters for list views.')|nl2br }}</p>
+                    
+                        {{ form_row(form.postEntriesPerPage) }}
+                        {{ form_row(form.linkOwnPostsOnAccountPage) }}
+                        {{ form_row(form.imageEntriesPerPage) }}
+                        {{ form_row(form.linkOwnImagesOnAccountPage) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesPostImageForArticle" aria-labelledby="imagesPostImageForArticleTab">
+                    {% set tabTitle = __('Image settings for posts image for article') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForPostImageForArticle) }}
+                        <div id="shrinkDetailsPostImageForArticle">
+                        {{ form_row(form.shrinkWidthPostImageForArticle) }}
+                        {{ form_row(form.shrinkHeightPostImageForArticle) }}
+                        </div>
+                        {{ form_row(form.thumbnailModePostImageForArticle) }}
+                        {{ form_row(form.thumbnailWidthPostImageForArticleView) }}
+                        {{ form_row(form.thumbnailHeightPostImageForArticleView) }}
+                        {{ form_row(form.thumbnailWidthPostImageForArticleDisplay) }}
+                        {{ form_row(form.thumbnailHeightPostImageForArticleDisplay) }}
+                        {{ form_row(form.thumbnailWidthPostImageForArticleEdit) }}
+                        {{ form_row(form.thumbnailHeightPostImageForArticleEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tabImagesImageImageForArticle" aria-labelledby="imagesImageImageForArticleTab">
+                    {% set tabTitle = __('Image settings for images image for article') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                
+                        {{ form_row(form.enableShrinkingForImageImageForArticle) }}
+                        <div id="shrinkDetailsImageImageForArticle">
+                        {{ form_row(form.shrinkWidthImageImageForArticle) }}
+                        {{ form_row(form.shrinkHeightImageImageForArticle) }}
+                        </div>
+                        {{ form_row(form.thumbnailModeImageImageForArticle) }}
+                        {{ form_row(form.thumbnailWidthImageImageForArticleView) }}
+                        {{ form_row(form.thumbnailHeightImageImageForArticleView) }}
+                        {{ form_row(form.thumbnailWidthImageImageForArticleDisplay) }}
+                        {{ form_row(form.thumbnailHeightImageImageForArticleDisplay) }}
+                        {{ form_row(form.thumbnailWidthImageImageForArticleEdit) }}
+                        {{ form_row(form.thumbnailHeightImageImageForArticleEdit) }}
+                    </fieldset>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab4" aria-labelledby="vars4Tab">
+                    {% set tabTitle = __('Integration') %}
+                    <fieldset>
+                        <legend>{{ tabTitle }}</legend>
+                    
+                        <p class="alert alert-info">{{ __('These options allow you to configure integration aspects.')|nl2br }}</p>
+                    
+                        {{ form_row(form.enabledFinderTypes) }}
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+                {{ form_widget(form.save) }}
+                {{ form_widget(form.cancel) }}
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block footer %}
+    {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.Config.js')) }}
+{% endblock %}

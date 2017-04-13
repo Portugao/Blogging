@@ -1,0 +1,115 @@
+{# purpose of this template: posts view filter form #}
+{% if hasPermission('MUBloggingModule:Post:', '::', 'ACCESS_EDIT') %}
+    {% form_theme quickNavForm with [
+        'bootstrap_3_layout.html.twig'
+    ] %}
+    {{ form_start(quickNavForm, {attr: {id: 'mUBloggingModulePostQuickNavForm', class: 'mubloggingmodule-quicknav navbar-form', role: 'navigation'}}) }}
+    {{ form_errors(quickNavForm) }}
+    <a href="#collapsePostQuickNav" role="button" data-toggle="collapse" class="btn btn-default" aria-expanded="false" aria-controls="collapsePostQuickNav">
+        <i class="fa fa-filter" aria-hidden="true"></i> {{ __('Filter') }}
+    </a>
+    <div id="collapsePostQuickNav" class="collapse">
+        <fieldset>
+            <h3>{{ __('Quick navigation') }}</h3>
+            {% set categoriesEnabled = featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+                <div class="hidden">
+            {% else %}
+                <div class="row">
+                    <div class="col-sm-3">
+            {% endif %}
+                {{ form_row(quickNavForm.categories) }}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+                </div>
+            {% else %}
+                    </div>
+                    <div class="col-sm-9">
+            {% endif %}
+            {% if postFilter is defined and postFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.post) }}
+            {% if postFilter is defined and postFilter != true %}
+                </div>
+            {% endif %}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.workflowState) }}
+            {% if workflowStateFilter is defined and workflowStateFilter != true %}
+                </div>
+            {% endif %}
+            {% if selectImagesForContentFilter is defined and selectImagesForContentFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.selectImagesForContent) }}
+            {% if selectImagesForContentFilter is defined and selectImagesForContentFilter != true %}
+                </div>
+            {% endif %}
+            {% if blockFilter is defined and blockFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.block) }}
+            {% if blockFilter is defined and blockFilter != true %}
+                </div>
+            {% endif %}
+            {% if selectImagesForContent2Filter is defined and selectImagesForContent2Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.selectImagesForContent2) }}
+            {% if selectImagesForContent2Filter is defined and selectImagesForContent2Filter != true %}
+                </div>
+            {% endif %}
+            {% if block2Filter is defined and block2Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.block2) }}
+            {% if block2Filter is defined and block2Filter != true %}
+                </div>
+            {% endif %}
+            {% if block3Filter is defined and block3Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.block3) }}
+            {% if block3Filter is defined and block3Filter != true %}
+                </div>
+            {% endif %}
+            {% if similarArticlesFilter is defined and similarArticlesFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.similarArticles) }}
+            {% if similarArticlesFilter is defined and similarArticlesFilter != true %}
+                </div>
+            {% endif %}
+            {% if searchFilter is defined and searchFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.q) }}
+            {% if searchFilter is defined and searchFilter != true %}
+                </div>
+            {% endif %}
+            {% if sorting is defined and sorting != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.sort) }}
+                {{ form_row(quickNavForm.sortdir) }}
+            {% if sorting is defined and sorting != true %}
+                </div>
+            {% endif %}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.num) }}
+            {% if pageSizeSelector is defined and pageSizeSelector != true %}
+                </div>
+            {% endif %}
+            {{ form_widget(quickNavForm.updateview) }}
+            {% if (categoryFilter is defined and categoryFilter != true) or not categoriesEnabled %}
+            {% else %}
+                    </div>
+                </div>
+            {% endif %}
+        </fieldset>
+    </div>
+    {{ form_end(quickNavForm) }}
+{% endif %}

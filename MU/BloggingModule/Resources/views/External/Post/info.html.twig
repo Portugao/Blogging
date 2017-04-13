@@ -1,0 +1,26 @@
+{# Purpose of this template: Display item information for previewing from other modules #}
+<dl id="post{{ post.id }}">
+<dt>{{ post.getTitleFromDisplayPattern()|notifyFilters('blogging.filter_hooks.posts.filter') }}</dt>
+<dd>{% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
+            <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+{% if post.imageForArticleMeta.isImage %}
+    {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
+    <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+{% else %}
+    {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
+{% endif %}
+</a>
+{% else %}&nbsp;{% endif %}
+</dd>
+{% if post.summaryOfPost is not empty %}<dd>{{ post.summaryOfPost }}</dd>{% endif %}
+{% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
+    <dd>
+        <dl class="category-list">
+        {% for propName, catMapping in post.categories %}
+            <dt>{{ propName }}</dt>
+            <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+        {% endfor %}
+        </dl>
+    </dd>
+{% endif %}
+</dl>

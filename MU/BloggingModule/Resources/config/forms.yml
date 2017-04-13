@@ -1,0 +1,135 @@
+services:
+    # Form types
+    
+    mu_blogging_module.form.type.postquicknav:
+        class: MU\BloggingModule\Form\Type\QuickNavigation\PostQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_blogging_module.listentries_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.imagequicknav:
+        class: MU\BloggingModule\Form\Type\QuickNavigation\ImageQuickNavType
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_blogging_module.listentries_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.handler.post:
+        class: MU\BloggingModule\Form\Handler\Post\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_blogging_module.entity_factory"
+            - "@mu_blogging_module.controller_helper"
+            - "@mu_blogging_module.model_helper"
+            - "@mu_blogging_module.workflow_helper"
+            - "@mu_blogging_module.hook_helper"
+            - "@mu_blogging_module.translatable_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.post:
+        class: MU\BloggingModule\Form\Type\PostType
+        arguments:
+            - "@translator.default"
+            - "@mu_blogging_module.entity_factory"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_blogging_module.translatable_helper"
+            - "@mu_blogging_module.listentries_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.handler.image:
+        class: MU\BloggingModule\Form\Handler\Image\EditHandler
+        arguments:
+            - "@kernel"
+            - "@translator.default"
+            - "@form.factory"
+            - "@request_stack"
+            - "@router"
+            - "@logger"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_users_module.current_user"
+            - "@zikula_groups_module.group_application_repository"
+            - "@mu_blogging_module.entity_factory"
+            - "@mu_blogging_module.controller_helper"
+            - "@mu_blogging_module.model_helper"
+            - "@mu_blogging_module.workflow_helper"
+            - "@mu_blogging_module.hook_helper"
+            - "@mu_blogging_module.translatable_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+        calls:
+            - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.image:
+        class: MU\BloggingModule\Form\Type\ImageType
+        arguments:
+            - "@translator.default"
+            - "@mu_blogging_module.entity_factory"
+            - "@zikula_extensions_module.api.variable"
+            - "@mu_blogging_module.translatable_helper"
+            - "@mu_blogging_module.listentries_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.deleteentity:
+        class: MU\BloggingModule\Form\DeleteEntityType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.block.itemlist:
+        class: MU\BloggingModule\Block\Form\Type\ItemListBlockType
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.postfinder:
+        class: MU\BloggingModule\Form\Type\Finder\PostFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_blogging_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.imagefinder:
+        class: MU\BloggingModule\Form\Type\Finder\ImageFinderType
+        arguments:
+            - "@translator.default"
+            - "@mu_blogging_module.feature_activation_helper"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.appsettings:
+        class: MU\BloggingModule\Form\AppSettingsType
+        arguments:
+            - "@translator.default"
+            - "@zikula_extensions_module.api.variable"
+            - "@zikula_groups_module.group_repository"
+        tags:
+            - { name: form.type }

@@ -1,0 +1,13 @@
+{# Purpose of this template: Display posts within an external context #}
+<dl>
+    {% for post in items %}
+        <dt>{{ post.getTitleFromDisplayPattern() }}</dt>
+        {% if post.summaryOfPost %}
+            <dd>{{ post.summaryOfPost|striptags|truncate(200, true, '&hellip;') }}</dd>
+        {% endif %}
+        <dd><a href="{{ path('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug }) }}">{{ __('Read more') }}</a>
+        </dd>
+    {% else %}
+        <dt>{{ __('No entries found.') }}</dt>
+    {% endfor %}
+</dl>

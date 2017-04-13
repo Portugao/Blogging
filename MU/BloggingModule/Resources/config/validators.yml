@@ -1,0 +1,9 @@
+services:
+    # Custom validators
+    mu_blogging_module.validator.list_entry.validator:
+        class: MU\BloggingModule\Validator\Constraints\ListEntryValidator
+        arguments:
+            - "@translator.default"
+            - "@mu_blogging_module.listentries_helper"
+        tags:
+            - { name: validator.constraint_validator, alias: mu_blogging_module.validator.list_entry.validator }

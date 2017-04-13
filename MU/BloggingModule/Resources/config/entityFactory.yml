@@ -1,0 +1,6 @@
+services:
+    # Entity factory class
+    mu_blogging_module.entity_factory:
+        class: MU\BloggingModule\Entity\Factory\BloggingFactory
+        arguments:
+            - "@doctrine.orm.default_entity_manager"

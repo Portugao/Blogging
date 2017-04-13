@@ -1,0 +1,59 @@
+{# Purpose of this template: Display one certain post within an external context #}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.js')) }}
+<div id="post{$post.id}" class="mubloggingmodule-external-post">
+{% if displayMode == 'link' %}
+    <p class="mubloggingmodule-external-link">
+    <a href="{{ path('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}">
+    {{ post.getTitleFromDisplayPattern()|notifyFilters('blogging.filter_hooks.posts.filter') }}
+    </a>
+    </p>
+{% endif %}
+{% if hasPermission('MUBloggingModule::', '::', 'ACCESS_EDIT') %}
+    {# for normal users without edit permission show only the actual file per default #}
+    {% if displayMode == 'embed' %}
+        <p class="mubloggingmodule-external-title">
+            <strong>{{ post.getTitleFromDisplayPattern()|notifyFilters('blogging.filter_hooks.posts.filter') }}</strong>
+        </p>
+    {% endif %}
+{% endif %}
+
+{% if displayMode == 'link' %}
+{% elseif displayMode == 'embed' %}
+    <div class="mubloggingmodule-external-snippet">
+        {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
+                    <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+        {% if post.imageForArticleMeta.isImage %}
+            {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
+            <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+        {% else %}
+            {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
+        {% endif %}
+        </a>
+        {% else %}&nbsp;{% endif %}
+    </div>
+
+    {# you can distinguish the context like this: #}
+    {# % if source == 'contentType' %}
+        ...
+    {% elseif source == 'scribite' %}
+        ...
+    {% endif % #}
+
+    {# you can enable more details about the item: #}
+    {#
+        <p class="mubloggingmodule-external-description">
+            {% if post.summaryOfPost is not empty %}{{ post.summaryOfPost }}<br />{% endif %}
+            {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
+                <dl class="category-list">
+                {% for propName, catMapping in post.categories %}
+                    <dt>{{ propName }}</dt>
+                    <dd>{{ catMapping.category.display_name[app.request.locale]|default(catMapping.category.name) }}</dd>
+                {% endfor %}
+                </dl>
+            {% endif %}
+        </p>
+    #}
+{% endif %}
+</div>

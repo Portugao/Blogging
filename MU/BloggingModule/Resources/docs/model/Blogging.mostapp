@@ -1,0 +1,174 @@
+application "Blogging" {
+    vendor "MU"
+    author "Michael Ueberschaer"
+    email "info@homepages-mit-zikula.de"
+    url "http://homepages-mit-zikula.de"
+    prefix "blogging"
+    generatorSettings {
+        settingsContainer "Settings"
+        generateMailzApi false
+        generateAtomTemplates false
+        generateCsvTemplates false
+        generateXmlTemplates false
+        generateJsonTemplates false
+        generateKmlTemplates false
+        generateIcsTemplates false
+        versionAllGeneratedFiles false
+        generatePoweredByBacklinksIntoFooterTemplates false
+        generateTests false
+    }
+    entities {
+        entity "post" leading categorisable categorisableMultiSelection {
+            nameMultiple "posts"
+            displayPattern "#title#"
+            workflow STANDARD
+            hasArchive true
+            hasTray true
+            fields {
+                string "title" translatable {
+                    cssClass "bloggertitle"
+                    sluggablePosition 1
+                    length 57
+                },
+                string "descriptionForGoogle" translatable {
+                    dbName "description"
+                    cssClass "bloggerdescription"
+                    length 170
+                },
+                upload "imageForArticle" {
+                    mandatory false
+                },
+                text "summaryOfPost" translatable {
+                    cssClass "bloggergsummary"
+                },
+                text "content" translatable {
+                    cssClass "bloggercontent"
+                    length 20000
+                },
+                list "selectImagesForContent" multiple {
+                    defaultValue "none"
+                    items {
+                        listItem  "None" ( "none" ),
+                        listItem  "All" ( "all" )
+                    }
+                },
+                list "block" nullable {
+                    defaultValue "none"
+                    mandatory false
+                    cssClass "bloggerblock"
+                    items {
+                        listItem  "None" ( "none" )
+                    }
+                },
+                text "advertising" nullable translatable {
+                    mandatory false
+                cssClass "bloggingadvertising"
+                },
+                text "content2" nullable translatable {
+                    mandatory false
+                    cssClass "bloggercontent2"
+                    length 20000
+                },
+                text "advertising2" nullable translatable {
+                    mandatory false
+                    cssClass "bloggingadvertising"
+                },
+                list "selectImagesForContent2" multiple {
+                    defaultValue "none"
+                    mandatory false
+                    items {
+                        listItem "All" ( "all" ),
+                        listItem  "None" ( "none" )
+                    }
+                },
+                text "content3" nullable translatable {
+                    mandatory false
+                    cssClass "bloggercontent3"
+                    length 20000
+                },
+                text "advertising3" nullable translatable {
+                    mandatory false
+                    cssClass "bloggingadvertising"
+                },
+                list "block2" {
+                    defaultValue "none"
+                    mandatory false
+                    cssClass "bloggerblock2"
+                    items {
+                        listItem  "None" ( "none" )
+                    }
+                },
+                list "block3" {
+                    defaultValue "none"
+                    mandatory false
+                    cssClass "bloggerblock3"
+                    items {
+                        listItem  "None" ( "none" )
+                    }
+                },
+                list "similarArticles" multiple {
+                    defaultValue "none"
+                    mandatory false
+                    items {
+                        listItem  "All" ( "all" ),
+                        listItem  "None" ( "none" )
+                    }
+                },
+                datetime "startDate" startDate {
+                    mandatory false
+                    displayType NONE
+                },
+                datetime "endDate" endDate {
+                    mandatory false
+                displayType NONE
+                },
+                integer "parentid" {
+                    defaultValue "0"
+                    displayType NONE
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit"
+            ,
+                deleteAction "Delete"
+            }
+        },
+        entity "image" {
+            nameMultiple "images"
+            displayPattern "#title#"
+            fields {
+                string "title" translatable,
+                upload "imageForArticle",
+                string "description" nullable translatable {
+                    mandatory false
+                }
+            }
+            actions {
+                mainAction "Index",
+                viewAction "View",
+                displayAction "Display",
+                editAction "Edit",
+                deleteAction "Delete"
+            }
+        }
+    }
+    relations {
+        one2many {
+            source 
+            "post"
+            sourceAlias "post"
+            sourceField "parentid"
+            target "post"
+            targetAlias "posts"
+        },
+        one2many {
+            source "post"
+            sourceAlias "post"
+            target "image"
+            targetAlias "images"
+        }
+    }
+}
