@@ -30,14 +30,11 @@
                 <col id="cDescriptionForGoogle" />
                 <col id="cImageForArticle" />
                 <col id="cSummaryOfPost" />
-                <col id="cContent" />
                 <col id="cSelectImagesForContent" />
                 <col id="cBlock" />
                 <col id="cAdvertising" />
-                <col id="cContent2" />
                 <col id="cAdvertising2" />
                 <col id="cSelectImagesForContent2" />
-                <col id="cContent3" />
                 <col id="cAdvertising3" />
                 <col id="cBlock2" />
                 <col id="cBlock3" />
@@ -69,9 +66,6 @@
                 <th id="hSummaryOfPost" scope="col" class="text-left">
                     <a href="{{ sort.summaryOfPost.url }}" title="{{ __f('Sort by %s', {'%s': 'summary of post'}) }}" class="{{ sort.summaryOfPost.class }}">{{ __('Summary of post') }}</a>
                 </th>
-                <th id="hContent" scope="col" class="text-left">
-                    <a href="{{ sort.content.url }}" title="{{ __f('Sort by %s', {'%s': 'content'}) }}" class="{{ sort.content.class }}">{{ __('Content') }}</a>
-                </th>
                 <th id="hSelectImagesForContent" scope="col" class="text-left">
                     <a href="{{ sort.selectImagesForContent.url }}" title="{{ __f('Sort by %s', {'%s': 'select images for content'}) }}" class="{{ sort.selectImagesForContent.class }}">{{ __('Select images for content') }}</a>
                 </th>
@@ -81,17 +75,11 @@
                 <th id="hAdvertising" scope="col" class="text-left">
                     <a href="{{ sort.advertising.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising'}) }}" class="{{ sort.advertising.class }}">{{ __('Advertising') }}</a>
                 </th>
-                <th id="hContent2" scope="col" class="text-left">
-                    <a href="{{ sort.content2.url }}" title="{{ __f('Sort by %s', {'%s': 'content 2'}) }}" class="{{ sort.content2.class }}">{{ __('Content 2') }}</a>
-                </th>
                 <th id="hAdvertising2" scope="col" class="text-left">
                     <a href="{{ sort.advertising2.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 2'}) }}" class="{{ sort.advertising2.class }}">{{ __('Advertising 2') }}</a>
                 </th>
                 <th id="hSelectImagesForContent2" scope="col" class="text-left">
                     <a href="{{ sort.selectImagesForContent2.url }}" title="{{ __f('Sort by %s', {'%s': 'select images for content 2'}) }}" class="{{ sort.selectImagesForContent2.class }}">{{ __('Select images for content 2') }}</a>
-                </th>
-                <th id="hContent3" scope="col" class="text-left">
-                    <a href="{{ sort.content3.url }}" title="{{ __f('Sort by %s', {'%s': 'content 3'}) }}" class="{{ sort.content3.class }}">{{ __('Content 3') }}</a>
                 </th>
                 <th id="hAdvertising3" scope="col" class="text-left">
                     <a href="{{ sort.advertising3.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 3'}) }}" class="{{ sort.advertising3.class }}">{{ __('Advertising 3') }}</a>
@@ -148,10 +136,7 @@
                     {% else %}&nbsp;{% endif %}
                 </td>
                 <td headers="hSummaryOfPost" class="text-left">
-                    {{ post.summaryOfPost|safeHtml }}
-                </td>
-                <td headers="hContent" class="text-left">
-                    {{ post.content|safeHtml }}
+                    {{ post.summaryOfPost|safeHtml|truncate(50) }}
                 </td>
                 <td headers="hSelectImagesForContent" class="text-left">
                     {{ post.selectImagesForContent|mubloggingmodule_listEntry('post', 'selectImagesForContent') }}
@@ -162,17 +147,11 @@
                 <td headers="hAdvertising" class="text-left">
                     {{ post.advertising|safeHtml }}
                 </td>
-                <td headers="hContent2" class="text-left">
-                    {{ post.content2|safeHtml }}
-                </td>
                 <td headers="hAdvertising2" class="text-left">
                     {{ post.advertising2|safeHtml }}
                 </td>
                 <td headers="hSelectImagesForContent2" class="text-left">
                     {{ post.selectImagesForContent2|mubloggingmodule_listEntry('post', 'selectImagesForContent2') }}
-                </td>
-                <td headers="hContent3" class="text-left">
-                    {{ post.content3|safeHtml }}
                 </td>
                 <td headers="hAdvertising3" class="text-left">
                     {{ post.advertising3|safeHtml }}
