@@ -23,21 +23,21 @@
             <dt>{{ __('State') }}</dt>
             <dd>{{ post.workflowState|mubloggingmodule_listEntry('post', 'workflowState') }}</dd>
         {% endif %}
-        {% if post.title is not empty %}
+        {#% if post.title is not empty %}
             <dt>{{ __('Title') }}</dt>
             <dd>{{ post.title }}</dd>
-        {% endif %}
-        {% if post.descriptionForGoogle is not empty %}
+        {% endif %#}
+        {#% if post.descriptionForGoogle is not empty %}
             <dt>{{ __('Description for google') }}</dt>
             <dd>{{ post.descriptionForGoogle }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if post.imageForArticle is not empty %}
-            <dt>{{ __('Image for article') }}</dt>
-            <dd>{% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
+            {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
+                       <div id="blogger-display-image">
                         <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
             {% if post.imageForArticleMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" /></div>
             {% else %}
                 {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
             {% endif %}
@@ -45,56 +45,44 @@
             {% else %}&nbsp;{% endif %}
             </dd>
         {% endif %}
-        {% if post.summaryOfPost is not empty %}
-            <dt>{{ __('Summary of post') }}</dt>
+        {% if post.summaryOfPost != NULL %}
             <dd>{{ post.summaryOfPost|safeHtml }}</dd>
         {% endif %}
-        {% if post.content is not empty %}
-            <dt>{{ __('Content') }}</dt>
+        {% if post.content != NULL %}
             <dd>{{ post.content|safeHtml }}</dd>
         {% endif %}
-        {% if post.selectImagesForContent is not empty %}
-            <dt>{{ __('Select images for content') }}</dt>
+        {% if post.selectImagesForContent != '###none###' %}
+  
             <dd>{{ post.selectImagesForContent|mubloggingmodule_listEntry('post', 'selectImagesForContent') }}</dd>
         {% endif %}
-        {% if post.block is not empty %}
-            <dt>{{ __('Block') }}</dt>
+        {% if post.block != 'none' %}
             <dd>{{ post.block|mubloggingmodule_listEntry('post', 'block') }}</dd>
         {% endif %}
-        {% if post.advertising is not empty %}
-            <dt>{{ __('Advertising') }}</dt>
+        {% if post.advertising != NULL %}
             <dd>{{ post.advertising|safeHtml }}</dd>
         {% endif %}
-        {% if post.content2 is not empty %}
-            <dt>{{ __('Content 2') }}</dt>
+        {% if post.content2 != NULL %}
             <dd>{{ post.content2|safeHtml }}</dd>
         {% endif %}
         {% if post.advertising2 is not empty %}
-            <dt>{{ __('Advertising 2') }}</dt>
             <dd>{{ post.advertising2|safeHtml }}</dd>
         {% endif %}
-        {% if post.selectImagesForContent2 is not empty %}
-            <dt>{{ __('Select images for content 2') }}</dt>
+        {% if post.selectImagesForContent2 != 'none' %}
             <dd>{{ post.selectImagesForContent2|mubloggingmodule_listEntry('post', 'selectImagesForContent2') }}</dd>
         {% endif %}
         {% if post.content3 is not empty %}
-            <dt>{{ __('Content 3') }}</dt>
-            <dd>{{ post.content3|safeHtml }}</dd>
+            <div class="blogger-display">{{ post.content3|safeHtml }}</dd>
         {% endif %}
-        {% if post.advertising3 is not empty %}
-            <dt>{{ __('Advertising 3') }}</dt>
+        {% if post.advertising3 != NULL %}
             <dd>{{ post.advertising3|safeHtml }}</dd>
         {% endif %}
-        {% if post.block2 is not empty %}
-            <dt>{{ __('Block 2') }}</dt>
+        {% if post.block2 != 'none' %}
             <dd>{{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}</dd>
         {% endif %}
-        {% if post.block3 is not empty %}
-            <dt>{{ __('Block 3') }}</dt>
+        {% if post.block3 != 'none' %}
             <dd>{{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}</dd>
         {% endif %}
-        {% if post.similarArticles is not 'none' %}
-            <dt>{{ __('Similar articles') }}</dt>
+        {% if post.similarArticles != 'none' %}
             <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
         {% endif %}
         {% if post.post|default %}
@@ -116,7 +104,7 @@
     {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
         {{ include('@MUBloggingModule/Helper/includeCategoriesDisplay.html.twig', { obj: post }) }}
     {% endif %}
-    {{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }}
+    {#{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }#}
 
     {{ block('display_hooks') }}
         </div>
