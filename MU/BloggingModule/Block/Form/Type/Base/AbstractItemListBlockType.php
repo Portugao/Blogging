@@ -241,6 +241,7 @@ abstract class AbstractItemListBlockType extends AbstractType
             ->setAllowedTypes([
                 'objectType' => 'string',
                 'is_categorisable' => 'bool',
+                'category_helper' => 'object',
                 'feature_activation_helper' => 'object'
             ])
         ;
