@@ -226,10 +226,10 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
         }
     
         return [
-            'objectType' => $objectType,
-            'isCategorisable' => in_array($objectType, $this->categorisableObjectTypes),
-            'categoryHelper' => $this->get('mu_blogging_module.category_helper'),
-            'featureActivationHelper' => $this->get('mu_blogging_module.feature_activation_helper')
+            'object_type' => $objectType,
+            'is_categorisable' => in_array($objectType, $this->categorisableObjectTypes),
+            'category_helper' => $this->get('mu_blogging_module.category_helper'),
+            'feature_activation_helper' => $this->get('mu_blogging_module.feature_activation_helper')
         ];
     }
     

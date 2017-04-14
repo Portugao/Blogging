@@ -268,28 +268,6 @@ abstract class AbstractPostType extends AbstractType
             'allowed_size' => ''
         ]);
         
-        $listEntries = $this->listHelper->getEntries('post', 'selectImagesForContent');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('selectImagesForContent', 'MU\BloggingModule\Form\Type\Field\MultiListType', [
-            'label' => $this->__('Select images for content') . ':',
-            'empty_data' => 'none',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the select images for content')
-            ],
-            'required' => true,
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
-        ]);
-        
         $listEntries = $this->listHelper->getEntries('post', 'block');
         $choices = [];
         $choiceAttributes = [];
@@ -310,29 +288,6 @@ abstract class AbstractPostType extends AbstractType
             'choices_as_values' => true,
             'choice_attr' => $choiceAttributes,
             'multiple' => false,
-            'expanded' => false
-        ]);
-        
-        $listEntries = $this->listHelper->getEntries('post', 'selectImagesForContent2');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('selectImagesForContent2', 'MU\BloggingModule\Form\Type\Field\MultiListType', [
-            'label' => $this->__('Select images for content 2') . ':',
-            'empty_data' => 'none',
-            'attr' => [
-                'class' => '',
-                'title' => $this->__('Choose the select images for content 2')
-            ],
-            'required' => false,
-            'placeholder' => $this->__('Choose an option'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
             'expanded' => false
         ]);
         
@@ -629,8 +584,6 @@ abstract class AbstractPostType extends AbstractType
                     return $this->entityFactory->createPost();
                 },
                 'error_mapping' => [
-                    'isSelectImagesForContentValueAllowed' => 'selectImagesForContent',
-                    'isSelectImagesForContent2ValueAllowed' => 'selectImagesForContent2',
                     'isSimilarArticlesValueAllowed' => 'similarArticles',
                     'imageForArticle' => 'imageForArticle.imageForArticle',
                     'isStartDateBeforeEndDate' => 'startDate',

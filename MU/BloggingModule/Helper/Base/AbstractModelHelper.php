@@ -60,9 +60,6 @@ abstract class AbstractModelHelper
             case 'post':
                 $result = true;
                 break;
-            case 'image':
-                $result = true;
-                break;
         }
     
         return $result;

@@ -30,10 +30,6 @@ function smarty_function_mubloggingmoduleObjectTypeSelector($params, $view)
         'text' => __('Posts', $dom),
         'value' => 'post'
     ];
-    $result[] = [
-        'text' => __('Images', $dom),
-        'value' => 'image'
-    ];
 
     if (array_key_exists('assign', $params)) {
         $view->assign($params['assign'], $result);

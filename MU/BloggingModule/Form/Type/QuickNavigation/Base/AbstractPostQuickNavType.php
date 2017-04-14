@@ -187,26 +187,6 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
-        $listEntries = $this->listHelper->getEntries('post', 'selectImagesForContent');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('selectImagesForContent', 'MU\BloggingModule\Form\Type\Field\MultiListType', [
-            'label' => $this->__('Select images for content'),
-            'attr' => [
-                'class' => 'input-sm'
-            ],
-            'required' => false,
-            'placeholder' => $this->__('All'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
-            'expanded' => false
-        ]);
         $listEntries = $this->listHelper->getEntries('post', 'block');
         $choices = [];
         $choiceAttributes = [];
@@ -225,26 +205,6 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'choices_as_values' => true,
             'choice_attr' => $choiceAttributes,
             'multiple' => false,
-            'expanded' => false
-        ]);
-        $listEntries = $this->listHelper->getEntries('post', 'selectImagesForContent2');
-        $choices = [];
-        $choiceAttributes = [];
-        foreach ($listEntries as $entry) {
-            $choices[$entry['text']] = $entry['value'];
-            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
-        }
-        $builder->add('selectImagesForContent2', 'MU\BloggingModule\Form\Type\Field\MultiListType', [
-            'label' => $this->__('Select images for content 2'),
-            'attr' => [
-                'class' => 'input-sm'
-            ],
-            'required' => false,
-            'placeholder' => $this->__('All'),
-            'choices' => $choices,
-            'choices_as_values' => true,
-            'choice_attr' => $choiceAttributes,
-            'multiple' => true,
             'expanded' => false
         ]);
         $listEntries = $this->listHelper->getEntries('post', 'block2');
@@ -348,14 +308,9 @@ abstract class AbstractPostQuickNavType extends AbstractType
                     $this->__('Description for google') => 'descriptionForGoogle',
                     $this->__('Image for article') => 'imageForArticle',
                     $this->__('Summary of post') => 'summaryOfPost',
-                    $this->__('Content') => 'content',
-                    $this->__('Select images for content') => 'selectImagesForContent',
                     $this->__('Block') => 'block',
                     $this->__('Advertising') => 'advertising',
-                    $this->__('Content 2') => 'content2',
                     $this->__('Advertising 2') => 'advertising2',
-                    $this->__('Select images for content 2') => 'selectImagesForContent2',
-                    $this->__('Content 3') => 'content3',
                     $this->__('Advertising 3') => 'advertising3',
                     $this->__('Block 2') => 'block2',
                     $this->__('Block 3') => 'block3',

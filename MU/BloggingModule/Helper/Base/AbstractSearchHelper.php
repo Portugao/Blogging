@@ -174,23 +174,15 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.imageForArticle';
                     $whereArray[] = 'tbl.summaryOfPost';
                     $whereArray[] = 'tbl.content';
-                    $whereArray[] = 'tbl.selectImagesForContent';
                     $whereArray[] = 'tbl.block';
                     $whereArray[] = 'tbl.advertising';
                     $whereArray[] = 'tbl.content2';
                     $whereArray[] = 'tbl.advertising2';
-                    $whereArray[] = 'tbl.selectImagesForContent2';
                     $whereArray[] = 'tbl.content3';
                     $whereArray[] = 'tbl.advertising3';
                     $whereArray[] = 'tbl.block2';
                     $whereArray[] = 'tbl.block3';
                     $whereArray[] = 'tbl.similarArticles';
-                    break;
-                case 'image':
-                    $whereArray[] = 'tbl.workflowState';
-                    $whereArray[] = 'tbl.title';
-                    $whereArray[] = 'tbl.imageForArticle';
-                    $whereArray[] = 'tbl.description';
                     break;
             }
     
@@ -218,7 +210,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
     
             $descriptionField = $repository->getDescriptionFieldName();
     
-            $entitiesWithDisplayAction = ['post', 'image'];
+            $entitiesWithDisplayAction = ['post'];
     
             foreach ($entities as $entity) {
                 $urlArgs = $entity->createUrlArgs();
@@ -270,10 +262,6 @@ abstract class AbstractSearchHelper implements SearchableInterface
             'mUBloggingModulePosts' => [
                 'value' => 'post',
                 'label' => $this->__('Posts')
-            ],
-            'mUBloggingModuleImages' => [
-                'value' => 'image',
-                'label' => $this->__('Images')
             ]
         ];
     

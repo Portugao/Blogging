@@ -373,8 +373,8 @@ abstract class AbstractNotificationHelper
     
         $urlArgs = $this->entity->createUrlArgs();
     
-        $hasDisplayAction = in_array($objectType, ['post', 'image']);
-        $hasEditAction = in_array($objectType, ['post', 'image']);
+        $hasDisplayAction = in_array($objectType, ['post']);
+        $hasEditAction = in_array($objectType, ['post']);
         $routeArea = in_array($this->recipientType, ['moderator', 'superModerator']) ? 'admin' : '';
         $routePrefix = 'mubloggingmodule_' . strtolower($objectType) . '_' . $routeArea;
     

@@ -42,8 +42,6 @@
                 "MUBloggingModule:ModerationBlock:": "Block title::",
                 "MUBloggingModule:Post:": "Post ID::",
                 "MUBloggingModule:Post:Post": "Post ID:Post ID:",
-                "MUBloggingModule:Image:": "Image ID::",
-                "MUBloggingModule:Post:Image": "Post ID:Image ID:",
                 "MUBloggingModule::Ajax": "::"
             }
         }

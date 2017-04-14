@@ -90,9 +90,6 @@ abstract class AbstractTranslatableHelper
             case 'post':
                 $fields = ['title', 'descriptionForGoogle', 'summaryOfPost', 'content', 'advertising', 'content2', 'advertising2', 'content3', 'advertising3'];
                 break;
-            case 'image':
-                $fields = ['title', 'description'];
-                break;
         }
     
         return $fields;

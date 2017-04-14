@@ -70,14 +70,9 @@ abstract class AbstractPostRepository extends EntityRepository
             'descriptionForGoogle',
             'imageForArticle',
             'summaryOfPost',
-            'content',
-            'selectImagesForContent',
             'block',
             'advertising',
-            'content2',
             'advertising2',
-            'selectImagesForContent2',
-            'content3',
             'advertising3',
             'block2',
             'block3',
@@ -238,9 +233,7 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['catIdList'] = $categoryHelper->retrieveCategoriesFromRequest('post', 'GET');
         $parameters['post'] = $this->getRequest()->query->get('post', 0);
         $parameters['workflowState'] = $this->getRequest()->query->get('workflowState', '');
-        $parameters['selectImagesForContent'] = $this->getRequest()->query->get('selectImagesForContent', '');
         $parameters['block'] = $this->getRequest()->query->get('block', '');
-        $parameters['selectImagesForContent2'] = $this->getRequest()->query->get('selectImagesForContent2', '');
         $parameters['block2'] = $this->getRequest()->query->get('block2', '');
         $parameters['block3'] = $this->getRequest()->query->get('block3', '');
         $parameters['similarArticles'] = $this->getRequest()->query->get('similarArticles', '');
@@ -759,8 +752,6 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchSummaryOfPost'] = '%' . $fragment . '%';
         $filters[] = 'tbl.content LIKE :searchContent';
         $parameters['searchContent'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.selectImagesForContent = :searchSelectImagesForContent';
-        $parameters['searchSelectImagesForContent'] = $fragment;
         $filters[] = 'tbl.block = :searchBlock';
         $parameters['searchBlock'] = $fragment;
         $filters[] = 'tbl.advertising LIKE :searchAdvertising';
@@ -769,8 +760,6 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchContent2'] = '%' . $fragment . '%';
         $filters[] = 'tbl.advertising2 LIKE :searchAdvertising2';
         $parameters['searchAdvertising2'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.selectImagesForContent2 = :searchSelectImagesForContent2';
-        $parameters['searchSelectImagesForContent2'] = $fragment;
         $filters[] = 'tbl.content3 LIKE :searchContent3';
         $parameters['searchContent3'] = '%' . $fragment . '%';
         $filters[] = 'tbl.advertising3 LIKE :searchAdvertising3';
@@ -1089,7 +1078,7 @@ abstract class AbstractPostRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblPost, tblPosts, tblImages';
+        $selection = ', tblPost, tblPosts';
     
         $selection = ', tblCategories';
     
@@ -1107,7 +1096,6 @@ abstract class AbstractPostRepository extends EntityRepository
     {
         $qb->leftJoin('tbl.post', 'tblPost');
         $qb->leftJoin('tbl.posts', 'tblPosts');
-        $qb->leftJoin('tbl.images', 'tblImages');
     
         $qb->leftJoin('tbl.categories', 'tblCategories');
     

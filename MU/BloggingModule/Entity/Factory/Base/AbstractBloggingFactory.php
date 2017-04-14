@@ -65,18 +65,6 @@ abstract class AbstractBloggingFactory
     }
 
     /**
-     * Creates a new image instance.
-     *
-     * @return MU\BloggingModule\Entity\imageEntity The newly created entity instance
-     */
-    public function createImage()
-    {
-        $entityClass = 'MU\\BloggingModule\\Entity\\ImageEntity';
-
-        return new $entityClass();
-    }
-
-    /**
      * Gets the list of identifier fields for a given object type.
      *
      * @param string $objectType The object type to be treated

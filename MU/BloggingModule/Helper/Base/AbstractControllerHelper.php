@@ -145,7 +145,6 @@ abstract class AbstractControllerHelper
     
         $allowedObjectTypes = [];
         $allowedObjectTypes[] = 'post';
-        $allowedObjectTypes[] = 'image';
     
         return $allowedObjectTypes;
     }

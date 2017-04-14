@@ -48,14 +48,9 @@
                     <option value="descriptionForGoogle"{if $sort eq 'descriptionForGoogle'} selected="selected"{/if}>{gt text='Description for google'}</option>
                     <option value="imageForArticle"{if $sort eq 'imageForArticle'} selected="selected"{/if}>{gt text='Image for article'}</option>
                     <option value="summaryOfPost"{if $sort eq 'summaryOfPost'} selected="selected"{/if}>{gt text='Summary of post'}</option>
-                    <option value="content"{if $sort eq 'content'} selected="selected"{/if}>{gt text='Content'}</option>
-                    <option value="selectImagesForContent"{if $sort eq 'selectImagesForContent'} selected="selected"{/if}>{gt text='Select images for content'}</option>
                     <option value="block"{if $sort eq 'block'} selected="selected"{/if}>{gt text='Block'}</option>
                     <option value="advertising"{if $sort eq 'advertising'} selected="selected"{/if}>{gt text='Advertising'}</option>
-                    <option value="content2"{if $sort eq 'content2'} selected="selected"{/if}>{gt text='Content 2'}</option>
                     <option value="advertising2"{if $sort eq 'advertising2'} selected="selected"{/if}>{gt text='Advertising 2'}</option>
-                    <option value="selectImagesForContent2"{if $sort eq 'selectImagesForContent2'} selected="selected"{/if}>{gt text='Select images for content 2'}</option>
-                    <option value="content3"{if $sort eq 'content3'} selected="selected"{/if}>{gt text='Content 3'}</option>
                     <option value="advertising3"{if $sort eq 'advertising3'} selected="selected"{/if}>{gt text='Advertising 3'}</option>
                     <option value="block2"{if $sort eq 'block2'} selected="selected"{/if}>{gt text='Block 2'}</option>
                     <option value="block3"{if $sort eq 'block3'} selected="selected"{/if}>{gt text='Block 3'}</option>

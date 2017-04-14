@@ -51,7 +51,7 @@ abstract class AbstractFeatureActivationHelper
                 return $this->$method($objectType);
             }
     
-            return in_array($objectType, ['post', 'image']);
+            return in_array($objectType, ['post']);
         }
     
         return false;

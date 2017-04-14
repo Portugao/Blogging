@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Zikula\Core\Doctrine\EntityAccess;
 use MU\BloggingModule\BloggingEvents;
 use MU\BloggingModule\Event\FilterPostEvent;
-use MU\BloggingModule\Event\FilterImageEvent;
 
 /**
  * Event subscriber base class for entity lifecycle events.
@@ -337,9 +336,6 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         $uploadFields = [];
         switch ($objectType) {
             case 'post':
-                $uploadFields = ['imageForArticle'];
-                break;
-            case 'image':
                 $uploadFields = ['imageForArticle'];
                 break;
         }

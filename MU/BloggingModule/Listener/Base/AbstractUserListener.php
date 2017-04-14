@@ -130,15 +130,5 @@ abstract class AbstractUserListener implements EventSubscriberInterface
         
         $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'posts'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
-        
-        $repo = $this->entityFactory->getRepository('image');
-        // set creator to admin (2) for all images created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
-        
-        // set last editor to admin (2) for all images updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
-        
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'images'];
-        $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);
     }
 }

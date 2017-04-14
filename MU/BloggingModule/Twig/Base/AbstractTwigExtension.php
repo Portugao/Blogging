@@ -256,10 +256,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
             'text' => $this->__('Posts'),
             'value' => 'post'
         ];
-        $result[] = [
-            'text' => $this->__('Images'),
-            'value' => 'image'
-        ];
     
         return $result;
     }

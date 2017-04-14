@@ -135,14 +135,8 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
-                    case 'selectImagesForContent':
-                        $result = true;
-                        break;
                     case 'block':
                         $result = false;
-                        break;
-                    case 'selectImagesForContent2':
-                        $result = true;
                         break;
                     case 'block2':
                         $result = false;
@@ -152,13 +146,6 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'similarArticles':
                         $result = true;
-                        break;
-                }
-                break;
-            case 'image':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $result = false;
                         break;
                 }
                 break;
@@ -189,14 +176,8 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForPost();
                         break;
-                    case 'selectImagesForContent':
-                        $entries = $this->getSelectImagesForContentEntriesForPost();
-                        break;
                     case 'block':
                         $entries = $this->getBlockEntriesForPost();
-                        break;
-                    case 'selectImagesForContent2':
-                        $entries = $this->getSelectImagesForContent2EntriesForPost();
                         break;
                     case 'block2':
                         $entries = $this->getBlock2EntriesForPost();
@@ -206,13 +187,6 @@ abstract class AbstractListEntriesHelper
                         break;
                     case 'similarArticles':
                         $entries = $this->getSimilarArticlesEntriesForPost();
-                        break;
-                }
-                break;
-            case 'image':
-                switch ($fieldName) {
-                    case 'workflowState':
-                        $entries = $this->getWorkflowStateEntriesForImage();
                         break;
                 }
                 break;
@@ -291,32 +265,6 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
-     * Get 'select images for content' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getSelectImagesForContentEntriesForPost()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'all',
-            'text'    => $this->__('All'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
      * Get 'block' list entries.
      *
      * @return array Array with desired list entries
@@ -324,32 +272,6 @@ abstract class AbstractListEntriesHelper
     public function getBlockEntriesForPost()
     {
         $states = [];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'select images for content 2' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getSelectImagesForContent2EntriesForPost()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'all',
-            'text'    => $this->__('All'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
         $states[] = [
             'value'   => 'none',
             'text'    => $this->__('None'),
@@ -418,32 +340,6 @@ abstract class AbstractListEntriesHelper
             'value'   => 'none',
             'text'    => $this->__('None'),
             'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-    
-        return $states;
-    }
-    
-    /**
-     * Get 'workflow state' list entries.
-     *
-     * @return array Array with desired list entries
-     */
-    public function getWorkflowStateEntriesForImage()
-    {
-        $states = [];
-        $states[] = [
-            'value'   => 'approved',
-            'text'    => $this->__('Approved'),
-            'title'   => $this->__('Content has been approved and is available online.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!approved',
-            'text'    => $this->__('All except approved'),
-            'title'   => $this->__('Shows all items except these which are approved'),
             'image'   => '',
             'default' => false
         ];

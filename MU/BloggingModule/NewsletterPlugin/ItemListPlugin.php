@@ -38,7 +38,7 @@ class ItemListPlugin extends Newsletter_AbstractPlugin implements ContainerAware
      */
     public function getTitle()
     {
-        return $this->container->get('translator.default')->__('Latest MUBloggingModule items');
+        return $this->container->get('translator.default')->__('Latest posts');
     }
     
     /**
@@ -48,7 +48,7 @@ class ItemListPlugin extends Newsletter_AbstractPlugin implements ContainerAware
      */
     public function getDisplayName()
     {
-        return $this->container->get('translator.default')->__('List of posts and other MUBloggingModule items');
+        return $this->container->get('translator.default')->__('List of posts');
     }
     
     /**
@@ -58,7 +58,7 @@ class ItemListPlugin extends Newsletter_AbstractPlugin implements ContainerAware
      */
     public function getDescription()
     {
-        return $this->container->get('translator.default')->__('This plugin shows a list of posts and other items of the MUBloggingModule module.');
+        return $this->container->get('translator.default')->__('This plugin shows a list of posts of the MUBloggingModule module.');
     }
     
     /**
@@ -84,7 +84,6 @@ class ItemListPlugin extends Newsletter_AbstractPlugin implements ContainerAware
         $objectTypes = [];
         if ($this->pluginAvailable()) {
             $objectTypes['post'] = ['name' => $translator->__('Posts')];
-            $objectTypes['image'] = ['name' => $translator->__('Images')];
         }
     
         $active = $this->getPluginVar('ObjectTypes', []);
@@ -217,7 +216,7 @@ class ItemListPlugin extends Newsletter_AbstractPlugin implements ContainerAware
         $descriptionFieldName = $repository->getDescriptionFieldName();
         $previewFieldName = $repository->getPreviewFieldName();
     
-        $hasDisplayPage = in_array($objectType, ['post', 'image']);
+        $hasDisplayPage = in_array($objectType, ['post']);
         $router = $this->container->get('router');
         $items = [];
         foreach ($entities as $k => $item) {

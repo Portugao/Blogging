@@ -95,7 +95,7 @@ abstract class AbstractUploadHelper
         $this->variableApi = $variableApi;
         $this->dataDirectory = $dataDirectory;
 
-        $this->allowedObjectTypes = ['post', 'image'];
+        $this->allowedObjectTypes = ['post'];
         $this->imageFileTypes = ['gif', 'jpeg', 'jpg', 'png', 'swf'];
         $this->forbiddenFileTypes = ['cgi', 'pl', 'asp', 'phtml', 'php', 'php3', 'php4', 'php5', 'exe', 'com', 'bat', 'jsp', 'cfm', 'shtml'];
     }
@@ -323,9 +323,6 @@ abstract class AbstractUploadHelper
             case 'post':
                 $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
                     break;
-            case 'image':
-                $allowedExtensions = ['gif', 'jpeg', 'jpg', 'png'];
-                    break;
         }
     
         if (count($allowedExtensions) > 0) {
@@ -362,9 +359,6 @@ abstract class AbstractUploadHelper
     
         switch ($objectType) {
             case 'post':
-                $namingScheme = 0;
-                    break;
-            case 'image':
                 $namingScheme = 0;
                     break;
         }
@@ -462,9 +456,6 @@ abstract class AbstractUploadHelper
             case 'post':
                 $basePath .= 'posts/imageforarticle/';
                 break;
-            case 'image':
-                $basePath .= 'images/imageforarticle/';
-                break;
             default:
                 throw new Exception($this->__('Error! Invalid object type received.'));
         }
@@ -521,8 +512,6 @@ abstract class AbstractUploadHelper
         $result = true;
     
         $result &= $this->checkAndCreateUploadFolder('post', 'imageForArticle', 'gif, jpeg, jpg, png');
-    
-        $result &= $this->checkAndCreateUploadFolder('image', 'imageForArticle', 'gif, jpeg, jpg, png');
     
         return $result;
     }

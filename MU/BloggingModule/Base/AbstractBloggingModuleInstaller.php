@@ -60,8 +60,6 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         $this->setVar('moderationGroupForPosts', '2');
         $this->setVar('postEntriesPerPage', '10');
         $this->setVar('linkOwnPostsOnAccountPage', true);
-        $this->setVar('imageEntriesPerPage', '10');
-        $this->setVar('linkOwnImagesOnAccountPage', true);
         $this->setVar('enableShrinkingForPostImageForArticle', false);
         $this->setVar('shrinkWidthPostImageForArticle', '800');
         $this->setVar('shrinkHeightPostImageForArticle', '600');
@@ -72,17 +70,7 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         $this->setVar('thumbnailHeightPostImageForArticleDisplay', '180');
         $this->setVar('thumbnailWidthPostImageForArticleEdit', '240');
         $this->setVar('thumbnailHeightPostImageForArticleEdit', '180');
-        $this->setVar('enableShrinkingForImageImageForArticle', false);
-        $this->setVar('shrinkWidthImageImageForArticle', '800');
-        $this->setVar('shrinkHeightImageImageForArticle', '600');
-        $this->setVar('thumbnailModeImageImageForArticle',  'inset' );
-        $this->setVar('thumbnailWidthImageImageForArticleView', '32');
-        $this->setVar('thumbnailHeightImageImageForArticleView', '24');
-        $this->setVar('thumbnailWidthImageImageForArticleDisplay', '240');
-        $this->setVar('thumbnailHeightImageImageForArticleDisplay', '180');
-        $this->setVar('thumbnailWidthImageImageForArticleEdit', '240');
-        $this->setVar('thumbnailHeightImageImageForArticleEdit', '180');
-        $this->setVar('enabledFinderTypes', [ 'post' ,  'image' ]);
+        $this->setVar('enabledFinderTypes', [ 'post' ]);
     
         $categoryRegistryIdsPerEntity = [];
     
@@ -452,8 +440,6 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         $classNames[] = 'MU\BloggingModule\Entity\PostEntity';
         $classNames[] = 'MU\BloggingModule\Entity\PostTranslationEntity';
         $classNames[] = 'MU\BloggingModule\Entity\PostCategoryEntity';
-        $classNames[] = 'MU\BloggingModule\Entity\ImageEntity';
-        $classNames[] = 'MU\BloggingModule\Entity\ImageTranslationEntity';
     
         return $classNames;
     }
@@ -472,8 +458,6 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         $request = $this->container->get('request_stack')->getCurrentRequest();
         
         $entityClass = 'MU\BloggingModule\Entity\PostEntity';
-        $entityManager->getRepository($entityClass)->truncateTable($logger);
-        $entityClass = 'MU\BloggingModule\Entity\ImageEntity';
         $entityManager->getRepository($entityClass)->truncateTable($logger);
     }
 }

@@ -1,7 +1,7 @@
 # SCRIBITE INTEGRATION
 
 It is easy to include MUBloggingModule in your [Scribite editors](https://github.com/zikula-modules/Scribite/).
-MUBloggingModule contains already the a popup for selecting posts and other items.
+MUBloggingModule contains already the a popup for selecting posts.
 Please note that Scribite 5.0+ is required for this.
 
 To activate the popup for the editor of your choice (currently supported: CKEditor, TinyMCE)

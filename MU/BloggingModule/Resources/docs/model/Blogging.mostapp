@@ -13,9 +13,12 @@ application "Blogging" {
         generateJsonTemplates false
         generateKmlTemplates false
         generateIcsTemplates false
+        generateOnlyBaseClasses false
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
+    skipFiles "Readme.md"
+        markFiles "Resources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -42,15 +45,9 @@ application "Blogging" {
                     cssClass "bloggergsummary"
                 },
                 text "content" translatable {
+                    displayType DISPLAY
                     cssClass "bloggercontent"
                     length 20000
-                },
-                list "selectImagesForContent" multiple {
-                    defaultValue "none"
-                    items {
-                        listItem  "None" ( "none" ),
-                        listItem  "All" ( "all" )
-                    }
                 },
                 list "block" nullable {
                     defaultValue "none"
@@ -66,6 +63,7 @@ application "Blogging" {
                 },
                 text "content2" nullable translatable {
                     mandatory false
+                    displayType DISPLAY
                     cssClass "bloggercontent2"
                     length 20000
                 },
@@ -73,16 +71,9 @@ application "Blogging" {
                     mandatory false
                     cssClass "bloggingadvertising"
                 },
-                list "selectImagesForContent2" multiple {
-                    defaultValue "none"
-                    mandatory false
-                    items {
-                        listItem "All" ( "all" ),
-                        listItem  "None" ( "none" )
-                    }
-                },
                 text "content3" nullable translatable {
                     mandatory false
+                    displayType DISPLAY
                     cssClass "bloggercontent3"
                     length 20000
                 },
@@ -135,24 +126,6 @@ application "Blogging" {
             ,
                 deleteAction "Delete"
             }
-        },
-        entity "image" {
-            nameMultiple "images"
-            displayPattern "#title#"
-            fields {
-                string "title" translatable,
-                upload "imageForArticle",
-                string "description" nullable translatable {
-                    mandatory false
-                }
-            }
-            actions {
-                mainAction "Index",
-                viewAction "View",
-                displayAction "Display",
-                editAction "Edit",
-                deleteAction "Delete"
-            }
         }
     }
     relations {
@@ -163,12 +136,6 @@ application "Blogging" {
             sourceField "parentid"
             target "post"
             targetAlias "posts"
-        },
-        one2many {
-            source "post"
-            sourceAlias "post"
-            target "image"
-            targetAlias "images"
         }
     }
 }

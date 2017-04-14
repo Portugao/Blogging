@@ -123,17 +123,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 }
             }
 
-            if (true === $this->variableApi->get('MUBloggingModule', 'linkOwnImagesOnAccountPage', true)) {
-                $objectType = 'image';
-                if ($this->permissionApi->hasPermission($this->getBundleName() . ':' . ucfirst($objectType) . ':', '::', ACCESS_READ)) {
-                    $links[] = [
-                        'url' => $this->router->generate('mubloggingmodule_' . strtolower($objectType) . '_view', ['own' => 1]),
-                        'text' => $this->__('My images', 'mubloggingmodule'),
-                        'icon' => 'list-alt'
-                    ];
-                }
-            }
-
             if ($this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
                 $links[] = [
                     'url' => $this->router->generate('mubloggingmodule_post_adminindex'),
@@ -173,14 +162,6 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
                 'url' => $this->router->generate('mubloggingmodule_post_' . $routeArea . 'view'),
                 'text' => $this->__('Posts', 'mubloggingmodule'),
                 'title' => $this->__('Post list', 'mubloggingmodule')
-            ];
-        }
-        if (in_array('image', $allowedObjectTypes)
-            && $this->permissionApi->hasPermission($this->getBundleName() . ':Image:', '::', $permLevel)) {
-            $links[] = [
-                'url' => $this->router->generate('mubloggingmodule_image_' . $routeArea . 'view'),
-                'text' => $this->__('Images', 'mubloggingmodule'),
-                'title' => $this->__('Image list', 'mubloggingmodule')
             ];
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {

@@ -135,14 +135,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $content = '';
     
     /**
-     * @ORM\Column(length=255)
-     * @Assert\NotBlank()
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="selectImagesForContent", multiple=true)
-     * @var string $selectImagesForContent
-     */
-    protected $selectImagesForContent = 'none';
-    
-    /**
      * @ORM\Column(length=255, nullable=true)
      * @BloggingAssert\ListEntry(entityName="post", propertyName="block", multiple=false)
      * @var string $block
@@ -172,14 +164,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @var text $advertising2
      */
     protected $advertising2 = '';
-    
-    /**
-     * @ORM\Column(length=255)
-     * @Assert\NotNull()
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="selectImagesForContent2", multiple=true)
-     * @var string $selectImagesForContent2
-     */
-    protected $selectImagesForContent2 = 'none';
     
     /**
      * @Gedmo\Translatable
@@ -297,15 +281,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     protected $posts = null;
     
-    /**
-     * Bidirectional - One post [post] has many images [images] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\BloggingModule\Entity\ImageEntity", mappedBy="post")
-     * @ORM\JoinTable(name="mu_blogging_postimages")
-     * @var \MU\BloggingModule\Entity\ImageEntity[] $images
-     */
-    protected $images = null;
-    
     
     /**
      * PostEntity constructor.
@@ -321,7 +296,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
         $this->endDate = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
         $this->initWorkflow();
         $this->posts = new ArrayCollection();
-        $this->images = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
     
@@ -547,28 +521,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the select images for content.
-     *
-     * @return string
-     */
-    public function getSelectImagesForContent()
-    {
-        return $this->selectImagesForContent;
-    }
-    
-    /**
-     * Sets the select images for content.
-     *
-     * @param string $selectImagesForContent
-     *
-     * @return void
-     */
-    public function setSelectImagesForContent($selectImagesForContent)
-    {
-        $this->selectImagesForContent = isset($selectImagesForContent) ? $selectImagesForContent : '';
-    }
-    
-    /**
      * Returns the block.
      *
      * @return string
@@ -654,28 +606,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function setAdvertising2($advertising2)
     {
         $this->advertising2 = $advertising2;
-    }
-    
-    /**
-     * Returns the select images for content 2.
-     *
-     * @return string
-     */
-    public function getSelectImagesForContent2()
-    {
-        return $this->selectImagesForContent2;
-    }
-    
-    /**
-     * Sets the select images for content 2.
-     *
-     * @param string $selectImagesForContent2
-     *
-     * @return void
-     */
-    public function setSelectImagesForContent2($selectImagesForContent2)
-    {
-        $this->selectImagesForContent2 = isset($selectImagesForContent2) ? $selectImagesForContent2 : '';
     }
     
     /**
@@ -1030,56 +960,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     {
         $this->posts->removeElement($post);
         $post->setPost(null);
-    }
-    
-    /**
-     * Returns the images.
-     *
-     * @return \MU\BloggingModule\Entity\ImageEntity[]
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-    
-    /**
-     * Sets the images.
-     *
-     * @param \MU\BloggingModule\Entity\ImageEntity[] $images
-     *
-     * @return void
-     */
-    public function setImages($images)
-    {
-        foreach ($images as $imageSingle) {
-            $this->addImages($imageSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\BloggingModule\Entity\ImageEntity to the list of images.
-     *
-     * @param \MU\BloggingModule\Entity\ImageEntity $image The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addImages(\MU\BloggingModule\Entity\ImageEntity $image)
-    {
-        $this->images->add($image);
-        $image->setPost($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\BloggingModule\Entity\ImageEntity from the list of images.
-     *
-     * @param \MU\BloggingModule\Entity\ImageEntity $image The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removeImages(\MU\BloggingModule\Entity\ImageEntity $image)
-    {
-        $this->images->removeElement($image);
-        $image->setPost(null);
     }
     
     

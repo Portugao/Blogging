@@ -161,9 +161,6 @@ abstract class AbstractWorkflowHelper
             case 'post':
                 $result = 'standard';
                 break;
-            case 'image':
-                $result = 'none';
-                break;
         }
     
         return $result;

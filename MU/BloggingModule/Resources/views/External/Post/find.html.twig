@@ -10,9 +10,6 @@
             {% if 'post' in activatedObjectTypes %}
                 <li{{ objectType == 'post' ? ' class="active"' : '' }}><a href="{{ path('mubloggingmodule_external_finder', {'objectType': 'post', 'editor': editorName}) }}" title="{{ __('Search and select post') }}">{{ __('Posts') }}</a></li>
             {% endif %}
-            {% if 'image' in activatedObjectTypes %}
-                <li{{ objectType == 'image' ? ' class="active"' : '' }}><a href="{{ path('mubloggingmodule_external_finder', {'objectType': 'image', 'editor': editorName}) }}" title="{{ __('Search and select image') }}">{{ __('Images') }}</a></li>
-            {% endif %}
             </ul>
         </div>
         {% form_theme finderForm with [

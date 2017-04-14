@@ -39,25 +39,11 @@
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 </div>
             {% endif %}
-            {% if selectImagesForContentFilter is defined and selectImagesForContentFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.selectImagesForContent) }}
-            {% if selectImagesForContentFilter is defined and selectImagesForContentFilter != true %}
-                </div>
-            {% endif %}
             {% if blockFilter is defined and blockFilter != true %}
                 <div class="hidden">
             {% endif %}
                 {{ form_row(quickNavForm.block) }}
             {% if blockFilter is defined and blockFilter != true %}
-                </div>
-            {% endif %}
-            {% if selectImagesForContent2Filter is defined and selectImagesForContent2Filter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.selectImagesForContent2) }}
-            {% if selectImagesForContent2Filter is defined and selectImagesForContent2Filter != true %}
                 </div>
             {% endif %}
             {% if block2Filter is defined and block2Filter != true %}

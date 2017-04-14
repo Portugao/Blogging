@@ -26,9 +26,6 @@
                 <li>
                     <a id="imagesPostImageForArticleTab" href="#tabImagesPostImageForArticle" role="tab" data-toggle="tab" aria-controls="tabImagesPostImageForArticle">{{ __('Posts image for article') }}</a>
                 </li>
-                <li>
-                    <a id="imagesImageImageForArticleTab" href="#tabImagesImageImageForArticle" role="tab" data-toggle="tab" aria-controls="tabImagesImageImageForArticle">{{ __('Images image for article') }}</a>
-                </li>
                 </ul>
             </li>
             {% set tabTitle = __('Integration') %}
@@ -58,8 +55,6 @@
                     
                         {{ form_row(form.postEntriesPerPage) }}
                         {{ form_row(form.linkOwnPostsOnAccountPage) }}
-                        {{ form_row(form.imageEntriesPerPage) }}
-                        {{ form_row(form.linkOwnImagesOnAccountPage) }}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tabImagesPostImageForArticle" aria-labelledby="imagesPostImageForArticleTab">
@@ -79,25 +74,6 @@
                         {{ form_row(form.thumbnailHeightPostImageForArticleDisplay) }}
                         {{ form_row(form.thumbnailWidthPostImageForArticleEdit) }}
                         {{ form_row(form.thumbnailHeightPostImageForArticleEdit) }}
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="tabImagesImageImageForArticle" aria-labelledby="imagesImageImageForArticleTab">
-                    {% set tabTitle = __('Image settings for images image for article') %}
-                    <fieldset>
-                        <legend>{{ tabTitle }}</legend>
-                
-                        {{ form_row(form.enableShrinkingForImageImageForArticle) }}
-                        <div id="shrinkDetailsImageImageForArticle">
-                        {{ form_row(form.shrinkWidthImageImageForArticle) }}
-                        {{ form_row(form.shrinkHeightImageImageForArticle) }}
-                        </div>
-                        {{ form_row(form.thumbnailModeImageImageForArticle) }}
-                        {{ form_row(form.thumbnailWidthImageImageForArticleView) }}
-                        {{ form_row(form.thumbnailHeightImageImageForArticleView) }}
-                        {{ form_row(form.thumbnailWidthImageImageForArticleDisplay) }}
-                        {{ form_row(form.thumbnailHeightImageImageForArticleDisplay) }}
-                        {{ form_row(form.thumbnailWidthImageImageForArticleEdit) }}
-                        {{ form_row(form.thumbnailHeightImageImageForArticleEdit) }}
                     </fieldset>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="tab4" aria-labelledby="vars4Tab">
