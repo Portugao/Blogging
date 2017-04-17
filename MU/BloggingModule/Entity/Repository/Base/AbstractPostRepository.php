@@ -28,15 +28,10 @@ use Zikula\Component\FilterUtil\PluginManager as FilterPluginManager;
 use Zikula\Component\FilterUtil\Plugin\DatePlugin as DateFilter;
 use Zikula\Core\FilterUtil\CategoryPlugin as CategoryFilter;
 use Zikula\Common\Translator\TranslatorInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Zikula\Core\RouteUrl;
-use Zikula\PermissionsModule\Api\PermissionApi;
 use Zikula\UsersModule\Api\CurrentUserApi;
 use MU\BloggingModule\Entity\PostEntity;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
-use MU\BloggingModule\Helper\HookHelper;
 use MU\BloggingModule\Helper\ImageHelper;
-use MU\BloggingModule\Helper\WorkflowHelper;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -201,7 +196,7 @@ abstract class AbstractPostRepository extends EntityRepository
             $thumbRuntimeOptions = [];
             $thumbRuntimeOptions[$objectType . 'ImageForArticle'] = $imageHelper->getRuntimeOptions($objectType, 'imageForArticle', $context, $args);
             $templateParameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
-            if (in_array($args['action'], ['display', 'view'])) {
+            if (in_array($args['action'], ['display', 'edit', 'view'])) {
                 // use separate preset for images in related items
                 $templateParameters['relationThumbRuntimeOptions'] = $imageHelper->getCustomRuntimeOptions('', '', 'MUBloggingModule_relateditem', $context, $args);
             }
@@ -1100,79 +1095,5 @@ abstract class AbstractPostRepository extends EntityRepository
         $qb->leftJoin('tbl.categories', 'tblCategories');
     
         return $qb;
-    }
-
-    /**
-     * Update for posts becoming archived.
-     *
-     * @return bool If everything went right or not
-     *
-     * @param PermissionApi       $permissionApi  PermissionApi service instance
-     * @param Session             $session        Session service instance
-     * @param TranslatorInterface $translator     Translator service instance
-     * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
-     * @param HookHelper          $hookHelper     HookHelper service instance
-     *
-     * @throws RuntimeException Thrown if workflow action execution fails
-     */
-    public function archiveObjects(PermissionApi $permissionApi, SessionInterface $session, TranslatorInterface $translator, WorkflowHelper $workflowHelper, HookHelper $hookHelper)
-    {
-        if (true !== $session->get('MUBloggingModuleAutomaticArchiving', false) && !$permissionApi->hasPermission('MUBloggingModule', '.*', ACCESS_EDIT)) {
-            // current user has no permission for executing the archive workflow action
-            return true;
-        }
-    
-        if (null == $this->getRequest()) {
-            // return as no request is given
-            return true;
-        }
-    
-        $today = date('Y-m-d H:i:s');
-    
-        $qb = $this->genericBaseQuery('', '', false);
-    
-        /*$qb->andWhere('tbl.workflowState != :archivedState')
-           ->setParameter('archivedState', 'archived');*/
-        $qb->andWhere('tbl.workflowState = :approvedState')
-           ->setParameter('approvedState', 'approved');
-    
-        $qb->andWhere('tbl.endDate < :today')
-           ->setParameter('today', $today);
-    
-        $query = $this->getQueryFromBuilder($qb);
-    
-        $affectedEntities = $query->getResult();
-    
-        $action = 'archive';
-        foreach ($affectedEntities as $entity) {
-            $entity->initWorkflow();
-    
-            // Let any hooks perform additional validation actions
-            $validationHooksPassed = $hookHelper->callValidationHooks($entity, 'validate_edit');
-            if (!$validationHooksPassed) {
-                continue;
-            }
-    
-            $success = false;
-            try {
-                // execute the workflow action
-                $success = $workflowHelper->executeAction($entity, $action);
-            } catch(\Exception $e) {
-                $flashBag = $session->getFlashBag();
-                $flashBag->add('error', $translator->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . '  ' . $e->getMessage());
-            }
-    
-            if (!$success) {
-                continue;
-            }
-    
-            // Let any hooks know that we have updated an item
-            $urlArgs = $entity->createUrlArgs();
-            $urlArgs['_locale'] = $this->request->getLocale();
-            $url = new RouteUrl('mubloggingmodule_post_display', $urlArgs);
-            $hookHelper->callProcessHooks($entity, 'process_edit', $url);
-        }
-    
-        return true;
     }
 }

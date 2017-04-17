@@ -112,11 +112,6 @@ abstract class AbstractWorkflowHelper
              'ui' => 'primary'
          ];
          $states[] = [
-             'value' => 'archived',
-             'text' => $this->translator->__('Archived'),
-             'ui' => 'info'
-         ];
-         $states[] = [
              'value' => 'deleted',
              'text' => $this->translator->__('Deleted'),
              'ui' => 'danger'
@@ -228,9 +223,6 @@ abstract class AbstractWorkflowHelper
                 $buttonClass = '';
                 break;
             case 'publish':
-                $buttonClass = '';
-                break;
-            case 'archive':
                 $buttonClass = '';
                 break;
             case 'delete':

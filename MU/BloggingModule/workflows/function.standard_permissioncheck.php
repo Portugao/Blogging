@@ -24,11 +24,6 @@
  */
 function MUBloggingModule_workflow_standard_permissioncheck($obj, $permLevel, $currentUser, $actionId)
 {
-    // every user is allowed to perform automatic archiving 
-    if (true === \SessionUtil::getVar('MUBloggingModuleAutomaticArchiving', false)) {
-        return true;
-    }
-
     // calculate the permission component
     $objectType = $obj['_objectType'];
     $component = 'MUBloggingModule:' . ucfirst($objectType) . ':';
@@ -59,7 +54,6 @@ function MUBloggingModule_workflow_standard_gettextstrings()
             $translator->__('Waiting') => $translator->__('Content has been submitted and waits for approval.'),
             $translator->__('Approved') => $translator->__('Content has been approved and is available online.'),
             $translator->__('Suspended') => $translator->__('Content has been approved, but is temporarily offline.'),
-            $translator->__('Archived') => $translator->__('Content has reached the end and became archived.'),
             $translator->__('Deleted') => $translator->__('Pseudo-state for content which has been deleted from the database.')
         ],
 
@@ -79,19 +73,12 @@ function MUBloggingModule_workflow_standard_gettextstrings()
             'approved' => [
                 $translator->__('Update') => $translator->__('Update content.'),
                 $translator->__('Unpublish') => $translator->__('Hide content temporarily.'),
-                $translator->__('Archive') => $translator->__('Move content into the archive.'),
                 $translator->__('Delete') => $translator->__('Delete content permanently.')
             ]
             ,
             'suspended' => [
                 $translator->__('Update') => $translator->__('Update content.'),
                 $translator->__('Publish') => $translator->__('Make content available again.'),
-                $translator->__('Archive') => $translator->__('Move content into the archive.'),
-                $translator->__('Delete') => $translator->__('Delete content permanently.')
-            ]
-            ,
-            'archived' => [
-                $translator->__('Update') => $translator->__('Update content.'),
                 $translator->__('Delete') => $translator->__('Delete content permanently.')
             ]
             ,

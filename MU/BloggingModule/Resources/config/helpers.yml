@@ -1,16 +1,5 @@
 services:
     # Helper classes
-    mu_blogging_module.archive_helper:
-        class: MU\BloggingModule\Helper\ArchiveHelper
-        arguments:
-            - "@translator.default"
-            - "@session"
-            - "@logger"
-            - "@zikula_permissions_module.api.permission"
-            - "@mu_blogging_module.entity_factory"
-            - "@mu_blogging_module.workflow_helper"
-            - "@mu_blogging_module.hook_helper"
-    
     mu_blogging_module.category_helper:
         class: MU\BloggingModule\Helper\CategoryHelper
         arguments:

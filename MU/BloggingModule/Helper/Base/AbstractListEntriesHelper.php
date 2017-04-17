@@ -226,13 +226,6 @@ abstract class AbstractListEntriesHelper
             'default' => false
         ];
         $states[] = [
-            'value'   => 'archived',
-            'text'    => $this->__('Archived'),
-            'title'   => $this->__('Content has reached the end and became archived.'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
             'value'   => '!waiting',
             'text'    => $this->__('All except waiting'),
             'title'   => $this->__('Shows all items except these which are waiting'),
@@ -250,13 +243,6 @@ abstract class AbstractListEntriesHelper
             'value'   => '!suspended',
             'text'    => $this->__('All except suspended'),
             'title'   => $this->__('Shows all items except these which are suspended'),
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => '!archived',
-            'text'    => $this->__('All except archived'),
-            'title'   => $this->__('Shows all items except these which are archived'),
             'image'   => '',
             'default' => false
         ];

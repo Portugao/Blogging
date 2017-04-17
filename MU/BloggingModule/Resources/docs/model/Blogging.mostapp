@@ -17,15 +17,15 @@ application "Blogging" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    skipFiles "Readme.md"
-        markFiles "Resources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+    skipFiles "README.md"
+        markFiles "Resources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
             nameMultiple "posts"
             displayPattern "#title#"
             workflow STANDARD
-            hasArchive true
+            hasArchive false
             hasTray true
             fields {
                 string "title" translatable {
@@ -36,6 +36,7 @@ application "Blogging" {
                 string "descriptionForGoogle" translatable {
                     dbName "description"
                     cssClass "bloggerdescription"
+                    minLength 155
                     length 170
                 },
                 upload "imageForArticle" {

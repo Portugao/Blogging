@@ -20,10 +20,6 @@
             <title>Suspended</title>
             <description>Content has been approved, but is temporarily offline.</description>
         </state>
-        <state id="archived">
-            <title>Archived</title>
-            <description>Content has reached the end and became archived.</description>
-        </state>
         <state id="deleted">
             <title>Deleted</title>
             <description>Pseudo-state for content which has been deleted from the database.</description>
@@ -113,20 +109,6 @@
             <!-- operation recipientType="field-email^lastname" action="submit">notify</operation -->
         </action>
         
-        <action id="archive">
-            <title>Archive</title>
-            <description>Move content into the archive.</description>
-            <permission>edit</permission>
-            <state>approved</state>
-            <nextState>archived</nextState>
-        
-            <operation>update</operation>
-            <operation recipientType="creator" action="archive">notify</operation>
-            
-            <!-- example for custom recipient type using designated entity fields: -->
-            <!-- operation recipientType="field-email^lastname" action="submit">notify</operation -->
-        </action>
-        
         <!-- From state: Suspended -->
         <action id="update">
             <title>Update</title>
@@ -149,33 +131,6 @@
         
             <operation>update</operation>
             <operation recipientType="creator" action="publish">notify</operation>
-            
-            <!-- example for custom recipient type using designated entity fields: -->
-            <!-- operation recipientType="field-email^lastname" action="submit">notify</operation -->
-        </action>
-        
-        <action id="archive">
-            <title>Archive</title>
-            <description>Move content into the archive.</description>
-            <permission>edit</permission>
-            <state>suspended</state>
-            <nextState>archived</nextState>
-        
-            <operation>update</operation>
-            <operation recipientType="creator" action="archive">notify</operation>
-            
-            <!-- example for custom recipient type using designated entity fields: -->
-            <!-- operation recipientType="field-email^lastname" action="submit">notify</operation -->
-        </action>
-        
-        <!-- From state: Archived -->
-        <action id="update">
-            <title>Update</title>
-            <description>Update content.</description>
-            <permission>edit</permission>
-            <state>archived</state>
-        
-            <operation>update</operation>
             
             <!-- example for custom recipient type using designated entity fields: -->
             <!-- operation recipientType="field-email^lastname" action="submit">notify</operation -->
@@ -217,20 +172,6 @@
             <description>Delete content permanently.</description>
             <permission>delete</permission>
             <state>suspended</state>
-            <nextState>deleted</nextState>
-        
-            <operation>delete</operation>
-            <operation recipientType="creator" action="delete">notify</operation>
-            
-            <!-- example for custom recipient type using designated entity fields: -->
-            <!-- operation recipientType="field-email^lastname" action="submit">notify</operation -->
-        </action>
-        
-        <action id="delete">
-            <title>Delete</title>
-            <description>Delete content permanently.</description>
-            <permission>delete</permission>
-            <state>archived</state>
             <nextState>deleted</nextState>
         
             <operation>delete</operation>
