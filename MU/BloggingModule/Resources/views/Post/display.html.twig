@@ -17,7 +17,7 @@
     <div class="mubloggingmodule-post mubloggingmodule-display">
 
     <div class="row">
-        <div class="col-sm-9">
+        <div class="col-sm-8">
     <dl>
         {% if post.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
@@ -101,7 +101,7 @@
 
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
             {{ block('related_items') }}
         </div>
     </div>
@@ -110,11 +110,11 @@
 {% block related_items %}
     {% if routeArea == 'admin' %}
         <h4>{{ __('Posts') }}</h4>
-    {% else %}
-        <h3>{{ __('Posts') }}</h3>
+
     {% endif %}
     
     {% if post.posts|default %}
+        <h3>{{ __('Article in this series') }}</h3>
         {{ include(
             '@MUBloggingModule/Post/includeDisplayItemListMany.html.twig',
             { items: post.posts }
