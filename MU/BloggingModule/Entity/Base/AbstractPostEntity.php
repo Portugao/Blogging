@@ -82,7 +82,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @Gedmo\Translatable
      * @ORM\Column(name="description", length=170)
      * @Assert\NotBlank()
-     * @Assert\Length(min="0", max="170")
+     * @Assert\Length(min="155", max="170")
      * @var string $descriptionForGoogle
      */
     protected $descriptionForGoogle = '';
