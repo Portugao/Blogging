@@ -288,8 +288,8 @@ abstract class AbstractEditHandler extends EditHandler
             return $this->repeatReturnUrl;
         }
     
-        if ($this->request->getSession()->has('mubloggingmoduleReferer')) {
-            $this->request->getSession()->del('mubloggingmoduleReferer');
+        if ($this->request->getSession()->has('mubloggingmodule' . $this->objectTypeCapital . 'Referer')) {
+            $this->request->getSession()->del('mubloggingmodule' . $this->objectTypeCapital . 'Referer');
         }
     
         // normal usage, compute return url from given redirect code

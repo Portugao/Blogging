@@ -291,9 +291,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function __construct()
     {
-        $this->parentid = 1;
-        $this->startDate = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
-        $this->endDate = \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'));
         $this->initWorkflow();
         $this->posts = new ArrayCollection();
         $this->categories = new ArrayCollection();
