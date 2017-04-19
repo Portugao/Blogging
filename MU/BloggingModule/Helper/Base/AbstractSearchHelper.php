@@ -170,6 +170,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 case 'post':
                     $whereArray[] = 'tbl.workflowState';
                     $whereArray[] = 'tbl.title';
+                    $whereArray[] = 'tbl.permalink';
                     $whereArray[] = 'tbl.descriptionForGoogle';
                     $whereArray[] = 'tbl.imageForArticle';
                     $whereArray[] = 'tbl.summaryOfPost';

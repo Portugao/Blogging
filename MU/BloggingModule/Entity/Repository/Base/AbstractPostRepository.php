@@ -739,6 +739,8 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchWorkflowState'] = $fragment;
         $filters[] = 'tbl.title LIKE :searchTitle';
         $parameters['searchTitle'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.permalink LIKE :searchPermalink';
+        $parameters['searchPermalink'] = '%' . $fragment . '%';
         $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
         $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
         $filters[] = 'tbl.imageForArticle = :searchImageForArticle';

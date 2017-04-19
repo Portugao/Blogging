@@ -80,6 +80,15 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
+     * @ORM\Column(length=100)
+     * @Assert\NotBlank()
+     * @Assert\Length(min="0", max="100")
+     * @var string $permalink
+     */
+    protected $permalink = '';
+    
+    /**
+     * @Gedmo\Translatable
      * @ORM\Column(name="description", length=170)
      * @Assert\NotBlank()
      * @Assert\Length(min="155", max="170")
@@ -231,7 +240,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
-     * @Gedmo\Slug(fields={"title"}, updatable=true, unique=true, separator="-", style="lower")
+     * @Gedmo\Slug(fields={"permalink"}, updatable=true, unique=true, separator="-", style="lower")
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Length(min="1", max="255")
      * @var string $slug
@@ -383,6 +392,28 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function setTitle($title)
     {
         $this->title = isset($title) ? $title : '';
+    }
+    
+    /**
+     * Returns the permalink.
+     *
+     * @return string
+     */
+    public function getPermalink()
+    {
+        return $this->permalink;
+    }
+    
+    /**
+     * Sets the permalink.
+     *
+     * @param string $permalink
+     *
+     * @return void
+     */
+    public function setPermalink($permalink)
+    {
+        $this->permalink = isset($permalink) ? $permalink : '';
     }
     
     /**

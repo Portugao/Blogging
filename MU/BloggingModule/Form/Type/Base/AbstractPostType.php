@@ -149,6 +149,17 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
+        $builder->add('permalink', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Permalink') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 100,
+                'class' => '',
+                'title' => $this->__('Enter the permalink of the post')
+            ],
+            'required' => true,
+        ]);
+        
         $builder->add('descriptionForGoogle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
             'label' => $this->__('Description for google') . ':',
             'empty_data' => '',

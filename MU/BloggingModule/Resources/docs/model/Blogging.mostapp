@@ -30,8 +30,13 @@ application "Blogging" {
             fields {
                 string "title" translatable {
                     cssClass "bloggertitle"
-                    sluggablePosition 1
+                    sluggablePosition 0
                     length 57
+                },
+                string "permalink" translatable {
+                    displayType NONE
+                    sluggablePosition 1
+                    length 100
                 },
                 string "descriptionForGoogle" translatable {
                     dbName "description"
