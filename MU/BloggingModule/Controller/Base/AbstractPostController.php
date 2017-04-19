@@ -147,6 +147,7 @@ abstract class AbstractPostController extends AbstractController
             new Column('title'),
             new Column('descriptionForGoogle'),
             new Column('imageForArticle'),
+            new Column('descriptionOfImageForArticle'),
             new Column('summaryOfPost'),
             new Column('block'),
             new Column('advertising'),

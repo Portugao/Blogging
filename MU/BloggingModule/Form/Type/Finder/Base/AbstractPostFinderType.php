@@ -182,6 +182,7 @@ abstract class AbstractPostFinderType extends AbstractType
                     $this->__('Title') => 'title',
                     $this->__('Description for google') => 'descriptionForGoogle',
                     $this->__('Image for article') => 'imageForArticle',
+                    $this->__('Description of image for article') => 'descriptionOfImageForArticle',
                     $this->__('Summary of post') => 'summaryOfPost',
                     $this->__('Block') => 'block',
                     $this->__('Advertising') => 'advertising',

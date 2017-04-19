@@ -171,6 +171,22 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
+        $builder->add('descriptionOfImageForArticle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            'label' => $this->__('Description of image for article') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Will set into the alt tag of this image.')
+            ],
+            'help' => $this->__('Will set into the alt tag of this image.'),
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the description of image for article of the post')
+            ],
+            'required' => false,
+        ]);
+        
         $builder->add('summaryOfPost', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
             'label' => $this->__('Summary of post') . ':',
             'empty_data' => '',

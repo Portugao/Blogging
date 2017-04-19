@@ -47,6 +47,7 @@
                     <option value="title"{if $sort eq 'title'} selected="selected"{/if}>{gt text='Title'}</option>
                     <option value="descriptionForGoogle"{if $sort eq 'descriptionForGoogle'} selected="selected"{/if}>{gt text='Description for google'}</option>
                     <option value="imageForArticle"{if $sort eq 'imageForArticle'} selected="selected"{/if}>{gt text='Image for article'}</option>
+                    <option value="descriptionOfImageForArticle"{if $sort eq 'descriptionOfImageForArticle'} selected="selected"{/if}>{gt text='Description of image for article'}</option>
                     <option value="summaryOfPost"{if $sort eq 'summaryOfPost'} selected="selected"{/if}>{gt text='Summary of post'}</option>
                     <option value="block"{if $sort eq 'block'} selected="selected"{/if}>{gt text='Block'}</option>
                     <option value="advertising"{if $sort eq 'advertising'} selected="selected"{/if}>{gt text='Advertising'}</option>

@@ -64,6 +64,7 @@ abstract class AbstractPostRepository extends EntityRepository
             'title',
             'descriptionForGoogle',
             'imageForArticle',
+            'descriptionOfImageForArticle',
             'summaryOfPost',
             'block',
             'advertising',
@@ -745,6 +746,8 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
         $filters[] = 'tbl.imageForArticle = :searchImageForArticle';
         $parameters['searchImageForArticle'] = $fragment;
+        $filters[] = 'tbl.descriptionOfImageForArticle LIKE :searchDescriptionOfImageForArticle';
+        $parameters['searchDescriptionOfImageForArticle'] = '%' . $fragment . '%';
         $filters[] = 'tbl.summaryOfPost LIKE :searchSummaryOfPost';
         $parameters['searchSummaryOfPost'] = '%' . $fragment . '%';
         $filters[] = 'tbl.content LIKE :searchContent';

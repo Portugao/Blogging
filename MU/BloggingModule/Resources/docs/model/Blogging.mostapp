@@ -47,6 +47,10 @@ application "Blogging" {
                 upload "imageForArticle" {
                     mandatory false
                 },
+                string "descriptionOfImageForArticle" translatable {
+                    documentation "Will set into the alt tag of this image."
+                    mandatory false
+                },
                 text "summaryOfPost" translatable {
                     cssClass "bloggergsummary"
                 },

@@ -126,6 +126,16 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $imageForArticleUrl = '';
     
     /**
+     * Will set into the alt tag of this image.
+     * @Gedmo\Translatable
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $descriptionOfImageForArticle
+     */
+    protected $descriptionOfImageForArticle = '';
+    
+    /**
      * @Gedmo\Translatable
      * @ORM\Column(type="text", length=2000)
      * @Assert\NotBlank()
@@ -502,6 +512,28 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function setImageForArticleMeta($imageForArticleMeta = [])
     {
         $this->imageForArticleMeta = $imageForArticleMeta;
+    }
+    
+    /**
+     * Returns the description of image for article.
+     *
+     * @return string
+     */
+    public function getDescriptionOfImageForArticle()
+    {
+        return $this->descriptionOfImageForArticle;
+    }
+    
+    /**
+     * Sets the description of image for article.
+     *
+     * @param string $descriptionOfImageForArticle
+     *
+     * @return void
+     */
+    public function setDescriptionOfImageForArticle($descriptionOfImageForArticle)
+    {
+        $this->descriptionOfImageForArticle = isset($descriptionOfImageForArticle) ? $descriptionOfImageForArticle : '';
     }
     
     /**
