@@ -4,8 +4,8 @@
 
 {% block header %}
     {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.Validation.js', 98)) }}
-    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.EditFunctions.js', 99)) }}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.EditFunctions.js'), 99) }}
     {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
 {% endblock %}
 {% block title mode == 'create' ? __('Create post') : __('Edit post') %}
@@ -45,10 +45,13 @@
                                     {{ form_row(form.descriptionOfImageForArticle) }}
                                     {{ form_row(form.summaryOfPost) }}
                                     {{ form_row(form.content) }}
-                                    {{ form_row(form.advertising) }}
                                     {{ form_row(form.content2) }}
-                                    {{ form_row(form.advertising2) }}
+                                    {{ form_row(form.advertising) }}
                                     {{ form_row(form.content3) }}
+                                    {{ form_row(form.content4) }}
+                                    {{ form_row(form.advertising2) }}
+                                    {{ form_row(form.content5) }}
+                                    {{ form_row(form.content6) }}
                                     {{ form_row(form.advertising3) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
@@ -68,18 +71,24 @@
                 {{ form_row(form.descriptionOfImageForArticle) }}
                 {{ form_row(form.summaryOfPost) }}
                 {{ form_row(form.content) }}
-                {{ form_row(form.advertising) }}
                 {{ form_row(form.content2) }}
-                {{ form_row(form.advertising2) }}
+                {{ form_row(form.advertising) }}
                 {{ form_row(form.content3) }}
+                {{ form_row(form.content4) }}
+                {{ form_row(form.advertising2) }}
+                {{ form_row(form.content5) }}
+                {{ form_row(form.content6) }}
                 {{ form_row(form.advertising3) }}
             </fieldset>
         {% endif %}
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
             {{ form_row(form.imageForArticle) }}
+            {{ form_row(form.positionOfAdvertising1) }}
             {{ form_row(form.block) }}
+            {{ form_row(form.positionOfAdvertising2) }}
             {{ form_row(form.block2) }}
+            {{ form_row(form.positionOfAdvertising3) }}
             {{ form_row(form.block3) }}
             {{ form_row(form.similarArticles) }}
             {{ form_row(form.startDate) }}

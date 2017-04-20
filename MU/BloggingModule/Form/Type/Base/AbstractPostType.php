@@ -209,6 +209,17 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
+        $builder->add('content2', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            'label' => $this->__('Content 2') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 20000,
+                'class' => ' bloggercontent2',
+                'title' => $this->__('Enter the content 2 of the post')
+            ],
+            'required' => false,
+        ]);
+        
         $builder->add('advertising', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
             'label' => $this->__('Advertising') . ':',
             'empty_data' => '',
@@ -220,13 +231,24 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('content2', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
-            'label' => $this->__('Content 2') . ':',
+        $builder->add('content3', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            'label' => $this->__('Content 3') . ':',
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
-                'class' => ' bloggercontent2',
-                'title' => $this->__('Enter the content 2 of the post')
+                'class' => ' bloggercontent3',
+                'title' => $this->__('Enter the content 3 of the post')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('content4', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            'label' => $this->__('Content 4') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 20000,
+                'class' => ' bloggercontent4',
+                'title' => $this->__('Enter the content 4 of the post')
             ],
             'required' => false,
         ]);
@@ -242,13 +264,24 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('content3', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
-            'label' => $this->__('Content 3') . ':',
+        $builder->add('content5', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            'label' => $this->__('Content 5') . ':',
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
-                'class' => ' bloggercontent3',
-                'title' => $this->__('Enter the content 3 of the post')
+                'class' => ' bloggercontent5',
+                'title' => $this->__('Enter the content 5 of the post')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('content6', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+            'label' => $this->__('Content 6') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 20000,
+                'class' => ' bloggercontent6',
+                'title' => $this->__('Enter the content 6 of the post')
             ],
             'required' => false,
         ]);
@@ -295,6 +328,28 @@ abstract class AbstractPostType extends AbstractType
             'allowed_size' => ''
         ]);
         
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfAdvertising1');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('positionOfAdvertising1', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of advertising 1') . ':',
+            'empty_data' => '1',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the position of advertising 1')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
         $listEntries = $this->listHelper->getEntries('post', 'block');
         $choices = [];
         $choiceAttributes = [];
@@ -318,6 +373,28 @@ abstract class AbstractPostType extends AbstractType
             'expanded' => false
         ]);
         
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfAdvertising2');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('positionOfAdvertising2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of advertising 2') . ':',
+            'empty_data' => 'content3Left',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the position of advertising 2')
+            ],
+            'required' => true,
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
         $listEntries = $this->listHelper->getEntries('post', 'block2');
         $choices = [];
         $choiceAttributes = [];
@@ -334,6 +411,28 @@ abstract class AbstractPostType extends AbstractType
             ],
             'required' => false,
             'placeholder' => $this->__('Choose an option'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfAdvertising3');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('positionOfAdvertising3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of advertising 3') . ':',
+            'empty_data' => 'content5Left',
+            'attr' => [
+                'class' => '',
+                'title' => $this->__('Choose the position of advertising 3')
+            ],
+            'required' => true,
             'choices' => $choices,
             'choices_as_values' => true,
             'choice_attr' => $choiceAttributes,

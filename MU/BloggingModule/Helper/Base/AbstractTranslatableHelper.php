@@ -88,7 +88,7 @@ abstract class AbstractTranslatableHelper
         $fields = [];
         switch ($objectType) {
             case 'post':
-                $fields = ['title', 'permalink', 'descriptionForGoogle', 'descriptionOfImageForArticle', 'summaryOfPost', 'content', 'advertising', 'content2', 'advertising2', 'content3', 'advertising3'];
+                $fields = ['title', 'permalink', 'descriptionForGoogle', 'descriptionOfImageForArticle', 'summaryOfPost', 'content', 'content2', 'advertising', 'content3', 'content4', 'advertising2', 'content5', 'content6', 'advertising3'];
                 break;
         }
     

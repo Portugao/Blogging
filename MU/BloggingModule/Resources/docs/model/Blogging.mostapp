@@ -59,6 +59,26 @@ application "Blogging" {
                     cssClass "bloggercontent"
                     length 20000
                 },
+                text "content2" translatable {
+                    mandatory false
+                    displayType DISPLAY
+                    cssClass "bloggercontent2"
+                    length 20000
+                },
+                text "advertising" nullable translatable {
+                    mandatory false
+                cssClass "bloggingadvertising"
+                },
+                list "positionOfAdvertising1" {
+                    defaultValue "1"
+                    displayType NONE
+                    items {
+                        listItem "content1Left" ( "1" ),
+                        listItem "content1Right" ( "2" ),
+                        listItem "content2Left" ( "3" ),
+                        listItem "content2Right" ( "4" )
+                    }
+                },
                 list "block" nullable {
                     defaultValue "none"
                     mandatory false
@@ -67,29 +87,31 @@ application "Blogging" {
                         listItem  "None" ( "none" )
                     }
                 },
-                text "advertising" nullable translatable {
-                    mandatory false
-                cssClass "bloggingadvertising"
-                },
-                text "content2" nullable translatable {
+                text "content3" translatable {
                     mandatory false
                     displayType DISPLAY
-                    cssClass "bloggercontent2"
+                    cssClass "bloggercontent3"
+                    length 20000
+                },
+                text "content4" translatable {
+                    mandatory false
+                    displayType DISPLAY
+                    cssClass "bloggercontent4"
                     length 20000
                 },
                 text "advertising2" nullable translatable {
                     mandatory false
                     cssClass "bloggingadvertising"
                 },
-                text "content3" nullable translatable {
-                    mandatory false
-                    displayType DISPLAY
-                    cssClass "bloggercontent3"
-                    length 20000
-                },
-                text "advertising3" nullable translatable {
-                    mandatory false
-                    cssClass "bloggingadvertising"
+                list "positionOfAdvertising2" {
+                    defaultValue "content3Left"
+                    displayType NONE
+                    items {
+                        listItem "content3Left" ( "1" ),
+                        listItem "content3Right" ( "2" ),
+                        listItem "content4Left" ( "3" ),
+                        listItem "content4Right" ( "4" )
+                    }
                 },
                 list "block2" {
                     defaultValue "none"
@@ -97,6 +119,32 @@ application "Blogging" {
                     cssClass "bloggerblock2"
                     items {
                         listItem  "None" ( "none" )
+                    }
+                },
+                text "content5" translatable {
+                    mandatory false
+                    displayType DISPLAY
+                    cssClass "bloggercontent5"
+                    length 20000
+                },
+                text "content6" translatable {
+                    mandatory false
+                    displayType DISPLAY
+                    cssClass "bloggercontent6"
+                    length 20000
+                },
+                text "advertising3" nullable translatable {
+                    mandatory false
+                    cssClass "bloggingadvertising"
+                },
+                list "positionOfAdvertising3" {
+                    defaultValue "content5Left"
+                    displayType NONE
+                    items {
+                        listItem "content5Left" ( "1" ),
+                        listItem "content5Right" ( "2" ),
+                        listItem "content6Left" ( "3" ),
+                        listItem "content6Right" ( "4" )
                     }
                 },
                 list "block3" {

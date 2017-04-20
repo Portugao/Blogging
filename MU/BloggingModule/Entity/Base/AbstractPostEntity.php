@@ -154,11 +154,13 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $content = '';
     
     /**
-     * @ORM\Column(length=255, nullable=true)
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="block", multiple=false)
-     * @var string $block
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=20000)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="20000")
+     * @var text $content2
      */
-    protected $block = 'none';
+    protected $content2 = '';
     
     /**
      * @Gedmo\Translatable
@@ -169,12 +171,37 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $advertising = '';
     
     /**
-     * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000, nullable=true)
-     * @Assert\Length(min="0", max="20000")
-     * @var text $content2
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfAdvertising1", multiple=false)
+     * @var string $positionOfAdvertising1
      */
-    protected $content2 = '';
+    protected $positionOfAdvertising1 = '1';
+    
+    /**
+     * @ORM\Column(length=255, nullable=true)
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="block", multiple=false)
+     * @var string $block
+     */
+    protected $block = 'none';
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=20000)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="20000")
+     * @var text $content3
+     */
+    protected $content3 = '';
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=20000)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="20000")
+     * @var text $content4
+     */
+    protected $content4 = '';
     
     /**
      * @Gedmo\Translatable
@@ -185,12 +212,38 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $advertising2 = '';
     
     /**
-     * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000, nullable=true)
-     * @Assert\Length(min="0", max="20000")
-     * @var text $content3
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfAdvertising2", multiple=false)
+     * @var string $positionOfAdvertising2
      */
-    protected $content3 = '';
+    protected $positionOfAdvertising2 = 'content3Left';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="block2", multiple=false)
+     * @var string $block2
+     */
+    protected $block2 = 'none';
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=20000)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="20000")
+     * @var text $content5
+     */
+    protected $content5 = '';
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(type="text", length=20000)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="20000")
+     * @var text $content6
+     */
+    protected $content6 = '';
     
     /**
      * @Gedmo\Translatable
@@ -202,11 +255,11 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @ORM\Column(length=255)
-     * @Assert\NotNull()
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="block2", multiple=false)
-     * @var string $block2
+     * @Assert\NotBlank()
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfAdvertising3", multiple=false)
+     * @var string $positionOfAdvertising3
      */
-    protected $block2 = 'none';
+    protected $positionOfAdvertising3 = 'content5Left';
     
     /**
      * @ORM\Column(length=255)
@@ -581,25 +634,25 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the block.
+     * Returns the content 2.
      *
-     * @return string
+     * @return text
      */
-    public function getBlock()
+    public function getContent2()
     {
-        return $this->block;
+        return $this->content2;
     }
     
     /**
-     * Sets the block.
+     * Sets the content 2.
      *
-     * @param string $block
+     * @param text $content2
      *
      * @return void
      */
-    public function setBlock($block)
+    public function setContent2($content2)
     {
-        $this->block = $block;
+        $this->content2 = isset($content2) ? $content2 : '';
     }
     
     /**
@@ -625,25 +678,91 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the content 2.
+     * Returns the position of advertising 1.
      *
-     * @return text
+     * @return string
      */
-    public function getContent2()
+    public function getPositionOfAdvertising1()
     {
-        return $this->content2;
+        return $this->positionOfAdvertising1;
     }
     
     /**
-     * Sets the content 2.
+     * Sets the position of advertising 1.
      *
-     * @param text $content2
+     * @param string $positionOfAdvertising1
      *
      * @return void
      */
-    public function setContent2($content2)
+    public function setPositionOfAdvertising1($positionOfAdvertising1)
     {
-        $this->content2 = $content2;
+        $this->positionOfAdvertising1 = isset($positionOfAdvertising1) ? $positionOfAdvertising1 : '';
+    }
+    
+    /**
+     * Returns the block.
+     *
+     * @return string
+     */
+    public function getBlock()
+    {
+        return $this->block;
+    }
+    
+    /**
+     * Sets the block.
+     *
+     * @param string $block
+     *
+     * @return void
+     */
+    public function setBlock($block)
+    {
+        $this->block = $block;
+    }
+    
+    /**
+     * Returns the content 3.
+     *
+     * @return text
+     */
+    public function getContent3()
+    {
+        return $this->content3;
+    }
+    
+    /**
+     * Sets the content 3.
+     *
+     * @param text $content3
+     *
+     * @return void
+     */
+    public function setContent3($content3)
+    {
+        $this->content3 = isset($content3) ? $content3 : '';
+    }
+    
+    /**
+     * Returns the content 4.
+     *
+     * @return text
+     */
+    public function getContent4()
+    {
+        return $this->content4;
+    }
+    
+    /**
+     * Sets the content 4.
+     *
+     * @param text $content4
+     *
+     * @return void
+     */
+    public function setContent4($content4)
+    {
+        $this->content4 = isset($content4) ? $content4 : '';
     }
     
     /**
@@ -669,25 +788,91 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the content 3.
+     * Returns the position of advertising 2.
      *
-     * @return text
+     * @return string
      */
-    public function getContent3()
+    public function getPositionOfAdvertising2()
     {
-        return $this->content3;
+        return $this->positionOfAdvertising2;
     }
     
     /**
-     * Sets the content 3.
+     * Sets the position of advertising 2.
      *
-     * @param text $content3
+     * @param string $positionOfAdvertising2
      *
      * @return void
      */
-    public function setContent3($content3)
+    public function setPositionOfAdvertising2($positionOfAdvertising2)
     {
-        $this->content3 = $content3;
+        $this->positionOfAdvertising2 = isset($positionOfAdvertising2) ? $positionOfAdvertising2 : '';
+    }
+    
+    /**
+     * Returns the block 2.
+     *
+     * @return string
+     */
+    public function getBlock2()
+    {
+        return $this->block2;
+    }
+    
+    /**
+     * Sets the block 2.
+     *
+     * @param string $block2
+     *
+     * @return void
+     */
+    public function setBlock2($block2)
+    {
+        $this->block2 = isset($block2) ? $block2 : '';
+    }
+    
+    /**
+     * Returns the content 5.
+     *
+     * @return text
+     */
+    public function getContent5()
+    {
+        return $this->content5;
+    }
+    
+    /**
+     * Sets the content 5.
+     *
+     * @param text $content5
+     *
+     * @return void
+     */
+    public function setContent5($content5)
+    {
+        $this->content5 = isset($content5) ? $content5 : '';
+    }
+    
+    /**
+     * Returns the content 6.
+     *
+     * @return text
+     */
+    public function getContent6()
+    {
+        return $this->content6;
+    }
+    
+    /**
+     * Sets the content 6.
+     *
+     * @param text $content6
+     *
+     * @return void
+     */
+    public function setContent6($content6)
+    {
+        $this->content6 = isset($content6) ? $content6 : '';
     }
     
     /**
@@ -713,25 +898,25 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the block 2.
+     * Returns the position of advertising 3.
      *
      * @return string
      */
-    public function getBlock2()
+    public function getPositionOfAdvertising3()
     {
-        return $this->block2;
+        return $this->positionOfAdvertising3;
     }
     
     /**
-     * Sets the block 2.
+     * Sets the position of advertising 3.
      *
-     * @param string $block2
+     * @param string $positionOfAdvertising3
      *
      * @return void
      */
-    public function setBlock2($block2)
+    public function setPositionOfAdvertising3($positionOfAdvertising3)
     {
-        $this->block2 = isset($block2) ? $block2 : '';
+        $this->positionOfAdvertising3 = isset($positionOfAdvertising3) ? $positionOfAdvertising3 : '';
     }
     
     /**

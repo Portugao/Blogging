@@ -135,10 +135,19 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $result = false;
                         break;
+                    case 'positionOfAdvertising1':
+                        $result = false;
+                        break;
                     case 'block':
                         $result = false;
                         break;
+                    case 'positionOfAdvertising2':
+                        $result = false;
+                        break;
                     case 'block2':
+                        $result = false;
+                        break;
+                    case 'positionOfAdvertising3':
                         $result = false;
                         break;
                     case 'block3':
@@ -176,11 +185,20 @@ abstract class AbstractListEntriesHelper
                     case 'workflowState':
                         $entries = $this->getWorkflowStateEntriesForPost();
                         break;
+                    case 'positionOfAdvertising1':
+                        $entries = $this->getPositionOfAdvertising1EntriesForPost();
+                        break;
                     case 'block':
                         $entries = $this->getBlockEntriesForPost();
                         break;
+                    case 'positionOfAdvertising2':
+                        $entries = $this->getPositionOfAdvertising2EntriesForPost();
+                        break;
                     case 'block2':
                         $entries = $this->getBlock2EntriesForPost();
+                        break;
+                    case 'positionOfAdvertising3':
+                        $entries = $this->getPositionOfAdvertising3EntriesForPost();
                         break;
                     case 'block3':
                         $entries = $this->getBlock3EntriesForPost();
@@ -251,6 +269,46 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'position of advertising 1' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getPositionOfAdvertising1EntriesForPost()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('Content 1 left'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('Content 1 right'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('Content 2 left'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '4',
+            'text'    => $this->__('Content 2 right'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'block' list entries.
      *
      * @return array Array with desired list entries
@@ -270,6 +328,46 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
+     * Get 'position of advertising 2' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getPositionOfAdvertising2EntriesForPost()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('Content 3 left'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('Content 3 right'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('Content 4 left'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '4',
+            'text'    => $this->__('Content 4 right'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
      * Get 'block 2' list entries.
      *
      * @return array Array with desired list entries
@@ -280,6 +378,46 @@ abstract class AbstractListEntriesHelper
         $states[] = [
             'value'   => 'none',
             'text'    => $this->__('None'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
+    
+    /**
+     * Get 'position of advertising 3' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getPositionOfAdvertising3EntriesForPost()
+    {
+        $states = [];
+        $states[] = [
+            'value'   => '1',
+            'text'    => $this->__('Content 5 left'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '2',
+            'text'    => $this->__('Content 5 right'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '3',
+            'text'    => $this->__('Content 6 left'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => '4',
+            'text'    => $this->__('Content 6 right'),
             'title'   => '',
             'image'   => '',
             'default' => false

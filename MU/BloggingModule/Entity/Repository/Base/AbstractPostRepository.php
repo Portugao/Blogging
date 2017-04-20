@@ -66,11 +66,11 @@ abstract class AbstractPostRepository extends EntityRepository
             'imageForArticle',
             'descriptionOfImageForArticle',
             'summaryOfPost',
-            'block',
             'advertising',
+            'block',
             'advertising2',
-            'advertising3',
             'block2',
+            'advertising3',
             'block3',
             'similarArticles',
             'createdBy',
@@ -229,8 +229,11 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['catIdList'] = $categoryHelper->retrieveCategoriesFromRequest('post', 'GET');
         $parameters['post'] = $this->getRequest()->query->get('post', 0);
         $parameters['workflowState'] = $this->getRequest()->query->get('workflowState', '');
+        $parameters['positionOfAdvertising1'] = $this->getRequest()->query->get('positionOfAdvertising1', '');
         $parameters['block'] = $this->getRequest()->query->get('block', '');
+        $parameters['positionOfAdvertising2'] = $this->getRequest()->query->get('positionOfAdvertising2', '');
         $parameters['block2'] = $this->getRequest()->query->get('block2', '');
+        $parameters['positionOfAdvertising3'] = $this->getRequest()->query->get('positionOfAdvertising3', '');
         $parameters['block3'] = $this->getRequest()->query->get('block3', '');
         $parameters['similarArticles'] = $this->getRequest()->query->get('similarArticles', '');
         $parameters['q'] = $this->getRequest()->query->get('q', '');
@@ -752,20 +755,32 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchSummaryOfPost'] = '%' . $fragment . '%';
         $filters[] = 'tbl.content LIKE :searchContent';
         $parameters['searchContent'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.block = :searchBlock';
-        $parameters['searchBlock'] = $fragment;
-        $filters[] = 'tbl.advertising LIKE :searchAdvertising';
-        $parameters['searchAdvertising'] = '%' . $fragment . '%';
         $filters[] = 'tbl.content2 LIKE :searchContent2';
         $parameters['searchContent2'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.advertising2 LIKE :searchAdvertising2';
-        $parameters['searchAdvertising2'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.advertising LIKE :searchAdvertising';
+        $parameters['searchAdvertising'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.positionOfAdvertising1 = :searchPositionOfAdvertising1';
+        $parameters['searchPositionOfAdvertising1'] = $fragment;
+        $filters[] = 'tbl.block = :searchBlock';
+        $parameters['searchBlock'] = $fragment;
         $filters[] = 'tbl.content3 LIKE :searchContent3';
         $parameters['searchContent3'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.advertising3 LIKE :searchAdvertising3';
-        $parameters['searchAdvertising3'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.content4 LIKE :searchContent4';
+        $parameters['searchContent4'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.advertising2 LIKE :searchAdvertising2';
+        $parameters['searchAdvertising2'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.positionOfAdvertising2 = :searchPositionOfAdvertising2';
+        $parameters['searchPositionOfAdvertising2'] = $fragment;
         $filters[] = 'tbl.block2 = :searchBlock2';
         $parameters['searchBlock2'] = $fragment;
+        $filters[] = 'tbl.content5 LIKE :searchContent5';
+        $parameters['searchContent5'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.content6 LIKE :searchContent6';
+        $parameters['searchContent6'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.advertising3 LIKE :searchAdvertising3';
+        $parameters['searchAdvertising3'] = '%' . $fragment . '%';
+        $filters[] = 'tbl.positionOfAdvertising3 = :searchPositionOfAdvertising3';
+        $parameters['searchPositionOfAdvertising3'] = $fragment;
         $filters[] = 'tbl.block3 = :searchBlock3';
         $parameters['searchBlock3'] = $fragment;
         $filters[] = 'tbl.similarArticles = :searchSimilarArticles';

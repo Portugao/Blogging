@@ -187,6 +187,26 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfAdvertising1');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('positionOfAdvertising1', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of advertising 1'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
         $listEntries = $this->listHelper->getEntries('post', 'block');
         $choices = [];
         $choiceAttributes = [];
@@ -207,6 +227,26 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfAdvertising2');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('positionOfAdvertising2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of advertising 2'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
         $listEntries = $this->listHelper->getEntries('post', 'block2');
         $choices = [];
         $choiceAttributes = [];
@@ -216,6 +256,26 @@ abstract class AbstractPostQuickNavType extends AbstractType
         }
         $builder->add('block2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
             'label' => $this->__('Block 2'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'placeholder' => $this->__('All'),
+            'choices' => $choices,
+            'choices_as_values' => true,
+            'choice_attr' => $choiceAttributes,
+            'multiple' => false,
+            'expanded' => false
+        ]);
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfAdvertising3');
+        $choices = [];
+        $choiceAttributes = [];
+        foreach ($listEntries as $entry) {
+            $choices[$entry['text']] = $entry['value'];
+            $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
+        }
+        $builder->add('positionOfAdvertising3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of advertising 3'),
             'attr' => [
                 'class' => 'input-sm'
             ],
@@ -309,11 +369,11 @@ abstract class AbstractPostQuickNavType extends AbstractType
                     $this->__('Image for article') => 'imageForArticle',
                     $this->__('Description of image for article') => 'descriptionOfImageForArticle',
                     $this->__('Summary of post') => 'summaryOfPost',
-                    $this->__('Block') => 'block',
                     $this->__('Advertising') => 'advertising',
+                    $this->__('Block') => 'block',
                     $this->__('Advertising 2') => 'advertising2',
-                    $this->__('Advertising 3') => 'advertising3',
                     $this->__('Block 2') => 'block2',
+                    $this->__('Advertising 3') => 'advertising3',
                     $this->__('Block 3') => 'block3',
                     $this->__('Similar articles') => 'similarArticles',
                     $this->__('Creation date') => 'createdDate',

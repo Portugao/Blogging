@@ -39,6 +39,13 @@
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 </div>
             {% endif %}
+            {% if positionOfAdvertising1Filter is defined and positionOfAdvertising1Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.positionOfAdvertising1) }}
+            {% if positionOfAdvertising1Filter is defined and positionOfAdvertising1Filter != true %}
+                </div>
+            {% endif %}
             {% if blockFilter is defined and blockFilter != true %}
                 <div class="hidden">
             {% endif %}
@@ -46,11 +53,25 @@
             {% if blockFilter is defined and blockFilter != true %}
                 </div>
             {% endif %}
+            {% if positionOfAdvertising2Filter is defined and positionOfAdvertising2Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.positionOfAdvertising2) }}
+            {% if positionOfAdvertising2Filter is defined and positionOfAdvertising2Filter != true %}
+                </div>
+            {% endif %}
             {% if block2Filter is defined and block2Filter != true %}
                 <div class="hidden">
             {% endif %}
                 {{ form_row(quickNavForm.block2) }}
             {% if block2Filter is defined and block2Filter != true %}
+                </div>
+            {% endif %}
+            {% if positionOfAdvertising3Filter is defined and positionOfAdvertising3Filter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.positionOfAdvertising3) }}
+            {% if positionOfAdvertising3Filter is defined and positionOfAdvertising3Filter != true %}
                 </div>
             {% endif %}
             {% if block3Filter is defined and block3Filter != true %}
