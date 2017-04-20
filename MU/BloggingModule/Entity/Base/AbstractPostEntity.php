@@ -128,8 +128,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * Will set into the alt tag of this image.
      * @Gedmo\Translatable
-     * @ORM\Column(length=255)
-     * @Assert\NotNull()
+     * @ORM\Column(length=255, nullable=true)
      * @Assert\Length(min="0", max="255")
      * @var string $descriptionOfImageForArticle
      */
@@ -581,7 +580,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setDescriptionOfImageForArticle($descriptionOfImageForArticle)
     {
-        $this->descriptionOfImageForArticle = isset($descriptionOfImageForArticle) ? $descriptionOfImageForArticle : '';
+        $this->descriptionOfImageForArticle = $descriptionOfImageForArticle;
     }
     
     /**

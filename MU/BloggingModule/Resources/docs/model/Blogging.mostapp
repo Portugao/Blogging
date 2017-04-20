@@ -47,7 +47,7 @@ application "Blogging" {
                 upload "imageForArticle" {
                     mandatory false
                 },
-                string "descriptionOfImageForArticle" translatable {
+                string "descriptionOfImageForArticle" nullable translatable {
                     documentation "Will set into the alt tag of this image."
                     mandatory false
                 },
