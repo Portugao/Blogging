@@ -155,8 +155,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=20000, nullable=true)
      * @Assert\Length(min="0", max="20000")
      * @var text $content2
      */
@@ -187,8 +186,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=20000, nullable=true)
      * @Assert\Length(min="0", max="20000")
      * @var text $content3
      */
@@ -196,8 +194,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=20000, nullable=true)
      * @Assert\Length(min="0", max="20000")
      * @var text $content4
      */
@@ -229,8 +226,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=20000, nullable=true)
      * @Assert\Length(min="0", max="20000")
      * @var text $content5
      */
@@ -238,8 +234,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @Gedmo\Translatable
-     * @ORM\Column(type="text", length=20000)
-     * @Assert\NotNull()
+     * @ORM\Column(type="text", length=20000, nullable=true)
      * @Assert\Length(min="0", max="20000")
      * @var text $content6
      */
@@ -652,7 +647,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent2($content2)
     {
-        $this->content2 = isset($content2) ? $content2 : '';
+        $this->content2 = $content2;
     }
     
     /**
@@ -740,7 +735,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent3($content3)
     {
-        $this->content3 = isset($content3) ? $content3 : '';
+        $this->content3 = $content3;
     }
     
     /**
@@ -762,7 +757,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent4($content4)
     {
-        $this->content4 = isset($content4) ? $content4 : '';
+        $this->content4 = $content4;
     }
     
     /**
@@ -850,7 +845,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent5($content5)
     {
-        $this->content5 = isset($content5) ? $content5 : '';
+        $this->content5 = $content5;
     }
     
     /**
@@ -872,7 +867,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent6($content6)
     {
-        $this->content6 = isset($content6) ? $content6 : '';
+        $this->content6 = $content6;
     }
     
     /**

@@ -59,7 +59,7 @@ application "Blogging" {
                     cssClass "bloggercontent"
                     length 20000
                 },
-                text "content2" translatable {
+                text "content2" nullable translatable {
                     mandatory false
                     displayType DISPLAY
                     cssClass "bloggercontent2"
@@ -87,13 +87,13 @@ application "Blogging" {
                         listItem  "None" ( "none" )
                     }
                 },
-                text "content3" translatable {
+                text "content3" nullable translatable {
                     mandatory false
                     displayType DISPLAY
                     cssClass "bloggercontent3"
                     length 20000
                 },
-                text "content4" translatable {
+                text "content4" nullable translatable {
                     mandatory false
                     displayType DISPLAY
                     cssClass "bloggercontent4"
@@ -121,13 +121,13 @@ application "Blogging" {
                         listItem  "None" ( "none" )
                     }
                 },
-                text "content5" translatable {
+                text "content5" nullable translatable {
                     mandatory false
                     displayType DISPLAY
                     cssClass "bloggercontent5"
                     length 20000
                 },
-                text "content6" translatable {
+                text "content6" nullable translatable {
                     mandatory false
                     displayType DISPLAY
                     cssClass "bloggercontent6"

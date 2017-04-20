@@ -29,19 +29,19 @@
                 <col id="cTitle" />
                 <col id="cDescriptionForGoogle" />
                 <col id="cImageForArticle" />
+                <col id="cDescriptionOfImageForArticle" />
                 <col id="cSummaryOfPost" />
-                <col id="cBlock" />
                 <col id="cAdvertising" />
+                <col id="cBlock" />
                 <col id="cAdvertising2" />
-                <col id="cAdvertising3" />
                 <col id="cBlock2" />
+                <col id="cAdvertising3" />
                 <col id="cBlock3" />
                 <col id="cSimilarArticles" />
                 <col id="cPost" />
             </colgroup>
             <thead>
-            <tr>
-                {% if routeArea == 'admin' %}
+            {% if routeArea == 'admin' %}
                     <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
                         <input type="checkbox" class="mublogging-mass-toggle" />
                     </th>
@@ -61,23 +61,26 @@
                 <th id="hImageForArticle" scope="col" class="text-left">
                     <a href="{{ sort.imageForArticle.url }}" title="{{ __f('Sort by %s', {'%s': 'image for article'}) }}" class="{{ sort.imageForArticle.class }}">{{ __('Image for article') }}</a>
                 </th>
+                <th id="hDescriptionOfImageForArticle" scope="col" class="text-left">
+                    <a href="{{ sort.descriptionOfImageForArticle.url }}" title="{{ __f('Sort by %s', {'%s': 'description of image for article'}) }}" class="{{ sort.descriptionOfImageForArticle.class }}">{{ __('Description of image for article') }}</a>
+                </th>
                 <th id="hSummaryOfPost" scope="col" class="text-left">
                     <a href="{{ sort.summaryOfPost.url }}" title="{{ __f('Sort by %s', {'%s': 'summary of post'}) }}" class="{{ sort.summaryOfPost.class }}">{{ __('Summary of post') }}</a>
-                </th>
-                <th id="hBlock" scope="col" class="text-left">
-                    <a href="{{ sort.block.url }}" title="{{ __f('Sort by %s', {'%s': 'block'}) }}" class="{{ sort.block.class }}">{{ __('Block') }}</a>
                 </th>
                 <th id="hAdvertising" scope="col" class="text-left">
                     <a href="{{ sort.advertising.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising'}) }}" class="{{ sort.advertising.class }}">{{ __('Advertising') }}</a>
                 </th>
+                <th id="hBlock" scope="col" class="text-left">
+                    <a href="{{ sort.block.url }}" title="{{ __f('Sort by %s', {'%s': 'block'}) }}" class="{{ sort.block.class }}">{{ __('Block') }}</a>
+                </th>
                 <th id="hAdvertising2" scope="col" class="text-left">
                     <a href="{{ sort.advertising2.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 2'}) }}" class="{{ sort.advertising2.class }}">{{ __('Advertising 2') }}</a>
                 </th>
-                <th id="hAdvertising3" scope="col" class="text-left">
-                    <a href="{{ sort.advertising3.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 3'}) }}" class="{{ sort.advertising3.class }}">{{ __('Advertising 3') }}</a>
-                </th>
                 <th id="hBlock2" scope="col" class="text-left">
                     <a href="{{ sort.block2.url }}" title="{{ __f('Sort by %s', {'%s': 'block 2'}) }}" class="{{ sort.block2.class }}">{{ __('Block 2') }}</a>
+                </th>
+                <th id="hAdvertising3" scope="col" class="text-left">
+                    <a href="{{ sort.advertising3.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 3'}) }}" class="{{ sort.advertising3.class }}">{{ __('Advertising 3') }}</a>
                 </th>
                 <th id="hBlock3" scope="col" class="text-left">
                     <a href="{{ sort.block3.url }}" title="{{ __f('Sort by %s', {'%s': 'block 3'}) }}" class="{{ sort.block3.class }}">{{ __('Block 3') }}</a>
@@ -127,23 +130,26 @@
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
+                <td headers="hDescriptionOfImageForArticle" class="text-left">
+                    {{ post.descriptionOfImageForArticle }}
+                </td>
                 <td headers="hSummaryOfPost" class="text-left">
                     {{ post.summaryOfPost|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hAdvertising" class="text-left">
+                    {{ post.advertising|safeHtml|truncate(50) }}
                 </td>
                 <td headers="hBlock" class="text-left">
                     {{ post.block|mubloggingmodule_listEntry('post', 'block') }}
                 </td>
-                <td headers="hAdvertising" class="text-left">
-                    {{ post.advertising|safeHtml }}
-                </td>
                 <td headers="hAdvertising2" class="text-left">
-                    {{ post.advertising2|safeHtml }}
-                </td>
-                <td headers="hAdvertising3" class="text-left">
-                    {{ post.advertising3|safeHtml }}
+                    {{ post.advertising2|safeHtml|truncate(50) }}
                 </td>
                 <td headers="hBlock2" class="text-left">
                     {{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}
+                </td>
+                <td headers="hAdvertising3" class="text-left">
+                    {{ post.advertising3|safeHtml|truncate(50) }}
                 </td>
                 <td headers="hBlock3" class="text-left">
                     {{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}
@@ -164,7 +170,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}20{% else %}19{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
             {{ __('No posts found.') }}
               </td>
             </tr>
