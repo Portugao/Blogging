@@ -57,28 +57,94 @@
             <div class="blogger-display blogger-summary">{{ post.summaryOfPost|safeHtml }}</div>
         {% endif %}
         {% if post.content != NULL %}
+        {% if post.advertising != NULL %}
+            {% if post.positionOfAdvertising1 == 1 %}
+                {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising1 == 2 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
+                    {% endif %}
+                {% endif %}        
             <div class="blogger-display blogger-content">{{ post.content|safeHtml }}</div>
+        {% endif %}
+        {% if post.content2 != NULL %}
+            {% if post.advertising != NULL %}
+                    {% if post.positionOfAdvertising1 == 3 %}
+                        {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising1 == 4 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising1 == 3 or post.positionOfAdvertising1 == 4 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising|safeHtml }}</div>
+                    {% endif %}
+                {% endif %} 
+            <div class="blogger-display blogger-content2">{{ post.content2|safeHtml }}</div>
         {% endif %}
         {% if post.block != 'none' %}
             <dd>{{ post.block|mubloggingmodule_listEntry('post', 'block') }}</dd>
         {% endif %}
-        {% if post.advertising != NULL %}
-            <dd>{{ post.advertising|safeHtml }}</dd>
-        {% endif %}
-        {% if post.content2 != NULL %}
-            <div class="blogger-display blogger-content2">{{ post.content2|safeHtml }}</div>
-        {% endif %}
-        {% if post.advertising2 != NULL %}
-            <dd>{{ post.advertising2|safeHtml }}</dd>
-        {% endif %}
         {% if post.content3 is not empty %}
+            {% if post.advertising2 != NULL %}
+                    {% if post.positionOfAdvertising2 == 1 %}
+                        {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 2 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 1 or post.positionOfAdvertising2 == 2 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising2|safeHtml }}</div>
+                    {% endif %}
+                {% endif %}         
             <div class="blogger-display blogger-content3">{{ post.content3|safeHtml }}</div>
         {% endif %}
-        {% if post.advertising3 != NULL %}
-            <dd>{{ post.advertising3|safeHtml }}</dd>
+        {% if post.content4 is not empty %}
+            {% if post.advertising2 != NULL %}
+                    {% if post.positionOfAdvertising2 == 3 %}
+                        {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 4 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 3 or post.positionOfAdvertising2 == 4 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising2|safeHtml }}</div>
+                    {% endif %}
+                {% endif %} 
+            <div class="blogger-display blogger-content4">{{ post.content4|safeHtml }}</div>
         {% endif %}
         {% if post.block2 != 'none' %}
             <dd>{{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}</dd>
+        {% endif %}
+        {% if post.content5 is not empty %}
+            {% if post.advertising3 != NULL %}
+                {% if post.positionOfAdvertising3 == 1 %}
+                    {% set bloggerfloat = 'blogger-left' %}
+                {% endif %}
+                {% if post.positionOfAdvertising1 == 2 %}
+                    {% set bloggerfloat = 'blogger-right' %}
+                {% endif %}
+                {% if post.positionOfAdvertising3 == 1 or post.positionOfAdvertising3 == 2 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising3|safeHtml }}</div>
+                {% endif %}
+            {% endif %} 
+            <div class="blogger-display blogger-content5">{{ post.content5|safeHtml }}</div>
+        {% endif %}
+        {% if post.content6 is not empty %}
+            {% if post.advertising3 != NULL %}
+                {% if post.positionOfAdvertising3 == 3 %}
+                    {% set bloggerfloat = 'blogger-left' %}
+                {% endif %}
+                {% if post.positionOfAdvertising1 == 4 %}
+                    {% set bloggerfloat = 'blogger-right' %}
+                {% endif %}
+                {% if post.positionOfAdvertising3 == 3 or post.positionOfAdvertising3 == 4 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising3|safeHtml }}</div>
+                {% endif %}
+            {% endif %} 
+            <div class="blogger-display blogger-content6">{{ post.content6|safeHtml }}</div>
         {% endif %}
         {% if post.block3 != 'none' %}
             <dd>{{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}</dd>

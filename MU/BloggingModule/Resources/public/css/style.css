@@ -162,3 +162,13 @@ div.mubloggingmodule-view .avatar img {
 .blogger-view-item-content {
 	margin: 15px 0;
 }
+
+.blogger-left {
+	float: left;
+	margin: 0 15px 10px 0;
+}
+
+.blogger-right {
+	float: right;
+	margin: 0 0 10px 15px;
+}
