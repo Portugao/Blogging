@@ -79,7 +79,7 @@
                         {% set bloggerfloat = 'blogger-right' %}
                     {% endif %}
                     {% if post.positionOfAdvertising1 == 3 or post.positionOfAdvertising1 == 4 %}
-                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising|safeHtml }}</div>
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
                     {% endif %}
                 {% endif %} 
             <div class="blogger-display blogger-content2">{{ post.content2|safeHtml }}</div>
@@ -96,7 +96,7 @@
                         {% set bloggerfloat = 'blogger-right' %}
                     {% endif %}
                     {% if post.positionOfAdvertising2 == 1 or post.positionOfAdvertising2 == 2 %}
-                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising2|safeHtml }}</div>
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising2|safeHtml }}</div>
                     {% endif %}
                 {% endif %}         
             <div class="blogger-display blogger-content3">{{ post.content3|safeHtml }}</div>
@@ -110,7 +110,7 @@
                         {% set bloggerfloat = 'blogger-right' %}
                     {% endif %}
                     {% if post.positionOfAdvertising2 == 3 or post.positionOfAdvertising2 == 4 %}
-                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising2|safeHtml }}</div>
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising2|safeHtml }}</div>
                     {% endif %}
                 {% endif %} 
             <div class="blogger-display blogger-content4">{{ post.content4|safeHtml }}</div>
@@ -127,7 +127,7 @@
                     {% set bloggerfloat = 'blogger-right' %}
                 {% endif %}
                 {% if post.positionOfAdvertising3 == 1 or post.positionOfAdvertising3 == 2 %}
-                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising3|safeHtml }}</div>
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising3|safeHtml }}</div>
                 {% endif %}
             {% endif %} 
             <div class="blogger-display blogger-content5">{{ post.content5|safeHtml }}</div>
@@ -141,7 +141,7 @@
                     {% set bloggerfloat = 'blogger-right' %}
                 {% endif %}
                 {% if post.positionOfAdvertising3 == 3 or post.positionOfAdvertising3 == 4 %}
-                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ post.advertising3|safeHtml }}</div>
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising3|safeHtml }}</div>
                 {% endif %}
             {% endif %} 
             <div class="blogger-display blogger-content6">{{ post.content6|safeHtml }}</div>
@@ -153,7 +153,7 @@
             <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
         {% endif %}
         {% if post.post|default %}
-            <dt>{{ __('Post') }}</dt>
+            <dt>{{ __('Main post') }}</dt>
             <dd>
               {% if not isQuickView %}
                   <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug }) }}">{% spaceless %}
@@ -183,7 +183,7 @@
 {% endblock %}
 {% block related_items %}
     {% if routeArea == 'admin' %}
-        <h4>{{ __('Posts') }}</h4>
+        <h4>{{ __('Main posts') }}</h4>
 
     {% endif %}
     
