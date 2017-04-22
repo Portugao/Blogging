@@ -239,7 +239,7 @@ abstract class AbstractItemListBlockType extends AbstractType
             ->setRequired(['object_type'])
             ->setOptional(['is_categorisable', 'category_helper', 'feature_activation_helper'])
             ->setAllowedTypes([
-                'objectType' => 'string',
+                'object_type' => 'string',
                 'is_categorisable' => 'bool',
                 'category_helper' => 'object',
                 'feature_activation_helper' => 'object'

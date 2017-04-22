@@ -12,12 +12,12 @@
 
 namespace MU\BloggingModule\Entity\Factory;
 
-use MU\BloggingModule\Entity\Factory\Base\AbstractBloggingFactory;
+use MU\BloggingModule\Entity\Factory\Base\AbstractEntityInitialiser;
 
 /**
- * Factory class used to create entities and receive entity repositories.
+ * Entity initialiser class used to dynamically apply default values to newly created entities.
  */
-class BloggingFactory extends AbstractBloggingFactory
+class EntityInitialiser extends AbstractEntityInitialiser
 {
-    // feel free to customise the factory
+    // feel free to customise the initialiser
 }

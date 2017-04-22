@@ -1,5 +1,5 @@
 services:
-    # Event subscriber and listener classes
+    # Event subscribers and listeners
     mu_blogging_module.entity_lifecycle_listener:
         class: MU\BloggingModule\Listener\EntityLifecycleListener
         arguments:

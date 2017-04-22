@@ -1,5 +1,5 @@
 services:
-    # Helper classes
+    # Helper services
     mu_blogging_module.category_helper:
         class: MU\BloggingModule\Helper\CategoryHelper
         arguments:
@@ -93,6 +93,7 @@ services:
         arguments:
             - "@translator.default"
             - "@session"
+            - "@liip_imagine.cache.manager"
             - "@logger"
             - "@zikula_users_module.current_user"
             - "@zikula_extensions_module.api.variable"

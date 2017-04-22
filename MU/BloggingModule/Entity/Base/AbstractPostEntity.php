@@ -381,7 +381,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function set_objectType($_objectType)
     {
-        $this->_objectType = $_objectType;
+        if ($this->_objectType != $_objectType) {
+            $this->_objectType = $_objectType;
+        }
     }
     
     
@@ -404,7 +406,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setId($id)
     {
-        $this->id = intval($id);
+        if (intval($this->id) !== intval($id)) {
+            $this->id = intval($id);
+        }
     }
     
     /**
@@ -426,7 +430,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setWorkflowState($workflowState)
     {
-        $this->workflowState = isset($workflowState) ? $workflowState : '';
+        if ($this->workflowState !== $workflowState) {
+            $this->workflowState = isset($workflowState) ? $workflowState : '';
+        }
     }
     
     /**
@@ -448,7 +454,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setTitle($title)
     {
-        $this->title = isset($title) ? $title : '';
+        if ($this->title !== $title) {
+            $this->title = isset($title) ? $title : '';
+        }
     }
     
     /**
@@ -470,7 +478,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setPermalink($permalink)
     {
-        $this->permalink = isset($permalink) ? $permalink : '';
+        if ($this->permalink !== $permalink) {
+            $this->permalink = isset($permalink) ? $permalink : '';
+        }
     }
     
     /**
@@ -492,7 +502,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setDescriptionForGoogle($descriptionForGoogle)
     {
-        $this->descriptionForGoogle = isset($descriptionForGoogle) ? $descriptionForGoogle : '';
+        if ($this->descriptionForGoogle !== $descriptionForGoogle) {
+            $this->descriptionForGoogle = isset($descriptionForGoogle) ? $descriptionForGoogle : '';
+        }
     }
     
     /**
@@ -514,7 +526,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setImageForArticle($imageForArticle)
     {
-        $this->imageForArticle = $imageForArticle;
+        if ($this->imageForArticle !== $imageForArticle) {
+            $this->imageForArticle = $imageForArticle;
+        }
     }
     
     /**
@@ -536,7 +550,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setImageForArticleUrl($imageForArticleUrl)
     {
-        $this->imageForArticleUrl = $imageForArticleUrl;
+        if ($this->imageForArticleUrl !== $imageForArticleUrl) {
+            $this->imageForArticleUrl = $imageForArticleUrl;
+        }
     }
     
     /**
@@ -558,7 +574,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setImageForArticleMeta($imageForArticleMeta = [])
     {
-        $this->imageForArticleMeta = $imageForArticleMeta;
+        if ($this->imageForArticleMeta !== $imageForArticleMeta) {
+            $this->imageForArticleMeta = $imageForArticleMeta;
+        }
     }
     
     /**
@@ -580,7 +598,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setDescriptionOfImageForArticle($descriptionOfImageForArticle)
     {
-        $this->descriptionOfImageForArticle = $descriptionOfImageForArticle;
+        if ($this->descriptionOfImageForArticle !== $descriptionOfImageForArticle) {
+            $this->descriptionOfImageForArticle = $descriptionOfImageForArticle;
+        }
     }
     
     /**
@@ -602,7 +622,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setSummaryOfPost($summaryOfPost)
     {
-        $this->summaryOfPost = isset($summaryOfPost) ? $summaryOfPost : '';
+        if ($this->summaryOfPost !== $summaryOfPost) {
+            $this->summaryOfPost = isset($summaryOfPost) ? $summaryOfPost : '';
+        }
     }
     
     /**
@@ -624,7 +646,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent($content)
     {
-        $this->content = isset($content) ? $content : '';
+        if ($this->content !== $content) {
+            $this->content = isset($content) ? $content : '';
+        }
     }
     
     /**
@@ -646,7 +670,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent2($content2)
     {
-        $this->content2 = $content2;
+        if ($this->content2 !== $content2) {
+            $this->content2 = $content2;
+        }
     }
     
     /**
@@ -668,7 +694,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setAdvertising($advertising)
     {
-        $this->advertising = $advertising;
+        if ($this->advertising !== $advertising) {
+            $this->advertising = $advertising;
+        }
     }
     
     /**
@@ -690,7 +718,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setPositionOfAdvertising1($positionOfAdvertising1)
     {
-        $this->positionOfAdvertising1 = isset($positionOfAdvertising1) ? $positionOfAdvertising1 : '';
+        if ($this->positionOfAdvertising1 !== $positionOfAdvertising1) {
+            $this->positionOfAdvertising1 = isset($positionOfAdvertising1) ? $positionOfAdvertising1 : '';
+        }
     }
     
     /**
@@ -712,7 +742,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setBlock($block)
     {
-        $this->block = $block;
+        if ($this->block !== $block) {
+            $this->block = $block;
+        }
     }
     
     /**
@@ -734,7 +766,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent3($content3)
     {
-        $this->content3 = $content3;
+        if ($this->content3 !== $content3) {
+            $this->content3 = $content3;
+        }
     }
     
     /**
@@ -756,7 +790,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent4($content4)
     {
-        $this->content4 = $content4;
+        if ($this->content4 !== $content4) {
+            $this->content4 = $content4;
+        }
     }
     
     /**
@@ -778,7 +814,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setAdvertising2($advertising2)
     {
-        $this->advertising2 = $advertising2;
+        if ($this->advertising2 !== $advertising2) {
+            $this->advertising2 = $advertising2;
+        }
     }
     
     /**
@@ -800,7 +838,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setPositionOfAdvertising2($positionOfAdvertising2)
     {
-        $this->positionOfAdvertising2 = isset($positionOfAdvertising2) ? $positionOfAdvertising2 : '';
+        if ($this->positionOfAdvertising2 !== $positionOfAdvertising2) {
+            $this->positionOfAdvertising2 = isset($positionOfAdvertising2) ? $positionOfAdvertising2 : '';
+        }
     }
     
     /**
@@ -822,7 +862,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setBlock2($block2)
     {
-        $this->block2 = isset($block2) ? $block2 : '';
+        if ($this->block2 !== $block2) {
+            $this->block2 = isset($block2) ? $block2 : '';
+        }
     }
     
     /**
@@ -844,7 +886,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent5($content5)
     {
-        $this->content5 = $content5;
+        if ($this->content5 !== $content5) {
+            $this->content5 = $content5;
+        }
     }
     
     /**
@@ -866,7 +910,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setContent6($content6)
     {
-        $this->content6 = $content6;
+        if ($this->content6 !== $content6) {
+            $this->content6 = $content6;
+        }
     }
     
     /**
@@ -888,7 +934,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setAdvertising3($advertising3)
     {
-        $this->advertising3 = $advertising3;
+        if ($this->advertising3 !== $advertising3) {
+            $this->advertising3 = $advertising3;
+        }
     }
     
     /**
@@ -910,7 +958,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setPositionOfAdvertising3($positionOfAdvertising3)
     {
-        $this->positionOfAdvertising3 = isset($positionOfAdvertising3) ? $positionOfAdvertising3 : '';
+        if ($this->positionOfAdvertising3 !== $positionOfAdvertising3) {
+            $this->positionOfAdvertising3 = isset($positionOfAdvertising3) ? $positionOfAdvertising3 : '';
+        }
     }
     
     /**
@@ -932,7 +982,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setBlock3($block3)
     {
-        $this->block3 = isset($block3) ? $block3 : '';
+        if ($this->block3 !== $block3) {
+            $this->block3 = isset($block3) ? $block3 : '';
+        }
     }
     
     /**
@@ -954,7 +1006,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setSimilarArticles($similarArticles)
     {
-        $this->similarArticles = isset($similarArticles) ? $similarArticles : '';
+        if ($this->similarArticles !== $similarArticles) {
+            $this->similarArticles = isset($similarArticles) ? $similarArticles : '';
+        }
     }
     
     /**
@@ -976,10 +1030,12 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setStartDate($startDate)
     {
-        if (is_object($startDate) && $startDate instanceOf \DateTime) {
-            $this->startDate = $startDate;
-        } else {
-            $this->startDate = new \DateTime($startDate);
+        if ($this->startDate !== $startDate) {
+            if (is_object($startDate) && $startDate instanceOf \DateTime) {
+                $this->startDate = $startDate;
+            } else {
+                $this->startDate = new \DateTime($startDate);
+            }
         }
     }
     
@@ -1002,10 +1058,12 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setEndDate($endDate)
     {
-        if (is_object($endDate) && $endDate instanceOf \DateTime) {
-            $this->endDate = $endDate;
-        } else {
-            $this->endDate = new \DateTime($endDate);
+        if ($this->endDate !== $endDate) {
+            if (is_object($endDate) && $endDate instanceOf \DateTime) {
+                $this->endDate = $endDate;
+            } else {
+                $this->endDate = new \DateTime($endDate);
+            }
         }
     }
     
@@ -1028,7 +1086,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setParentid($parentid)
     {
-        $this->parentid = intval($parentid);
+        if (intval($this->parentid) !== intval($parentid)) {
+            $this->parentid = intval($parentid);
+        }
     }
     
     /**
@@ -1050,7 +1110,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
+        if ($this->slug != $slug) {
+            $this->slug = $slug;
+        }
     }
     
     /**
@@ -1072,7 +1134,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setLocale($locale)
     {
-        $this->locale = $locale;
+        if ($this->locale != $locale) {
+            $this->locale = $locale;
+        }
     }
     
     /**
