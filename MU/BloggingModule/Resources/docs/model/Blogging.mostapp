@@ -34,6 +34,7 @@ application "Blogging" {
                     length 57
                 },
                 string "permalink" translatable {
+                    mandatory false
                     displayType NONE
                     sluggablePosition 1
                     length 100

@@ -81,7 +81,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * @Gedmo\Translatable
      * @ORM\Column(length=100)
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      * @Assert\Length(min="0", max="100")
      * @var string $permalink
      */
