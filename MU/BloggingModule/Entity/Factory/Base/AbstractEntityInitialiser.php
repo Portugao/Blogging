@@ -51,16 +51,16 @@ abstract class AbstractEntityInitialiser
                 $items[] = $listEntry['value'];
             }
         }
-        $entity->setPositionOfAdvertising1('###', $items);
+        $entity->setPositionOfAdvertising1(implode('###', $items));
 
-        $listEntries = $this->listEntriesHelper->getBlockEntriesForPost();
+        $listEntries = $this->listEntriesHelper->getPositionOfBlockEntriesForPost();
         $items = [];
         foreach ($listEntries as $listEntry) {
             if (true === $listEntry['default']) {
                 $items[] = $listEntry['value'];
             }
         }
-        $entity->setBlock('###', $items);
+        $entity->setPositionOfBlock(implode('###', $items));
 
         $listEntries = $this->listEntriesHelper->getPositionOfAdvertising2EntriesForPost();
         $items = [];
@@ -69,16 +69,16 @@ abstract class AbstractEntityInitialiser
                 $items[] = $listEntry['value'];
             }
         }
-        $entity->setPositionOfAdvertising2('###', $items);
+        $entity->setPositionOfAdvertising2(implode('###', $items));
 
-        $listEntries = $this->listEntriesHelper->getBlock2EntriesForPost();
+        $listEntries = $this->listEntriesHelper->getPositionOfBlock2EntriesForPost();
         $items = [];
         foreach ($listEntries as $listEntry) {
             if (true === $listEntry['default']) {
                 $items[] = $listEntry['value'];
             }
         }
-        $entity->setBlock2('###', $items);
+        $entity->setPositionOfBlock2(implode('###', $items));
 
         $listEntries = $this->listEntriesHelper->getPositionOfAdvertising3EntriesForPost();
         $items = [];
@@ -87,16 +87,16 @@ abstract class AbstractEntityInitialiser
                 $items[] = $listEntry['value'];
             }
         }
-        $entity->setPositionOfAdvertising3('###', $items);
+        $entity->setPositionOfAdvertising3(implode('###', $items));
 
-        $listEntries = $this->listEntriesHelper->getBlock3EntriesForPost();
+        $listEntries = $this->listEntriesHelper->getPositionOfBlock3EntriesForPost();
         $items = [];
         foreach ($listEntries as $listEntry) {
             if (true === $listEntry['default']) {
                 $items[] = $listEntry['value'];
             }
         }
-        $entity->setBlock3('###', $items);
+        $entity->setPositionOfBlock3(implode('###', $items));
 
         $listEntries = $this->listEntriesHelper->getSimilarArticlesEntriesForPost();
         foreach ($listEntries as $listEntry) {

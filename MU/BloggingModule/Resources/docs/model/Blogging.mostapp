@@ -18,7 +18,7 @@ application "Blogging" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
     skipFiles "README.md"
-        markFiles "Entity/Repository/PostRepository.php,\r\nResources/public/css/style.css,\r\nResources/views/base.html.twig,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+        markFiles "Controller/PostController.php,\r\nEntity/Repository/PostRepository.php,\r\nResources/public/css/style.css,\r\nResources/views/base.html.twig,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -80,7 +80,8 @@ application "Blogging" {
                         listItem "content2Right" ( "4" )
                     }
                 },
-                list "block" nullable {
+                list "positionOfBlock" nullable {
+                    dbName ""
                     defaultValue "none"
                     mandatory false
                     cssClass "bloggerblock"
@@ -114,7 +115,8 @@ application "Blogging" {
                         listItem "content4Right" ( "4" )
                     }
                 },
-                list "block2" {
+                list "positionOfBlock2" {
+                    dbName ""
                     defaultValue "none"
                     mandatory false
                     cssClass "bloggerblock2"
@@ -148,7 +150,8 @@ application "Blogging" {
                         listItem "content6Right" ( "4" )
                     }
                 },
-                list "block3" {
+                list "positionOfBlock3" {
+                    dbName ""
                     defaultValue "none"
                     mandatory false
                     cssClass "bloggerblock3"

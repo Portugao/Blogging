@@ -135,7 +135,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
         $searchTypes = $this->getSearchTypes();
     
         foreach ($searchTypes as $searchType => $typeInfo) {
-            $templateParameters['active_' . $searchType] = true;
+            $templateParameters['active_' . $typeInfo['value']] = true;
         }
     
         return $this->templateEngine->renderResponse('@MUBloggingModule/Search/options.html.twig', $templateParameters)->getContent();
@@ -179,17 +179,17 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.content2';
                     $whereArray[] = 'tbl.advertising';
                     $whereArray[] = 'tbl.positionOfAdvertising1';
-                    $whereArray[] = 'tbl.block';
+                    $whereArray[] = 'tbl.positionOfBlock';
                     $whereArray[] = 'tbl.content3';
                     $whereArray[] = 'tbl.content4';
                     $whereArray[] = 'tbl.advertising2';
                     $whereArray[] = 'tbl.positionOfAdvertising2';
-                    $whereArray[] = 'tbl.block2';
+                    $whereArray[] = 'tbl.positionOfBlock2';
                     $whereArray[] = 'tbl.content5';
                     $whereArray[] = 'tbl.content6';
                     $whereArray[] = 'tbl.advertising3';
                     $whereArray[] = 'tbl.positionOfAdvertising3';
-                    $whereArray[] = 'tbl.block3';
+                    $whereArray[] = 'tbl.positionOfBlock3';
                     $whereArray[] = 'tbl.similarArticles';
                     break;
             }

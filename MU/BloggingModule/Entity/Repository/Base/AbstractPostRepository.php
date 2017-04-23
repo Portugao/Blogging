@@ -66,11 +66,11 @@ abstract class AbstractPostRepository extends EntityRepository
             'descriptionOfImageForArticle',
             'summaryOfPost',
             'advertising',
-            'block',
+            'positionOfBlock',
             'advertising2',
-            'block2',
+            'positionOfBlock2',
             'advertising3',
-            'block3',
+            'positionOfBlock3',
             'similarArticles',
             'createdBy',
             'createdDate',
@@ -229,15 +229,16 @@ abstract class AbstractPostRepository extends EntityRepository
     
         $parameters = [];
         $categoryHelper = \ServiceUtil::get('mu_blogging_module.category_helper');
+        $parameters['catId'] = $this->getRequest()->query->get('catId', '');
         $parameters['catIdList'] = $categoryHelper->retrieveCategoriesFromRequest('post', 'GET');
         $parameters['post'] = $this->getRequest()->query->get('post', 0);
         $parameters['workflowState'] = $this->getRequest()->query->get('workflowState', '');
         $parameters['positionOfAdvertising1'] = $this->getRequest()->query->get('positionOfAdvertising1', '');
-        $parameters['block'] = $this->getRequest()->query->get('block', '');
+        $parameters['positionOfBlock'] = $this->getRequest()->query->get('positionOfBlock', '');
         $parameters['positionOfAdvertising2'] = $this->getRequest()->query->get('positionOfAdvertising2', '');
-        $parameters['block2'] = $this->getRequest()->query->get('block2', '');
+        $parameters['positionOfBlock2'] = $this->getRequest()->query->get('positionOfBlock2', '');
         $parameters['positionOfAdvertising3'] = $this->getRequest()->query->get('positionOfAdvertising3', '');
-        $parameters['block3'] = $this->getRequest()->query->get('block3', '');
+        $parameters['positionOfBlock3'] = $this->getRequest()->query->get('positionOfBlock3', '');
         $parameters['similarArticles'] = $this->getRequest()->query->get('similarArticles', '');
         $parameters['q'] = $this->getRequest()->query->get('q', '');
         
@@ -764,8 +765,8 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchAdvertising'] = '%' . $fragment . '%';
         $filters[] = 'tbl.positionOfAdvertising1 = :searchPositionOfAdvertising1';
         $parameters['searchPositionOfAdvertising1'] = $fragment;
-        $filters[] = 'tbl.block = :searchBlock';
-        $parameters['searchBlock'] = $fragment;
+        $filters[] = 'tbl.positionOfBlock = :searchPositionOfBlock';
+        $parameters['searchPositionOfBlock'] = $fragment;
         $filters[] = 'tbl.content3 LIKE :searchContent3';
         $parameters['searchContent3'] = '%' . $fragment . '%';
         $filters[] = 'tbl.content4 LIKE :searchContent4';
@@ -774,8 +775,8 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchAdvertising2'] = '%' . $fragment . '%';
         $filters[] = 'tbl.positionOfAdvertising2 = :searchPositionOfAdvertising2';
         $parameters['searchPositionOfAdvertising2'] = $fragment;
-        $filters[] = 'tbl.block2 = :searchBlock2';
-        $parameters['searchBlock2'] = $fragment;
+        $filters[] = 'tbl.positionOfBlock2 = :searchPositionOfBlock2';
+        $parameters['searchPositionOfBlock2'] = $fragment;
         $filters[] = 'tbl.content5 LIKE :searchContent5';
         $parameters['searchContent5'] = '%' . $fragment . '%';
         $filters[] = 'tbl.content6 LIKE :searchContent6';
@@ -784,8 +785,8 @@ abstract class AbstractPostRepository extends EntityRepository
         $parameters['searchAdvertising3'] = '%' . $fragment . '%';
         $filters[] = 'tbl.positionOfAdvertising3 = :searchPositionOfAdvertising3';
         $parameters['searchPositionOfAdvertising3'] = $fragment;
-        $filters[] = 'tbl.block3 = :searchBlock3';
-        $parameters['searchBlock3'] = $fragment;
+        $filters[] = 'tbl.positionOfBlock3 = :searchPositionOfBlock3';
+        $parameters['searchPositionOfBlock3'] = $fragment;
         $filters[] = 'tbl.similarArticles = :searchSimilarArticles';
         $parameters['searchSimilarArticles'] = $fragment;
         $filters[] = 'tbl.startDate = :searchStartDate';

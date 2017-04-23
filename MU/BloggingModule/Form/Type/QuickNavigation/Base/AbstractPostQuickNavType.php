@@ -207,15 +207,15 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
-        $listEntries = $this->listHelper->getEntries('post', 'block');
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfBlock');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('block', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Block'),
+        $builder->add('positionOfBlock', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of block'),
             'attr' => [
                 'class' => 'input-sm'
             ],
@@ -247,15 +247,15 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
-        $listEntries = $this->listHelper->getEntries('post', 'block2');
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfBlock2');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('block2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Block 2'),
+        $builder->add('positionOfBlock2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of block 2'),
             'attr' => [
                 'class' => 'input-sm'
             ],
@@ -287,15 +287,15 @@ abstract class AbstractPostQuickNavType extends AbstractType
             'multiple' => false,
             'expanded' => false
         ]);
-        $listEntries = $this->listHelper->getEntries('post', 'block3');
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfBlock3');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('block3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Block 3'),
+        $builder->add('positionOfBlock3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of block 3'),
             'attr' => [
                 'class' => 'input-sm'
             ],
@@ -370,11 +370,11 @@ abstract class AbstractPostQuickNavType extends AbstractType
                     $this->__('Description of image for article') => 'descriptionOfImageForArticle',
                     $this->__('Summary of post') => 'summaryOfPost',
                     $this->__('Advertising') => 'advertising',
-                    $this->__('Block') => 'block',
+                    $this->__('Position of block') => 'positionOfBlock',
                     $this->__('Advertising 2') => 'advertising2',
-                    $this->__('Block 2') => 'block2',
+                    $this->__('Position of block 2') => 'positionOfBlock2',
                     $this->__('Advertising 3') => 'advertising3',
-                    $this->__('Block 3') => 'block3',
+                    $this->__('Position of block 3') => 'positionOfBlock3',
                     $this->__('Similar articles') => 'similarArticles',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',

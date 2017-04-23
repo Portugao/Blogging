@@ -32,16 +32,17 @@
                 <col id="cDescriptionOfImageForArticle" />
                 <col id="cSummaryOfPost" />
                 <col id="cAdvertising" />
-                <col id="cBlock" />
+                <col id="cPositionOfBlock" />
                 <col id="cAdvertising2" />
-                <col id="cBlock2" />
+                <col id="cPositionOfBlock2" />
                 <col id="cAdvertising3" />
-                <col id="cBlock3" />
+                <col id="cPositionOfBlock3" />
                 <col id="cSimilarArticles" />
                 <col id="cPost" />
             </colgroup>
             <thead>
-            {% if routeArea == 'admin' %}
+            <tr>
+                {% if routeArea == 'admin' %}
                     <th id="hSelect" scope="col" class="{% if items|length > 0 %}fixed-column {% endif %}text-center z-w02">
                         <input type="checkbox" class="mublogging-mass-toggle" />
                     </th>
@@ -70,20 +71,20 @@
                 <th id="hAdvertising" scope="col" class="text-left">
                     <a href="{{ sort.advertising.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising'}) }}" class="{{ sort.advertising.class }}">{{ __('Advertising') }}</a>
                 </th>
-                <th id="hBlock" scope="col" class="text-left">
-                    <a href="{{ sort.block.url }}" title="{{ __f('Sort by %s', {'%s': 'block'}) }}" class="{{ sort.block.class }}">{{ __('Block') }}</a>
+                <th id="hPositionOfBlock" scope="col" class="text-left">
+                    <a href="{{ sort.positionOfBlock.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block'}) }}" class="{{ sort.positionOfBlock.class }}">{{ __('Position of block') }}</a>
                 </th>
                 <th id="hAdvertising2" scope="col" class="text-left">
                     <a href="{{ sort.advertising2.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 2'}) }}" class="{{ sort.advertising2.class }}">{{ __('Advertising 2') }}</a>
                 </th>
-                <th id="hBlock2" scope="col" class="text-left">
-                    <a href="{{ sort.block2.url }}" title="{{ __f('Sort by %s', {'%s': 'block 2'}) }}" class="{{ sort.block2.class }}">{{ __('Block 2') }}</a>
+                <th id="hPositionOfBlock2" scope="col" class="text-left">
+                    <a href="{{ sort.positionOfBlock2.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block 2'}) }}" class="{{ sort.positionOfBlock2.class }}">{{ __('Position of block 2') }}</a>
                 </th>
                 <th id="hAdvertising3" scope="col" class="text-left">
                     <a href="{{ sort.advertising3.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 3'}) }}" class="{{ sort.advertising3.class }}">{{ __('Advertising 3') }}</a>
                 </th>
-                <th id="hBlock3" scope="col" class="text-left">
-                    <a href="{{ sort.block3.url }}" title="{{ __f('Sort by %s', {'%s': 'block 3'}) }}" class="{{ sort.block3.class }}">{{ __('Block 3') }}</a>
+                <th id="hPositionOfBlock3" scope="col" class="text-left">
+                    <a href="{{ sort.positionOfBlock3.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block 3'}) }}" class="{{ sort.positionOfBlock3.class }}">{{ __('Position of block 3') }}</a>
                 </th>
                 <th id="hSimilarArticles" scope="col" class="text-left">
                     <a href="{{ sort.similarArticles.url }}" title="{{ __f('Sort by %s', {'%s': 'similar articles'}) }}" class="{{ sort.similarArticles.class }}">{{ __('Similar articles') }}</a>
@@ -139,20 +140,20 @@
                 <td headers="hAdvertising" class="text-left">
                     {{ post.advertising|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hBlock" class="text-left">
-                    {{ post.block|mubloggingmodule_listEntry('post', 'block') }}
+                <td headers="hPositionOfBlock" class="text-left">
+                    {{ post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock') }}
                 </td>
                 <td headers="hAdvertising2" class="text-left">
                     {{ post.advertising2|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hBlock2" class="text-left">
-                    {{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}
+                <td headers="hPositionOfBlock2" class="text-left">
+                    {{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}
                 </td>
                 <td headers="hAdvertising3" class="text-left">
                     {{ post.advertising3|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hBlock3" class="text-left">
-                    {{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}
+                <td headers="hPositionOfBlock3" class="text-left">
+                    {{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}
                 </td>
                 <td headers="hSimilarArticles" class="text-left">
                     {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}

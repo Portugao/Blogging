@@ -138,19 +138,19 @@ abstract class AbstractListEntriesHelper
                     case 'positionOfAdvertising1':
                         $result = false;
                         break;
-                    case 'block':
+                    case 'positionOfBlock':
                         $result = false;
                         break;
                     case 'positionOfAdvertising2':
                         $result = false;
                         break;
-                    case 'block2':
+                    case 'positionOfBlock2':
                         $result = false;
                         break;
                     case 'positionOfAdvertising3':
                         $result = false;
                         break;
-                    case 'block3':
+                    case 'positionOfBlock3':
                         $result = false;
                         break;
                     case 'similarArticles':
@@ -188,20 +188,20 @@ abstract class AbstractListEntriesHelper
                     case 'positionOfAdvertising1':
                         $entries = $this->getPositionOfAdvertising1EntriesForPost();
                         break;
-                    case 'block':
-                        $entries = $this->getBlockEntriesForPost();
+                    case 'positionOfBlock':
+                        $entries = $this->getPositionOfBlockEntriesForPost();
                         break;
                     case 'positionOfAdvertising2':
                         $entries = $this->getPositionOfAdvertising2EntriesForPost();
                         break;
-                    case 'block2':
-                        $entries = $this->getBlock2EntriesForPost();
+                    case 'positionOfBlock2':
+                        $entries = $this->getPositionOfBlock2EntriesForPost();
                         break;
                     case 'positionOfAdvertising3':
                         $entries = $this->getPositionOfAdvertising3EntriesForPost();
                         break;
-                    case 'block3':
-                        $entries = $this->getBlock3EntriesForPost();
+                    case 'positionOfBlock3':
+                        $entries = $this->getPositionOfBlock3EntriesForPost();
                         break;
                     case 'similarArticles':
                         $entries = $this->getSimilarArticlesEntriesForPost();
@@ -309,11 +309,11 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
-     * Get 'block' list entries.
+     * Get 'position of block' list entries.
      *
      * @return array Array with desired list entries
      */
-    public function getBlockEntriesForPost()
+    public function getPositionOfBlockEntriesForPost()
     {
         $states = [];
         $states[] = [
@@ -368,11 +368,11 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
-     * Get 'block 2' list entries.
+     * Get 'position of block 2' list entries.
      *
      * @return array Array with desired list entries
      */
-    public function getBlock2EntriesForPost()
+    public function getPositionOfBlock2EntriesForPost()
     {
         $states = [];
         $states[] = [
@@ -427,11 +427,11 @@ abstract class AbstractListEntriesHelper
     }
     
     /**
-     * Get 'block 3' list entries.
+     * Get 'position of block 3' list entries.
      *
      * @return array Array with desired list entries
      */
-    public function getBlock3EntriesForPost()
+    public function getPositionOfBlock3EntriesForPost()
     {
         $states = [];
         $states[] = [

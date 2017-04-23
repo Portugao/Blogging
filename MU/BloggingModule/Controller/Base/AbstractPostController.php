@@ -134,10 +134,6 @@ abstract class AbstractPostController extends AbstractController
         $controllerHelper = $this->get('mu_blogging_module.controller_helper');
         $viewHelper = $this->get('mu_blogging_module.view_helper');
         
-        // parameter for used sort order
-        $sortdir = strtolower($sortdir);
-        $request->query->set('sort', $sort);
-        $request->query->set('sortdir', $sortdir);
         $request->query->set('pos', $pos);
         
         $sortableColumns = new SortableColumns($this->get('router'), 'mubloggingmodule_post_' . ($isAdmin ? 'admin' : '') . 'view', 'sort', 'sortdir');
@@ -150,11 +146,11 @@ abstract class AbstractPostController extends AbstractController
             new Column('descriptionOfImageForArticle'),
             new Column('summaryOfPost'),
             new Column('advertising'),
-            new Column('block'),
+            new Column('positionOfBlock'),
             new Column('advertising2'),
-            new Column('block2'),
+            new Column('positionOfBlock2'),
             new Column('advertising3'),
-            new Column('block3'),
+            new Column('positionOfBlock3'),
             new Column('similarArticles'),
             new Column('post'),
             new Column('createdBy'),
@@ -162,6 +158,7 @@ abstract class AbstractPostController extends AbstractController
             new Column('updatedBy'),
             new Column('updatedDate'),
         ]);
+        $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         

@@ -350,19 +350,19 @@ abstract class AbstractPostType extends AbstractType
             'expanded' => false
         ]);
         
-        $listEntries = $this->listHelper->getEntries('post', 'block');
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfBlock');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('block', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Block') . ':',
+        $builder->add('positionOfBlock', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of block') . ':',
             'empty_data' => 'none',
             'attr' => [
                 'class' => ' bloggerblock',
-                'title' => $this->__('Choose the block')
+                'title' => $this->__('Choose the position of block')
             ],
             'required' => false,
             'placeholder' => $this->__('Choose an option'),
@@ -395,19 +395,19 @@ abstract class AbstractPostType extends AbstractType
             'expanded' => false
         ]);
         
-        $listEntries = $this->listHelper->getEntries('post', 'block2');
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfBlock2');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('block2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Block 2') . ':',
+        $builder->add('positionOfBlock2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of block 2') . ':',
             'empty_data' => 'none',
             'attr' => [
                 'class' => ' bloggerblock2',
-                'title' => $this->__('Choose the block 2')
+                'title' => $this->__('Choose the position of block 2')
             ],
             'required' => false,
             'placeholder' => $this->__('Choose an option'),
@@ -440,19 +440,19 @@ abstract class AbstractPostType extends AbstractType
             'expanded' => false
         ]);
         
-        $listEntries = $this->listHelper->getEntries('post', 'block3');
+        $listEntries = $this->listHelper->getEntries('post', 'positionOfBlock3');
         $choices = [];
         $choiceAttributes = [];
         foreach ($listEntries as $entry) {
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('block3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
-            'label' => $this->__('Block 3') . ':',
+        $builder->add('positionOfBlock3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            'label' => $this->__('Position of block 3') . ':',
             'empty_data' => 'none',
             'attr' => [
                 'class' => ' bloggerblock3',
-                'title' => $this->__('Choose the block 3')
+                'title' => $this->__('Choose the position of block 3')
             ],
             'required' => false,
             'placeholder' => $this->__('Choose an option'),

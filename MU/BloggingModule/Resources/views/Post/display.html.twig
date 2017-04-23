@@ -84,8 +84,8 @@
                 {% endif %} 
             <div class="blogger-display blogger-content2">{{ post.content2|safeHtml }}</div>
         {% endif %}
-        {% if post.block != 'none' %}
-            <dd>{{ post.block|mubloggingmodule_listEntry('post', 'block') }}</dd>
+        {% if post.positionOfBlock != 'none' %}
+            {{ showblockposition (post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock')) }}
         {% endif %}
         {% if post.content3 is not empty %}
             {% if post.advertising2 != NULL %}
@@ -115,8 +115,8 @@
                 {% endif %} 
             <div class="blogger-display blogger-content4">{{ post.content4|safeHtml }}</div>
         {% endif %}
-        {% if post.block2 != 'none' %}
-            <dd>{{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}</dd>
+        {% if post.positionPfBlock2 != 'none' %}
+            <dd>{{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}</dd>
         {% endif %}
         {% if post.content5 is not empty %}
             {% if post.advertising3 != NULL %}
@@ -146,8 +146,8 @@
             {% endif %} 
             <div class="blogger-display blogger-content6">{{ post.content6|safeHtml }}</div>
         {% endif %}
-        {% if post.block3 != 'none' %}
-            <dd>{{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}</dd>
+        {% if post.positionOfBlock3 != 'none' %}
+            <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
         {% endif %}
         {% if post.similarArticles != '###none###' %}
             <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>

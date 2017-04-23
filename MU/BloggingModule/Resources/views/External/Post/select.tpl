@@ -50,11 +50,11 @@
                     <option value="descriptionOfImageForArticle"{if $sort eq 'descriptionOfImageForArticle'} selected="selected"{/if}>{gt text='Description of image for article'}</option>
                     <option value="summaryOfPost"{if $sort eq 'summaryOfPost'} selected="selected"{/if}>{gt text='Summary of post'}</option>
                     <option value="advertising"{if $sort eq 'advertising'} selected="selected"{/if}>{gt text='Advertising'}</option>
-                    <option value="block"{if $sort eq 'block'} selected="selected"{/if}>{gt text='Block'}</option>
+                    <option value="positionOfBlock"{if $sort eq 'positionOfBlock'} selected="selected"{/if}>{gt text='Position of block'}</option>
                     <option value="advertising2"{if $sort eq 'advertising2'} selected="selected"{/if}>{gt text='Advertising 2'}</option>
-                    <option value="block2"{if $sort eq 'block2'} selected="selected"{/if}>{gt text='Block 2'}</option>
+                    <option value="positionOfBlock2"{if $sort eq 'positionOfBlock2'} selected="selected"{/if}>{gt text='Position of block 2'}</option>
                     <option value="advertising3"{if $sort eq 'advertising3'} selected="selected"{/if}>{gt text='Advertising 3'}</option>
-                    <option value="block3"{if $sort eq 'block3'} selected="selected"{/if}>{gt text='Block 3'}</option>
+                    <option value="positionOfBlock3"{if $sort eq 'positionOfBlock3'} selected="selected"{/if}>{gt text='Position of block 3'}</option>
                     <option value="similarArticles"{if $sort eq 'similarArticles'} selected="selected"{/if}>{gt text='Similar articles'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
