@@ -178,10 +178,10 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @ORM\Column(length=255, nullable=true)
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="block", multiple=false)
-     * @var string $block
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfBlock", multiple=false)
+     * @var string $positionOfBlock
      */
-    protected $block = 'none';
+    protected $positionOfBlock = 'none';
     
     /**
      * @Gedmo\Translatable
@@ -218,10 +218,10 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * @ORM\Column(length=255)
      * @Assert\NotNull()
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="block2", multiple=false)
-     * @var string $block2
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfBlock2", multiple=false)
+     * @var string $positionOfBlock2
      */
-    protected $block2 = 'none';
+    protected $positionOfBlock2 = 'none';
     
     /**
      * @Gedmo\Translatable
@@ -258,10 +258,10 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * @ORM\Column(length=255)
      * @Assert\NotNull()
-     * @BloggingAssert\ListEntry(entityName="post", propertyName="block3", multiple=false)
-     * @var string $block3
+     * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfBlock3", multiple=false)
+     * @var string $positionOfBlock3
      */
-    protected $block3 = 'none';
+    protected $positionOfBlock3 = 'none';
     
     /**
      * @ORM\Column(length=255)
@@ -283,7 +283,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @ORM\Column(type="datetime")
      * @Assert\NotNull()
      * @Assert\DateTime()
-     * @Assert\Expression("value > this.getStartDate()")
+     * @Assert\Expression("!value or value > this.getStartDate()")
      * @var DateTime $endDate
      */
     protected $endDate;
@@ -724,26 +724,26 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the block.
+     * Returns the position of block.
      *
      * @return string
      */
-    public function getBlock()
+    public function getPositionOfBlock()
     {
-        return $this->block;
+        return $this->positionOfBlock;
     }
     
     /**
-     * Sets the block.
+     * Sets the position of block.
      *
-     * @param string $block
+     * @param string $positionOfBlock
      *
      * @return void
      */
-    public function setBlock($block)
+    public function setPositionOfBlock($positionOfBlock)
     {
-        if ($this->block !== $block) {
-            $this->block = $block;
+        if ($this->positionOfBlock !== $positionOfBlock) {
+            $this->positionOfBlock = $positionOfBlock;
         }
     }
     
@@ -844,26 +844,26 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the block 2.
+     * Returns the position of block 2.
      *
      * @return string
      */
-    public function getBlock2()
+    public function getPositionOfBlock2()
     {
-        return $this->block2;
+        return $this->positionOfBlock2;
     }
     
     /**
-     * Sets the block 2.
+     * Sets the position of block 2.
      *
-     * @param string $block2
+     * @param string $positionOfBlock2
      *
      * @return void
      */
-    public function setBlock2($block2)
+    public function setPositionOfBlock2($positionOfBlock2)
     {
-        if ($this->block2 !== $block2) {
-            $this->block2 = isset($block2) ? $block2 : '';
+        if ($this->positionOfBlock2 !== $positionOfBlock2) {
+            $this->positionOfBlock2 = isset($positionOfBlock2) ? $positionOfBlock2 : '';
         }
     }
     
@@ -964,26 +964,26 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
-     * Returns the block 3.
+     * Returns the position of block 3.
      *
      * @return string
      */
-    public function getBlock3()
+    public function getPositionOfBlock3()
     {
-        return $this->block3;
+        return $this->positionOfBlock3;
     }
     
     /**
-     * Sets the block 3.
+     * Sets the position of block 3.
      *
-     * @param string $block3
+     * @param string $positionOfBlock3
      *
      * @return void
      */
-    public function setBlock3($block3)
+    public function setPositionOfBlock3($positionOfBlock3)
     {
-        if ($this->block3 !== $block3) {
-            $this->block3 = isset($block3) ? $block3 : '';
+        if ($this->positionOfBlock3 !== $positionOfBlock3) {
+            $this->positionOfBlock3 = isset($positionOfBlock3) ? $positionOfBlock3 : '';
         }
     }
     
