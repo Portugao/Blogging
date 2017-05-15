@@ -6,7 +6,7 @@
 {% extends 'MUBloggingModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ post.getTitleFromDisplayPattern()|default(__('Post')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = post.getTitleFromDisplayPattern()|default(__('Post')) %}
+    {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
     {{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
@@ -39,10 +39,10 @@
                 {% if post.descriptionOfImageForArticle is not empty %}
                     {% set imageDescription = post.descriptionOfImageForArticle %}
                 {% else %}
-                    {% set imageDescription = post.getTitleFromDisplayPattern()|e('html_attr') %}
+                    {% set imageDescription = post|mubloggingmodule_formattedTitle|e('html_attr') %}
                 {% endif %}
                 <div id="blogger-display-image">
-                    <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+                    <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
                 {% if post.imageForArticleMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
                 <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageDescription }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-responsive" /></div>
