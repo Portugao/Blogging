@@ -17,9 +17,9 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\LinkContainer\LinkContainerInterface;
-use Zikula\ExtensionsModule\Api\VariableApi;
-use Zikula\PermissionsModule\Api\PermissionApi;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use MU\BloggingModule\Helper\ControllerHelper;
 
 /**
@@ -35,17 +35,17 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
     protected $router;
 
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     protected $permissionApi;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     private $currentUserApi;
 
@@ -59,17 +59,17 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
      *
      * @param TranslatorInterface $translator       Translator service instance
      * @param Routerinterface     $router           Router service instance
-     * @param PermissionApi       $permissionApi    PermissionApi service instance
-     * @param VariableApi         $variableApi      VariableApi service instance
-     * @param CurrentUserApi      $currentUserApi   CurrentUserApi service instance
+     * @param PermissionApiInterface       $permissionApi    PermissionApi service instance
+     * @param VariableApiInterface         $variableApi      VariableApi service instance
+     * @param CurrentUserApiInterface $currentUserApi   CurrentUserApi service instance
      * @param ControllerHelper    $controllerHelper ControllerHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         RouterInterface $router,
-        PermissionApi $permissionApi,
-        VariableApi $variableApi,
-        CurrentUserApi $currentUserApi,
+        PermissionApiInterface $permissionApi,
+        VariableApiInterface $variableApi,
+        CurrentUserApiInterface $currentUserApi,
         ControllerHelper $controllerHelper
     ) {
         $this->setTranslator($translator);

@@ -26,12 +26,14 @@ use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\Doctrine\EntityAccess;
 use Zikula\Core\RouteUrl;
-use Zikula\ExtensionsModule\Api\VariableApi;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\GroupsModule\Constant as GroupsConstant;
 use Zikula\GroupsModule\Entity\Repository\GroupApplicationRepository;
-use Zikula\PageLockModule\Api\LockingApi;
-use Zikula\PermissionsModule\Api\PermissionApi;
-use Zikula\UsersModule\Api\CurrentUserApi;
-use MU\BloggingModule\Entity\Factory\BloggingFactory;
+use Zikula\PageLockModule\Api\ApiInterface\LockingApiInterface;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use Zikula\UsersModule\Constant as UsersConstant;
+use MU\BloggingModule\Entity\Factory\EntityFactory;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
 use MU\BloggingModule\Helper\ControllerHelper;
 use MU\BloggingModule\Helper\HookHelper;
@@ -83,18 +85,23 @@ abstract class AbstractEditHandler
     protected $entityRef = null;
 
     /**
-     * List of identifier names.
+     * Name of primary identifier field.
      *
-     * @var array
+     * @var string
      */
-    protected $idFields = [];
+    protected $idField = null;
 
     /**
-     * List of identifiers of treated entity.
+     * Identifier or slug of treated entity.
      *
-     * @var array
+     * @var integer|string
      */
-    protected $idValues = [];
+    protected $idValue = 0;
+
+    /**
+     * List of object types with unique slugs.
+     */
+    protected $entitiesWithUniqueSlugs = ['post'];
 
     /**
      * Code defining the redirect goal after command handling.
@@ -130,13 +137,6 @@ abstract class AbstractEditHandler
      * @var string
      */
     protected $idPrefix = '';
-
-    /**
-     * Whether an existing item is used as template for a new one.
-     *
-     * @var boolean
-     */
-    protected $hasTemplateId = false;
 
     /**
      * Whether the PageLock extension is used for this entity type or not.
@@ -189,17 +189,17 @@ abstract class AbstractEditHandler
     protected $logger;
 
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     protected $permissionApi;
 
     /**
-     * @var VariableApi
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
 
@@ -209,7 +209,7 @@ abstract class AbstractEditHandler
     protected $groupApplicationRepository;
 
     /**
-     * @var BloggingFactory
+     * @var EntityFactory
      */
     protected $entityFactory;
 
@@ -246,7 +246,7 @@ abstract class AbstractEditHandler
     /**
      * Reference to optional locking api.
      *
-     * @var LockingApi
+     * @var LockingApiInterface
      */
     protected $lockingApi = null;
 
@@ -273,11 +273,11 @@ abstract class AbstractEditHandler
      * @param RequestStack              $requestStack     RequestStack service instance
      * @param RouterInterface           $router           Router service instance
      * @param LoggerInterface           $logger           Logger service instance
-     * @param PermissionApi             $permissionApi    PermissionApi service instance
-     * @param VariableApi               $variableApi      VariableApi service instance
-     * @param CurrentUserApi            $currentUserApi   CurrentUserApi service instance
+     * @param PermissionApiInterface             $permissionApi    PermissionApi service instance
+     * @param VariableApiInterface      $variableApi      VariableApi service instance
+     * @param CurrentUserApiInterface   $currentUserApi   CurrentUserApi service instance
      * @param GroupApplicationRepository $groupApplicationRepository GroupApplicationRepository service instance.
-     * @param BloggingFactory $entityFactory BloggingFactory service instance
+     * @param EntityFactory             $entityFactory    EntityFactory service instance
      * @param ControllerHelper          $controllerHelper ControllerHelper service instance
      * @param ModelHelper               $modelHelper      ModelHelper service instance
      * @param WorkflowHelper            $workflowHelper   WorkflowHelper service instance
@@ -292,11 +292,11 @@ abstract class AbstractEditHandler
         RequestStack $requestStack,
         RouterInterface $router,
         LoggerInterface $logger,
-        PermissionApi $permissionApi,
-        VariableApi $variableApi,
-        CurrentUserApi $currentUserApi,
+        PermissionApiInterface $permissionApi,
+        VariableApiInterface $variableApi,
+        CurrentUserApiInterface $currentUserApi,
         GroupApplicationRepository $groupApplicationRepository,
-        BloggingFactory $entityFactory,
+        EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
         ModelHelper $modelHelper,
         WorkflowHelper $workflowHelper,
@@ -369,17 +369,34 @@ abstract class AbstractEditHandler
     
         $this->permissionComponent = 'MUBloggingModule:' . $this->objectTypeCapital . ':';
     
-        $this->idFields = $this->entityFactory->getIdFields($this->objectType);
+        $this->idField = in_array($this->objectType, $this->entitiesWithUniqueSlugs) ? 'slug' : $this->entityFactory->getIdField($this->objectType);
     
         // retrieve identifier of the object we wish to edit
-        $this->idValues = $this->controllerHelper->retrieveIdentifier($this->request, [], $this->objectType);
-        $hasIdentifier = $this->controllerHelper->isValidIdentifier($this->idValues);
+        $routeParams = $this->request->get('_route_params', []);
+        if ($this->idField == 'slug') {
+            if (array_key_exists($this->idField, $routeParams)) {
+                $this->idValue = !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : '';
+            }
+            if (empty($this->idValue)) {
+                $this->idValue = $this->request->query->get($this->idField, '');
+            }
+        } else {
+            if (array_key_exists($this->idField, $routeParams)) {
+                $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
+            }
+            if (empty($this->idValue)) {
+                $this->idValue = $this->request->query->getInt($this->idField, 0);
+            }
+            if (0 === $this->idValue && $this->idField != 'id') {
+                $this->idValue = $this->request->query->getInt('id', 0);
+            }
+        }
     
         $entity = null;
-        $this->templateParameters['mode'] = $hasIdentifier ? 'edit' : 'create';
+        $this->templateParameters['mode'] = !empty($this->idValue) ? 'edit' : 'create';
     
         if ($this->templateParameters['mode'] == 'edit') {
-            if (!$this->permissionApi->hasPermission($this->permissionComponent, $this->createCompositeIdentifier() . '::', ACCESS_EDIT)) {
+            if (!$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_EDIT)) {
                 throw new AccessDeniedException();
             }
     
@@ -387,7 +404,7 @@ abstract class AbstractEditHandler
             if (null !== $entity) {
                 if (true === $this->hasPageLockSupport && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
                     // try to guarantee that only one person at a time can be editing this entity
-                    $lockName = 'MUBloggingModule' . $this->objectTypeCapital . $this->createCompositeIdentifier();
+                    $lockName = 'MUBloggingModule' . $this->objectTypeCapital . $this->getKey();
                     $this->lockingApi->addLock($lockName, $this->getRedirectUrl(null));
                     // reload entity as the addLock call above has triggered the preUpdate event
                     $this->entityFactory->getObjectManager()->refresh($entity);
@@ -433,7 +450,7 @@ abstract class AbstractEditHandler
         $actions = $this->workflowHelper->getActionsForObject($entity);
         if (false === $actions || !is_array($actions)) {
             $this->request->getSession()->getFlashBag()->add('error', $this->__('Error! Could not determine workflow actions.'));
-            $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $entity->createCompositeIdentifier()];
+            $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $entity->getKey()];
             $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed to determine available workflow actions.', $logArgs);
             throw new \RuntimeException($this->__('Error! Could not determine workflow actions.'));
         }
@@ -494,27 +511,6 @@ abstract class AbstractEditHandler
         return $this->templateParameters;
     }
     
-    /**
-     * Create concatenated identifier string (for composite keys).
-     *
-     * @return String concatenated identifiers
-     */
-    protected function createCompositeIdentifier()
-    {
-        $itemId = '';
-        if ($this->templateParameters['mode'] == 'create') {
-            return $itemId;
-        }
-    
-        foreach ($this->idFields as $idField) {
-            if (!empty($itemId)) {
-                $itemId .= '_';
-            }
-            $itemId .= $this->idValues[$idField];
-        }
-    
-        return $itemId;
-    }
     
     /**
      * Initialise existing entity for editing.
@@ -523,14 +519,11 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForEditing()
     {
-        $entity = $this->entityFactory->getRepository($this->objectType)->selectById($this->idValues);
-        if (null === $entity) {
-            return null;
+        if (in_array($this->objectType, $this->entitiesWithUniqueSlugs)) {
+            return $this->entityFactory->getRepository($this->objectType)->selectBySlug($this->idValue);
         }
     
-        $entity->initWorkflow();
-    
-        return $entity;
+        return $this->entityFactory->getRepository($this->objectType)->selectById($this->idValue);
     }
     
     /**
@@ -540,28 +533,16 @@ abstract class AbstractEditHandler
      */
     protected function initEntityForCreation()
     {
-        $this->hasTemplateId = false;
-        $templateId = $this->request->query->get('astemplate', '');
+        $templateId = $this->request->query->getInt('astemplate', '');
         $entity = null;
     
         if (!empty($templateId)) {
-            $templateIdValueParts = explode('_', $templateId);
-            $this->hasTemplateId = count($templateIdValueParts) == count($this->idFields);
-    
-            if (true === $this->hasTemplateId) {
-                $templateIdValues = [];
-                $i = 0;
-                foreach ($this->idFields as $idField) {
-                    $templateIdValues[$idField] = $templateIdValueParts[$i];
-                    $i++;
-                }
-                // reuse existing entity
-                $entityT = $this->entityFactory->getRepository($this->objectType)->selectById($templateIdValues);
-                if (null === $entityT) {
-                    return null;
-                }
-                $entity = clone $entityT;
+            // reuse existing entity
+            $entityT = $this->entityFactory->getRepository($this->objectType)->selectById($templateId);
+            if (null === $entityT) {
+                return null;
             }
+            $entity = clone $entityT;
         }
     
         if (null === $entity) {
@@ -697,7 +678,7 @@ abstract class AbstractEditHandler
         }
     
         if (true === $this->hasPageLockSupport && $this->templateParameters['mode'] == 'edit' && $this->kernel->isBundle('ZikulaPageLockModule') && null !== $this->lockingApi) {
-            $lockName = 'MUBloggingModule' . $this->objectTypeCapital . $this->createCompositeIdentifier();
+            $lockName = 'MUBloggingModule' . $this->objectTypeCapital . $this->getKey();
             $this->lockingApi->releaseLock($lockName);
         }
     
@@ -772,7 +753,7 @@ abstract class AbstractEditHandler
     
         $flashType = true === $success ? 'status' : 'error';
         $this->request->getSession()->getFlashBag()->add($flashType, $message);
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $this->entityRef->createCompositeIdentifier()];
+        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => $this->objectType, 'id' => $this->entityRef->getKey()];
         if (true === $success) {
             $this->logger->notice('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
         } else {
@@ -840,21 +821,20 @@ abstract class AbstractEditHandler
     protected function prepareWorkflowAdditions($enterprise = false)
     {
         $roles = [];
-        $isLoggedIn = $this->currentUserApi->isLoggedIn();
-        $currentUserId = $isLoggedIn ? $this->currentUserApi->get('uid') : 1;
+        $currentUserId = $this->currentUserApi->isLoggedIn() ? $this->currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         $roles['is_creator'] = $this->templateParameters['mode'] == 'create'
             || (method_exists($this->entityRef, 'getCreatedBy') && $this->entityRef->getCreatedBy()->getUid() == $currentUserId);
     
         $groupApplicationArgs = [
             'user' => $currentUserId,
-            'group' => $this->variableApi->get('MUBloggingModule', 'moderationGroupFor' . $this->objectTypeCapital, 2)
+            'group' => $this->variableApi->get('MUBloggingModule', 'moderationGroupFor' . $this->objectTypeCapital, GroupsConstant::GROUP_ID_ADMIN)
         ];
         $roles['is_moderator'] = count($this->groupApplicationRepository->findBy($groupApplicationArgs)) > 0;
     
         if (true === $enterprise) {
             $groupApplicationArgs = [
                 'user' => $currentUserId,
-                'group' => $this->variableApi->get('MUBloggingModule', 'superModerationGroupFor' . $this->objectTypeCapital, 2)
+                'group' => $this->variableApi->get('MUBloggingModule', 'superModerationGroupFor' . $this->objectTypeCapital, GroupsConstant::GROUP_ID_ADMIN)
             ];
             $roles['is_super_moderator'] = count($this->groupApplicationRepository->findBy($groupApplicationArgs)) > 0;
         }
@@ -865,9 +845,9 @@ abstract class AbstractEditHandler
     /**
      * Sets optional locking api reference.
      *
-     * @param LockingApi $lockingApi
+     * @param LockingApiInterface $lockingApi
      */
-    public function setLockingApi(LockingApi $lockingApi)
+    public function setLockingApi(LockingApiInterface $lockingApi)
     {
         $this->lockingApi = $lockingApi;
     }

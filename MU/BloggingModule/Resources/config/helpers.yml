@@ -4,26 +4,41 @@ services:
         class: MU\BloggingModule\Helper\CategoryHelper
         arguments:
             - "@translator.default"
-            - "@session"
             - "@request_stack"
             - "@logger"
             - "@zikula_users_module.current_user"
-            - "@zikula_categories_module.api.category_registry"
+            - "@zikula_categories_module.category_registry_repository"
             - "@zikula_categories_module.api.category_permission"
+    
+    mu_blogging_module.collection_filter_helper:
+        class: MU\BloggingModule\Helper\CollectionFilterHelper
+        arguments:
+            - "@request_stack"
+            - "@zikula_users_module.current_user"
+            - "@mu_blogging_module.category_helper"
+            - "@=service('zikula_extensions_module.api.variable').get('MUBloggingModule', 'showOnlyOwnEntries', false)"
+            - "@=service('zikula_extensions_module.api.variable').get('MUBloggingModule', 'filterDataByLocale', false)"
     
     mu_blogging_module.controller_helper:
         class: MU\BloggingModule\Helper\ControllerHelper
         arguments:
             - "@translator.default"
             - "@request_stack"
-            - "@session"
             - "@logger"
             - "@form.factory"
             - "@zikula_extensions_module.api.variable"
             - "@mu_blogging_module.entity_factory"
+            - "@mu_blogging_module.collection_filter_helper"
             - "@mu_blogging_module.model_helper"
             - "@mu_blogging_module.image_helper"
             - "@mu_blogging_module.feature_activation_helper"
+    
+    mu_blogging_module.entity_display_helper:
+        class: MU\BloggingModule\Helper\EntityDisplayHelper
+        arguments:
+            - "@translator.default"
+            - "@request_stack"
+            - "@mu_blogging_module.listentries_helper"
     
     mu_blogging_module.feature_activation_helper:
         class: MU\BloggingModule\Helper\FeatureActivationHelper
@@ -62,6 +77,7 @@ services:
             - "@twig"
             - "@zikula_mailer_module.api.mailer"
             - "@zikula_groups_module.group_repository"
+            - "@mu_blogging_module.entity_display_helper"
             - "@mu_blogging_module.workflow_helper"
     
     mu_blogging_module.search_helper:
@@ -69,11 +85,11 @@ services:
         arguments:
             - "@translator.default"
             - "@zikula_permissions_module.api.permission"
-            - "@templating.engine.twig"
             - "@session"
             - "@request_stack"
             - "@mu_blogging_module.entity_factory"
             - "@mu_blogging_module.controller_helper"
+            - "@mu_blogging_module.entity_display_helper"
             - "@mu_blogging_module.feature_activation_helper"
             - "@mu_blogging_module.category_helper"
         tags:
@@ -96,7 +112,7 @@ services:
             - "@liip_imagine.cache.manager"
             - "@logger"
             - "@zikula_users_module.current_user"
-            - "@zikula_extensions_module.api.variable"
+            - "@=service('zikula_extensions_module.api.variable').getAll('MUBloggingModule')"
             - "%datadir%"
     
     mu_blogging_module.view_helper:
@@ -114,7 +130,9 @@ services:
         class: MU\BloggingModule\Helper\WorkflowHelper
         arguments:
             - "@translator.default"
+            - "@workflow.registry"
             - "@logger"
             - "@zikula_permissions_module.api.permission"
+            - "@zikula_users_module.current_user"
             - "@mu_blogging_module.entity_factory"
             - "@mu_blogging_module.listentries_helper"

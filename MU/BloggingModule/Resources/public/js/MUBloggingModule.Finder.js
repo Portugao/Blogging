@@ -200,7 +200,7 @@ mUBloggingModule.itemSelector.onLoad = function (baseId, selectedId)
 
 mUBloggingModule.itemSelector.onParamChanged = function ()
 {
-    jQuery('#ajax_indicator').removeClass('hidden');
+    jQuery('#ajaxIndicator').removeClass('hidden');
 
     mUBloggingModule.itemSelector.getItemList();
 };
@@ -223,16 +223,12 @@ mUBloggingModule.itemSelector.getItemList = function ()
         params[catidsMain] = jQuery('#' + baseId + '_catidsMain').val();
     }
 
-    jQuery.ajax({
-        type: 'POST',
-        url: Routing.generate('mubloggingmodule_ajax_getitemlistfinder'),
-        data: params
-    }).done(function(res) {
-        // get data returned by the ajax response
+    jQuery.getJSON(Routing.generate('mubloggingmodule_ajax_getitemlistfinder'), params, function( data ) {
         var baseId;
+
         baseId = mUBloggingModule.itemSelector.baseId;
-        mUBloggingModule.itemSelector.items[baseId] = res.data;
-        jQuery('#ajax_indicator').addClass('hidden');
+        mUBloggingModule.itemSelector.items[baseId] = data;
+        jQuery('#ajaxIndicator').addClass('hidden');
         mUBloggingModule.itemSelector.updateItemDropdownEntries();
         mUBloggingModule.itemSelector.updatePreview();
     });

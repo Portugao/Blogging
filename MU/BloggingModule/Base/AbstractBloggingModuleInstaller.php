@@ -15,7 +15,6 @@ namespace MU\BloggingModule\Base;
 use Doctrine\DBAL\Connection;
 use RuntimeException;
 use Zikula\Core\AbstractExtensionInstaller;
-use Zikula_Workflow_Util;
 use Zikula\CategoriesModule\Entity\CategoryRegistryEntity;
 
 /**
@@ -60,6 +59,7 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         $this->setVar('moderationGroupForPosts', '2');
         $this->setVar('postEntriesPerPage', '10');
         $this->setVar('linkOwnPostsOnAccountPage', true);
+        $this->setVar('filterDataByLocale', false);
         $this->setVar('enableShrinkingForPostImageForArticle', false);
         $this->setVar('shrinkWidthPostImageForArticle', '800');
         $this->setVar('shrinkHeightPostImageForArticle', '600');
@@ -77,20 +77,19 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         // add default entry for category registry (property named Main)
         $categoryHelper = new \MU\BloggingModule\Helper\CategoryHelper(
             $this->container->get('translator.default'),
-            $this->container->get('session'),
             $this->container->get('request_stack'),
             $logger,
             $this->container->get('zikula_users_module.current_user'),
-            $this->container->get('zikula_categories_module.api.category_registry'),
+            $this->container->get('zikula_categories_module.category_registry_repository'),
             $this->container->get('zikula_categories_module.api.category_permission')
         );
-        $categoryGlobal = $this->container->get('zikula_categories_module.api.category')->getCategoryByPath('/__SYSTEM__/Modules/Global');
+        $categoryGlobal = $this->container->get('zikula_categories_module.category_repository')->findOneBy(['name' => 'Global']);
     
         $registry = new CategoryRegistryEntity();
         $registry->setModname('MUBloggingModule');
         $registry->setEntityname('PostEntity');
         $registry->setProperty($categoryHelper->getPrimaryProperty('Post'));
-        $registry->setCategory_Id($categoryGlobal['id']);
+        $registry->setCategory($categoryGlobal);
     
         try {
             $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
@@ -385,15 +384,6 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     {
         $logger = $this->container->get('logger');
     
-        // delete stored object workflows
-        $result = Zikula_Workflow_Util::deleteWorkflowsForModule('MUBloggingModule');
-        if (false === $result) {
-            $this->addFlash('error', $this->__f('An error was encountered while removing stored object workflows for the %extension% extension.', ['%extension%' => 'MUBloggingModule']));
-            $logger->error('{app}: Could not remove stored object workflows during uninstallation.', ['app' => 'MUBloggingModule']);
-    
-            return false;
-        }
-    
         try {
             $this->schemaTool->drop($this->listEntityClasses());
         } catch (\Exception $e) {
@@ -410,11 +400,12 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         $this->delVars();
     
         // remove category registry entries
-        $categoryRegistryApi = $this->container->get('zikula_categories_module.api.category_registry');
-        // assume that not more than five registries exist
-        for ($i = 1; $i <= 5; $i++) {
-            $categoryRegistryApi->deleteRegistry('MUBloggingModule');
+        $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
+        $registries = $this->container->get('zikula_categories_module.category_registry_repository')->findBy(['modname' => 'MUBloggingModule']);
+        foreach ($registries as $registry) {
+            $entityManager->remove($registry);
         }
+        $entityManager->flush();
     
         // remove all thumbnails
         $manager = $this->container->get('systemplugin.imagine.manager');

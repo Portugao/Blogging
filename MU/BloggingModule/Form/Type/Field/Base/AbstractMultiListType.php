@@ -13,6 +13,7 @@
 namespace MU\BloggingModule\Form\Type\Field\Base;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use MU\BloggingModule\Form\DataTransformer\ListFieldTransformer;
 use MU\BloggingModule\Helper\ListEntriesHelper;
@@ -51,7 +52,7 @@ abstract class AbstractMultiListType extends AbstractType
      */
     public function getParent()
     {
-        return 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
+        return ChoiceType::class;
     }
 
     /**

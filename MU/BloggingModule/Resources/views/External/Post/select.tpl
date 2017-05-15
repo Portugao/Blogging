@@ -32,7 +32,7 @@
             <div class="col-sm-9">
                 <select id="{$baseID}Id" name="id" class="form-control">
                     {foreach item='post' from=$items}
-                        <option value="{$post.id}"{if $selectedId eq $post.id} selected="selected"{/if}>{$post->getTitleFromDisplayPattern()}</option>
+                        <option value="{$post->getKey()}"{if $selectedId eq $post->getKey()} selected="selected"{/if}>{$post->getTitle()}</option>
                     {foreachelse}
                         <option value="0">{gt text='No entries found.'}</option>
                     {/foreach}
@@ -46,6 +46,7 @@
                     <option value="workflowState"{if $sort eq 'workflowState'} selected="selected"{/if}>{gt text='Workflow state'}</option>
                     <option value="title"{if $sort eq 'title'} selected="selected"{/if}>{gt text='Title'}</option>
                     <option value="descriptionForGoogle"{if $sort eq 'descriptionForGoogle'} selected="selected"{/if}>{gt text='Description for google'}</option>
+                    <option value="forWhichLanguage"{if $sort eq 'forWhichLanguage'} selected="selected"{/if}>{gt text='For which language'}</option>
                     <option value="imageForArticle"{if $sort eq 'imageForArticle'} selected="selected"{/if}>{gt text='Image for article'}</option>
                     <option value="descriptionOfImageForArticle"{if $sort eq 'descriptionOfImageForArticle'} selected="selected"{/if}>{gt text='Description of image for article'}</option>
                     <option value="summaryOfPost"{if $sort eq 'summaryOfPost'} selected="selected"{/if}>{gt text='Summary of post'}</option>
@@ -82,7 +83,7 @@
     <div class="col-sm-4">
         <div id="{$baseID}Preview" style="border: 1px dotted #a3a3a3; padding: .2em .5em">
             <p><strong>{gt text='Post information'}</strong></p>
-            {img id='ajax_indicator' modname='core' set='ajax' src='indicator_circle.gif' alt='' class='hidden'}
+            {img id='ajaxIndicator' modname='core' set='ajax' src='indicator_circle.gif' alt='' class='hidden'}
             <div id="{$baseID}PreviewContainer">&nbsp;</div>
         </div>
     </div>

@@ -6,7 +6,6 @@
     {{ parent() }}
     {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.Validation.js'), 98) }}
     {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.EditFunctions.js'), 99) }}
-    {{ pageAddAsset('javascript', asset('typeahead/typeahead.bundle.min.js')) }}
 {% endblock %}
 {% block title mode == 'create' ? __('Create post') : __('Edit post') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
@@ -83,6 +82,7 @@
         {% endif %}
         <fieldset>
             <legend>{{ __('Further properties') }}</legend>
+            {{ form_row(form.forWhichLanguage) }}
             {{ form_row(form.imageForArticle) }}
             {{ form_row(form.positionOfAdvertising1) }}
             {{ form_row(form.positionOfBlock) }}

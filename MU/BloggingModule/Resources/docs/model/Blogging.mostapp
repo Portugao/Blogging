@@ -6,7 +6,7 @@ application "Blogging" {
     prefix "blogging"
     generatorSettings {
         settingsContainer "Settings"
-        generateMailzApi false
+        targetCoreVersion ZK15
         generateAtomTemplates false
         generateCsvTemplates false
         generateXmlTemplates false
@@ -18,7 +18,7 @@ application "Blogging" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
     skipFiles "README.md"
-        markFiles "Controller/PostController.php,\r\nEntity/Repository/PostRepository.php,\r\nResources/public/css/style.css,\r\nResources/views/base.html.twig,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+        markFiles "Controller/PostController.php,\r\nEntity/PostEntity,\r\nEntity/Repository/PostRepository.php,\r\nResources/public/css/style.css,\r\nResources/views/base.html.twig,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -45,6 +45,7 @@ application "Blogging" {
                     minLength 155
                     length 170
                 },
+                string "forWhichLanguage" locale,
                 upload "imageForArticle" {
                     mandatory false
                 },
@@ -167,11 +168,11 @@ application "Blogging" {
                         listItem  "None" ( "none" )
                     }
                 },
-                datetime "startDate" startDate {
+                datetime "startDate" nullable startDate {
                     mandatory false
                     displayType NONE
                 },
-                datetime "endDate" endDate {
+                datetime "endDate" nullable endDate {
                     mandatory false
                 displayType NONE
                 },

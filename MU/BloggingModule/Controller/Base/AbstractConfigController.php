@@ -15,6 +15,7 @@ namespace MU\BloggingModule\Controller\Base;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
+use MU\BloggingModule\Form\Type\ConfigType;
 
 /**
  * Config controller base class.
@@ -36,14 +37,16 @@ abstract class AbstractConfigController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $form = $this->createForm('MU\BloggingModule\Form\AppSettingsType');
+        $form = $this->createForm(ConfigType::class);
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('save')->isClicked()) {
                 $formData = $form->getData();
+                // normalise group selector values
                 foreach (['moderationGroupForPosts'] as $groupFieldName) {
                     $formData[$groupFieldName] = is_object($formData[$groupFieldName]) ? $formData[$groupFieldName]->getGid() : $formData[$groupFieldName];
                 }
+        
                 $this->setVars($formData);
         
                 $this->addFlash('status', $this->__('Done! Module configuration updated.'));

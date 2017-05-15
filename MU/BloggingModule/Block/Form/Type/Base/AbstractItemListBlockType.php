@@ -13,10 +13,15 @@
 namespace MU\BloggingModule\Block\Form\Type\Base;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Zikula\CategoriesModule\Form\Type\CategoriesType;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
@@ -79,7 +84,7 @@ abstract class AbstractItemListBlockType extends AbstractType
      */
     public function addObjectTypeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('objectType', 'Symfony\Component\Form\Extension\Core\Type\HiddenType', [
+        $builder->add('objectType', HiddenType::class, [
             'label' => $this->__('Object type') . ':',
             'empty_data' => 'post',
             'attr' => [
@@ -108,7 +113,7 @@ abstract class AbstractItemListBlockType extends AbstractType
         }
     
         $hasMultiSelection = $options['category_helper']->hasMultipleSelection($options['object_type']);
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
+        $builder->add('categories', CategoriesType::class, [
             'label' => ($hasMultiSelection ? $this->__('Categories') : $this->__('Category')) . ':',
             'empty_data' => $hasMultiSelection ? [] : null,
             'attr' => [
@@ -132,7 +137,7 @@ abstract class AbstractItemListBlockType extends AbstractType
      */
     public function addSortingField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('sorting', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('sorting', ChoiceType::class, [
             'label' => $this->__('Sorting') . ':',
             'empty_data' => 'default',
             'choices' => [
@@ -154,7 +159,7 @@ abstract class AbstractItemListBlockType extends AbstractType
      */
     public function addAmountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('amount', 'Symfony\Component\Form\Extension\Core\Type\IntegerType', [
+        $builder->add('amount', IntegerType::class, [
             'label' => $this->__('Amount') . ':',
             'attr' => [
                 'maxlength' => 2,
@@ -175,7 +180,7 @@ abstract class AbstractItemListBlockType extends AbstractType
     public function addTemplateFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('template', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('template', ChoiceType::class, [
                 'label' => $this->__('Template') . ':',
                 'empty_data' => 'itemlist_display.html.twig',
                 'choices' => [
@@ -187,7 +192,7 @@ abstract class AbstractItemListBlockType extends AbstractType
                 'multiple' => false,
                 'expanded' => false
             ])
-            ->add('customTemplate', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+            ->add('customTemplate', TextType::class, [
                 'label' => $this->__('Custom template') . ':',
                 'required' => false,
                 'attr' => [
@@ -207,7 +212,7 @@ abstract class AbstractItemListBlockType extends AbstractType
      */
     public function addFilterField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('filter', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('filter', TextType::class, [
             'label' => $this->__('Filter (expert option)') . ':',
             'required' => false,
             'attr' => [

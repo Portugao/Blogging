@@ -1,12 +1,15 @@
 services:
     # Entity factory
     mu_blogging_module.entity_factory:
-        class: MU\BloggingModule\Entity\Factory\BloggingFactory
+        class: MU\BloggingModule\Entity\Factory\EntityFactory
         arguments:
             - "@doctrine.orm.default_entity_manager"
             - "@mu_blogging_module.entity_initialiser"
+            - "@mu_blogging_module.collection_filter_helper"
+            - "@mu_blogging_module.feature_activation_helper"
+    
     # Entity initialiser
     mu_blogging_module.entity_initialiser:
         class: MU\BloggingModule\Entity\Factory\EntityInitialiser
         arguments:
-            - "@mu_blogging_module.listentries_helper"
+        - "@mu_blogging_module.listentries_helper"

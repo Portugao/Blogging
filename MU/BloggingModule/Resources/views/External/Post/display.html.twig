@@ -2,11 +2,11 @@
 {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
 {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
 {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.js')) }}
-<div id="post{$post.id}" class="mubloggingmodule-external-post">
+<div id="post{$post->getKey()}" class="mubloggingmodule-external-post">
 {% if displayMode == 'link' %}
     <p class="mubloggingmodule-external-link">
-    <a href="{{ path('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}">
-    {{ post.getTitleFromDisplayPattern()|notifyFilters('blogging.filter_hooks.posts.filter') }}
+    <a href="{{ path('mubloggingmodule_post_display', { 'slug': post.slug }) }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}">
+    {{ post|mubloggingmodule_formattedTitle|notifyFilters('blogging.filter_hooks.posts.filter')|safeHtml }}
     </a>
     </p>
 {% endif %}
@@ -14,7 +14,7 @@
     {# for normal users without edit permission show only the actual file per default #}
     {% if displayMode == 'embed' %}
         <p class="mubloggingmodule-external-title">
-            <strong>{{ post.getTitleFromDisplayPattern()|notifyFilters('blogging.filter_hooks.posts.filter') }}</strong>
+            <strong>{{ post|mubloggingmodule_formattedTitle|notifyFilters('blogging.filter_hooks.posts.filter')|safeHtml }}</strong>
         </p>
     {% endif %}
 {% endif %}
@@ -23,10 +23,10 @@
 {% elseif displayMode == 'embed' %}
     <div class="mubloggingmodule-external-snippet">
         {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
-                    <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+                    <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
         {% if post.imageForArticleMeta.isImage %}
             {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-            <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+            <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
         {% else %}
             {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
         {% endif %}

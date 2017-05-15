@@ -13,6 +13,7 @@
 namespace MU\BloggingModule\Form\Handler\Post\Base;
 
 use MU\BloggingModule\Form\Handler\Common\EditHandler;
+use MU\BloggingModule\Form\Type\PostType;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -98,8 +99,8 @@ abstract class AbstractEditHandler extends EditHandler
             'entity' => $this->entityRef,
             'mode' => $this->templateParameters['mode'],
             'actions' => $this->templateParameters['actions'],
-            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->createCompositeIdentifier() . '::', ACCESS_MODERATE),
-            'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->createCompositeIdentifier() . '::', ACCESS_ADD)
+            'has_moderate_permission' => $this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_MODERATE),
+            'filter_by_ownership' => !$this->permissionApi->hasPermission($this->permissionComponent, $this->idValue . '::', ACCESS_ADD)
         ];
     
         $workflowRoles = $this->prepareWorkflowAdditions(false);
@@ -110,7 +111,7 @@ abstract class AbstractEditHandler extends EditHandler
             $options['translations'][$language] = isset($this->templateParameters[$this->objectTypeLower . $language]) ? $this->templateParameters[$this->objectTypeLower . $language] : [];
         }
     
-        return $this->formFactory->create('MU\BloggingModule\Form\Type\PostType', $this->entityRef, $options);
+        return $this->formFactory->create(PostType::class, $this->entityRef, $options);
     }
 
 
@@ -157,7 +158,14 @@ abstract class AbstractEditHandler extends EditHandler
         $objectIsPersisted = $args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel');
     
         if (null !== $this->returnTo) {
-            $isDisplayOrEditPage = substr($this->returnTo, -7) == 'display' || substr($this->returnTo, -4) == 'edit';
+            $refererParts = explode('/', $this->returnTo);
+            $isDisplayPage = $refererParts[count($refererParts)-2] == 'post';
+            if ($isDisplayPage) {
+                // update slug for proper redirect to display page
+                $refererParts[count($refererParts)-1] = $this->entityRef->getSlug();
+                $this->returnTo = implode('/', $refererParts);
+            }
+            $isDisplayOrEditPage = $isDisplayPage || substr($this->returnTo, -4) == 'edit';
             if (!$isDisplayOrEditPage || $objectIsPersisted) {
                 // return to referer
                 return $this->returnTo;
@@ -257,9 +265,9 @@ abstract class AbstractEditHandler extends EditHandler
         try {
             // execute the workflow action
             $success = $this->workflowHelper->executeAction($entity, $action);
-        } catch(\Exception $e) {
-            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $e->getMessage());
-            $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'post', 'id' => $entity->createCompositeIdentifier(), 'errorMessage' => $e->getMessage()];
+        } catch(\Exception $exception) {
+            $flashBag->add('error', $this->__f('Sorry, but an error occured during the %action% action. Please apply the changes again!', ['%action%' => $action]) . ' ' . $exception->getMessage());
+            $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entity' => 'post', 'id' => $entity->getKey(), 'errorMessage' => $exception->getMessage()];
             $this->logger->error('{app}: User {user} tried to edit the {entity} with id {id}, but failed. Error details: {errorMessage}.', $logArgs);
         }
     
@@ -267,9 +275,7 @@ abstract class AbstractEditHandler extends EditHandler
     
         if ($success && $this->templateParameters['mode'] == 'create') {
             // store new identifier
-            foreach ($this->idFields as $idField) {
-                $this->idValues[$idField] = $entity[$idField];
-            }
+            $this->idValue = $entity->getKey();
         }
     
         return $success;
@@ -315,11 +321,7 @@ abstract class AbstractEditHandler extends EditHandler
             case 'userDisplay':
             case 'adminDisplay':
                 if ($args['commandName'] != 'delete' && !($this->templateParameters['mode'] == 'create' && $args['commandName'] == 'cancel')) {
-                    foreach ($this->idFields as $idField) {
-                        $urlArgs[$idField] = $this->idValues[$idField];
-                    }
-    
-                    return $this->router->generate($routePrefix . 'display', $urlArgs);
+                    return $this->router->generate($routePrefix . 'display', $this->entityRef->createUrlArgs());
                 }
     
                 return $this->getDefaultReturnUrl($args);

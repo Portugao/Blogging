@@ -50,23 +50,12 @@ abstract class AbstractExternalController extends AbstractController
         
         $entityFactory = $this->get('mu_blogging_module.entity_factory');
         $repository = $entityFactory->getRepository($objectType);
-        $repository->setRequest($this->get('request_stack')->getCurrentRequest());
-        $idValues = $controllerHelper->retrieveIdentifier($request, [], $objectType);
-        
-        $hasIdentifier = $controllerHelper->isValidIdentifier($idValues);
-        if (!$hasIdentifier) {
-            return new Response($this->__('Error! Invalid identifier received.'));
-        }
         
         // assign object data fetched from the database
-        $entity = $repository->selectById($idValues);
+        $entity = $repository->selectById($id);
         if (null === $entity) {
             return new Response($this->__('No such item.'));
         }
-        
-        $entity->initWorkflow();
-        
-        $instance = $entity->createCompositeIdentifier() . '::';
         
         $templateParameters = [
             'objectType' => $objectType,
@@ -75,11 +64,8 @@ abstract class AbstractExternalController extends AbstractController
             'displayMode' => $displayMode
         ];
         
-        $contextArgs = ['controller' => $objectType, 'action' => 'display'];
-        $additionalParameters = $repository->getAdditionalTemplateParameters($this->get('mu_blogging_module.image_helper'), 'controllerAction', $contextArgs);
-        $templateParameters = array_merge($templateParameters, $additionalParameters);
-        
-        $templateParameters['featureActivationHelper'] = $this->get('mu_blogging_module.feature_activation_helper');
+        $contextArgs = ['controller' => 'external', 'action' => 'display'];
+        $templateParameters = $this->get('mu_blogging_module.controller_helper')->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
         
         return $this->render('@MUBloggingModule/External/' . ucfirst($objectType) . '/display.html.twig', $templateParameters);
     }
@@ -120,7 +106,6 @@ abstract class AbstractExternalController extends AbstractController
         }
         
         $repository = $this->get('mu_blogging_module.entity_factory')->getRepository($objectType);
-        $repository->setRequest($request);
         if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
             $sort = $repository->getDefaultSortingField();
         }
@@ -169,25 +154,26 @@ abstract class AbstractExternalController extends AbstractController
         }
         
         $where = '';
-        $sortParam = $sort . ' ' . $sdir;
+        $orderBy = $sort . ' ' . $sdir;
+        
+        $qb = $repository->getListQueryBuilder($where, $orderBy);
         
         if (true === $templateParameters['onlyImages'] && $templateParameters['imageField'] != '') {
-            $searchTerm = '';
             $imageField = $templateParameters['imageField'];
-        
-            $whereParts = [];
+            $orX = $qb->expr()->orX();
             foreach (['gif', 'jpg', 'jpeg', 'jpe', 'png', 'bmp'] as $imageExtension) {
-                $whereParts[] = 'tbl.' . $imageField . ':like:%.' . $imageExtension;
+                $orX->add($qb->expr()->like('tbl.' . $imageField, '%.' . $imageExtension));
             }
         
-            $where = '(' . implode('*', $whereParts) . ')';
+            $qb->andWhere($orX);
         }
         
         if ($searchTerm != '') {
-            list($entities, $objectCount) = $repository->selectSearch($searchTerm, [], $sortParam, $currentPage, $resultsPerPage);
-        } else {
-            list($entities, $objectCount) = $repository->selectWherePaginated($where, $sortParam, $currentPage, $resultsPerPage);
+            $qb = $this->get('mu_blogging_module.collection_filter_helper')->addSearchFilter($objectType, $qb, $searchTerm);
         }
+        $query = $repository->getQueryFromBuilder($qb);
+        
+        list($entities, $objectCount) = $repository->retrieveCollectionResult($query, true);
         
         if (in_array($objectType, ['post'])) {
             $featureActivationHelper = $this->get('mu_blogging_module.feature_activation_helper');
@@ -196,17 +182,11 @@ abstract class AbstractExternalController extends AbstractController
             }
         }
         
-        foreach ($entities as $k => $entity) {
-            $entity->initWorkflow();
-        }
-        
         $templateParameters['items'] = $entities;
         $templateParameters['finderForm'] = $form->createView();
         
-        $imageHelper = $this->get('mu_blogging_module.image_helper');
-        $templateParameters = array_merge($templateParameters, $repository->getAdditionalTemplateParameters($imageHelper, 'controllerAction', ['action' => 'display']));
-        
-        $templateParameters['featureActivationHelper'] = $this->get('mu_blogging_module.feature_activation_helper');
+        $contextArgs = ['controller' => 'external', 'action' => 'display'];
+        $templateParameters = $this->get('mu_blogging_module.controller_helper')->addTemplateParameters($objectType, $templateParameters, 'controllerAction', $contextArgs);
         
         $templateParameters['pager'] = [
             'numitems' => $objectCount,

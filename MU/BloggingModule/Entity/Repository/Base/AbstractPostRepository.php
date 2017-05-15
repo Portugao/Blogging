@@ -20,17 +20,10 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Zikula\Component\FilterUtil\FilterUtil;
-use Zikula\Component\FilterUtil\Config as FilterConfig;
-use Zikula\Component\FilterUtil\PluginManager as FilterPluginManager;
-use Zikula\Component\FilterUtil\Plugin\DatePlugin as DateFilter;
-use Zikula\Core\FilterUtil\CategoryPlugin as CategoryFilter;
 use Zikula\Common\Translator\TranslatorInterface;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 use MU\BloggingModule\Entity\PostEntity;
-use MU\BloggingModule\Helper\FeatureActivationHelper;
-use MU\BloggingModule\Helper\ImageHelper;
+use MU\BloggingModule\Helper\CollectionFilterHelper;
 
 /**
  * Repository class used to implement own convenience methods for performing certain DQL queries.
@@ -39,17 +32,20 @@ use MU\BloggingModule\Helper\ImageHelper;
  */
 abstract class AbstractPostRepository extends EntityRepository
 {
-    
     /**
      * @var string The default sorting field/expression
      */
     protected $defaultSortingField = 'title';
 
     /**
-     * @var Request The request object given by the calling controller
+     * @var CollectionFilterHelper
      */
-    protected $request;
-    
+    protected $collectionFilterHelper = null;
+
+    /**
+     * @var bool Whether translations are enabled or not
+     */
+    protected $translationsEnabled = true;
 
     /**
      * Retrieves an array with all fields which can be used for sorting instances.
@@ -62,6 +58,7 @@ abstract class AbstractPostRepository extends EntityRepository
             'workflowState',
             'title',
             'descriptionForGoogle',
+            'forWhichLanguage',
             'imageForArticle',
             'descriptionOfImageForArticle',
             'summaryOfPost',
@@ -104,160 +101,59 @@ abstract class AbstractPostRepository extends EntityRepository
     }
     
     /**
-     * Returns the request.
+     * Returns the collection filter helper.
      *
-     * @return Request
+     * @return CollectionFilterHelper
      */
-    public function getRequest()
+    public function getCollectionFilterHelper()
     {
-        return $this->request;
+        return $this->collectionFilterHelper;
     }
     
     /**
-     * Sets the request.
+     * Sets the collection filter helper.
      *
-     * @param Request $request
+     * @param CollectionFilterHelper $collectionFilterHelper
      *
      * @return void
      */
-    public function setRequest($request)
+    public function setCollectionFilterHelper($collectionFilterHelper)
     {
-        if ($this->request != $request) {
-            $this->request = $request;
+        if ($this->collectionFilterHelper != $collectionFilterHelper) {
+            $this->collectionFilterHelper = $collectionFilterHelper;
         }
     }
     
-
     /**
-     * Returns name of the field used as title / name for entities of this repository.
+     * Returns the translations enabled.
      *
-     * @return string Name of field to be used as title
+     * @return bool
      */
-    public function getTitleFieldName()
+    public function getTranslationsEnabled()
     {
-        return 'title';
+        return $this->translationsEnabled;
     }
     
     /**
-     * Returns name of the field used for describing entities of this repository.
+     * Sets the translations enabled.
      *
-     * @return string Name of field to be used as description
+     * @param bool $translationsEnabled
+     *
+     * @return void
      */
-    public function getDescriptionFieldName()
+    public function setTranslationsEnabled($translationsEnabled)
     {
-        return 'summaryOfPost';
-    }
-    
-    /**
-     * Returns name of first upload field which is capable for handling images.
-     *
-     * @return string Name of field to be used for preview images
-     */
-    public function getPreviewFieldName()
-    {
-        return 'imageForArticle';
-    }
-    
-    /**
-     * Returns name of the date(time) field to be used for representing the start
-     * of this object. Used for providing meta data to the tag module.
-     *
-     * @return string Name of field to be used as date
-     */
-    public function getStartDateFieldName()
-    {
-        $fieldName = 'startDate';
-    
-        return $fieldName;
-    }
-
-    /**
-     * Returns an array of additional template variables which are specific to the object type treated by this repository.
-     *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args    Additional arguments
-     *
-     * @return array List of template variables to be assigned
-     */
-    public function getAdditionalTemplateParameters(ImageHelper $imageHelper, $context = '', $args = [])
-    {
-        if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType'])) {
-            $context = 'controllerAction';
+        if ($this->translationsEnabled != $translationsEnabled) {
+            $this->translationsEnabled = isset($translationsEnabled) ? $translationsEnabled : '';
         }
-    
-        $templateParameters = [];
-    
-        if ($context == 'controllerAction') {
-            if (!isset($args['action'])) {
-                $args['action'] = $this->getRequest()->query->getAlpha('func', 'index');
-            }
-            if (in_array($args['action'], ['index', 'view'])) {
-                $templateParameters = $this->getViewQuickNavParameters($context, $args);
-            }
-    
-            // initialise Imagine runtime options
-            $objectType = 'post';
-            $thumbRuntimeOptions = [];
-            $thumbRuntimeOptions[$objectType . 'ImageForArticle'] = $imageHelper->getRuntimeOptions($objectType, 'imageForArticle', $context, $args);
-            $templateParameters['thumbRuntimeOptions'] = $thumbRuntimeOptions;
-            if (in_array($args['action'], ['display', 'edit', 'view'])) {
-                // use separate preset for images in related items
-                $templateParameters['relationThumbRuntimeOptions'] = $imageHelper->getCustomRuntimeOptions('', '', 'MUBloggingModule_relateditem', $context, $args);
-            }
-        }
-    
-        // in the concrete child class you could do something like
-        // $parameters = parent::getAdditionalTemplateParameters($imageHelper, $context, $args);
-        // $parameters['myvar'] = 'myvalue';
-        // return $parameters;
-    
-        return $templateParameters;
     }
-    /**
-     * Returns an array of additional template variables for view quick navigation forms.
-     *
-     * @param string $context Usage context (allowed values: controllerAction, api, actionHandler, block, contentType)
-     * @param array  $args    Additional arguments
-     *
-     * @return array List of template variables to be assigned
-     */
-    protected function getViewQuickNavParameters($context = '', $args = [])
-    {
-        if (!in_array($context, ['controllerAction', 'api', 'actionHandler', 'block', 'contentType'])) {
-            $context = 'controllerAction';
-        }
     
-        $parameters = [];
-        $categoryHelper = \ServiceUtil::get('mu_blogging_module.category_helper');
-        $parameters['catId'] = $this->getRequest()->query->get('catId', '');
-        $parameters['catIdList'] = $categoryHelper->retrieveCategoriesFromRequest('post', 'GET');
-        $parameters['post'] = $this->getRequest()->query->get('post', 0);
-        $parameters['workflowState'] = $this->getRequest()->query->get('workflowState', '');
-        $parameters['positionOfAdvertising1'] = $this->getRequest()->query->get('positionOfAdvertising1', '');
-        $parameters['positionOfBlock'] = $this->getRequest()->query->get('positionOfBlock', '');
-        $parameters['positionOfAdvertising2'] = $this->getRequest()->query->get('positionOfAdvertising2', '');
-        $parameters['positionOfBlock2'] = $this->getRequest()->query->get('positionOfBlock2', '');
-        $parameters['positionOfAdvertising3'] = $this->getRequest()->query->get('positionOfAdvertising3', '');
-        $parameters['positionOfBlock3'] = $this->getRequest()->query->get('positionOfBlock3', '');
-        $parameters['similarArticles'] = $this->getRequest()->query->get('similarArticles', '');
-        $parameters['q'] = $this->getRequest()->query->get('q', '');
-        
-    
-        // in the concrete child class you could do something like
-        // $parameters = parent::getViewQuickNavParameters($context, $args);
-        // $parameters['myvar'] = 'myvalue';
-        // return $parameters;
-    
-        return $parameters;
-    }
 
     /**
      * Helper method for truncating the table.
      * Used during installation when inserting default data.
      *
      * @param LoggerInterface $logger Logger service instance
-     *
-     * @return void
      */
     public function truncateTable(LoggerInterface $logger)
     {
@@ -277,13 +173,13 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param integer             $newUserId      The new userid of the creator as replacement
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function updateCreator($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function updateCreator($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)
@@ -310,13 +206,13 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param integer             $newUserId      The new userid of the last editor as replacement
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function updateLastEditor($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function updateLastEditor($userId, $newUserId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)
@@ -342,13 +238,13 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param integer             $userId         The userid of the creator to be removed
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function deleteByCreator($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function deleteByCreator($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)) {
@@ -360,7 +256,6 @@ abstract class AbstractPostRepository extends EntityRepository
            ->where('tbl.createdBy = :creator')
            ->setParameter('creator', $userId);
         $query = $qb->getQuery();
-    
         $query->execute();
     
         $logArgs = ['app' => 'MUBloggingModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'posts', 'userid' => $userId];
@@ -373,13 +268,13 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param integer             $userId         The userid of the last editor to be removed
      * @param TranslatorInterface $translator     Translator service instance
      * @param LoggerInterface     $logger         Logger service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
      *
      * @return void
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
-    public function deleteByLastEditor($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApi $currentUserApi)
+    public function deleteByLastEditor($userId, TranslatorInterface $translator, LoggerInterface $logger, CurrentUserApiInterface $currentUserApi)
     {
         // check id parameter
         if ($userId == 0 || !is_numeric($userId)) {
@@ -391,7 +286,6 @@ abstract class AbstractPostRepository extends EntityRepository
            ->where('tbl.updatedBy = :editor')
            ->setParameter('editor', $userId);
         $query = $qb->getQuery();
-    
         $query->execute();
     
         $logArgs = ['app' => 'MUBloggingModule', 'user' => $currentUserApi->get('uname'), 'entities' => 'posts', 'userid' => $userId];
@@ -401,10 +295,12 @@ abstract class AbstractPostRepository extends EntityRepository
     /**
      * Adds an array of id filters to given query instance.
      *
-     * @param mixed        $idList The array of ids to use to retrieve the object
+     * @param array        $idList The array of ids to use to retrieve the object
      * @param QueryBuilder $qb     Query builder to be enhanced
      *
      * @return QueryBuilder Enriched query builder instance
+     *
+     * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
     protected function addIdListFilter($idList, QueryBuilder $qb)
     {
@@ -416,15 +312,7 @@ abstract class AbstractPostRepository extends EntityRepository
                 throw new InvalidArgumentException('Invalid identifier received.');
             }
     
-            if (is_array($id)) {
-                $andX = $qb->expr()->andX();
-                foreach ($id as $fieldName => $fieldValue) {
-                    $andX->add($qb->expr()->eq('tbl.' . $fieldName, $fieldValue));
-                }
-                $orX->add($andX);
-            } else {
-                $orX->add($qb->expr()->eq('tbl.id', $id));
-            }
+            $orX->add($qb->expr()->eq('tbl.id', $id));
         }
     
         $qb->andWhere($orX);
@@ -439,9 +327,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return array|postEntity retrieved data array or postEntity instance
-     *
-     * @throws InvalidArgumentException Thrown if invalid parameters are received
+     * @return array|postEntity Retrieved data array or postEntity instance
      */
     public function selectById($id = 0, $useJoins = true, $slimMode = false)
     {
@@ -457,9 +343,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return ArrayCollection collection containing retrieved postEntity instances
-     *
-     * @throws InvalidArgumentException Thrown if invalid parameters are received
+     * @return ArrayCollection Collection containing retrieved postEntity instances
      */
     public function selectByIdList($idList = [0], $useJoins = true, $slimMode = false)
     {
@@ -481,7 +365,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      * @param integer $excludeId Optional id to be excluded (used for unique validation)
      *
-     * @return MU\BloggingModule\Entity\PostEntity retrieved instance of MU\BloggingModule\Entity\PostEntity
+     * @return MU\BloggingModule\Entity\PostEntity Retrieved instance of MU\BloggingModule\Entity\PostEntity
      *
      * @throws InvalidArgumentException Thrown if invalid parameters are received
      */
@@ -497,7 +381,9 @@ abstract class AbstractPostRepository extends EntityRepository
         $qb->andWhere('tbl.slug = :slug')
            ->setParameter('slug', $slugTitle);
     
-        $qb = $this->addExclusion($qb, $excludeId);
+        if ($excludeId > 0) {
+            $qb = $this->addExclusion($qb, [$excludeId]);
+        }
     
         $query = $this->getQueryFromBuilder($qb);
     
@@ -532,13 +418,13 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return QueryBuilder query builder for the given arguments
+     * @return QueryBuilder Query builder for the given arguments
      */
     public function getListQueryBuilder($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
         $qb = $this->genericBaseQuery($where, $orderBy, $useJoins, $slimMode);
-        if (!$useJoins || !$slimMode) {
-            $qb = $this->addCommonViewFilters($qb);
+        if ((!$useJoins || !$slimMode) && null !== $this->collectionFilterHelper) {
+            $qb = $this->collectionFilterHelper->addCommonViewFilters('post', $qb);
         }
     
         return $qb;
@@ -552,7 +438,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return ArrayCollection collection containing retrieved postEntity instances
+     * @return ArrayCollection Collection containing retrieved postEntity instances
      */
     public function selectWhere($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
@@ -560,7 +446,7 @@ abstract class AbstractPostRepository extends EntityRepository
     
         $query = $this->getQueryFromBuilder($qb);
     
-        return $this->retrieveCollectionResult($query, $orderBy, false);
+        return $this->retrieveCollectionResult($query, false);
     }
 
     /**
@@ -593,111 +479,14 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins       Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode       If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return array with retrieved collection and amount of total records affected by this query
+     * @return array Retrieved collection and amount of total records affected by this query
      */
     public function selectWherePaginated($where = '', $orderBy = '', $currentPage = 1, $resultsPerPage = 25, $useJoins = true, $slimMode = false)
     {
         $qb = $this->getListQueryBuilder($where, $orderBy, $useJoins, $slimMode);
         $query = $this->getSelectWherePaginatedQuery($qb, $currentPage, $resultsPerPage);
     
-        return $this->retrieveCollectionResult($query, $orderBy, true);
-    }
-    
-    /**
-     * Adds quick navigation related filter options as where clauses.
-     *
-     * @param QueryBuilder $qb Query builder to be enhanced
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    public function addCommonViewFilters(QueryBuilder $qb)
-    {
-        if (null === $this->getRequest()) {
-            // if no request is set we return (#433)
-            return $qb;
-        }
-    
-        $routeName = $this->getRequest()->get('_route');
-        if (false !== strpos($routeName, 'edit')) {
-            return $qb;
-        }
-    
-        $parameters = $this->getViewQuickNavParameters('', []);
-        foreach ($parameters as $k => $v) {
-            if ($k == 'catId') {
-                // single category filter
-                if ($v > 0) {
-                    $qb->andWhere('tblCategories.category = :category')
-                       ->setParameter('category', $v);
-                }
-            } elseif ($k == 'catIdList') {
-                // multi category filter
-                /* old
-                $qb->andWhere('tblCategories.category IN (:categories)')
-                   ->setParameter('categories', $v);
-                 */
-                $categoryHelper = \ServiceUtil::get('mu_blogging_module.category_helper');
-                $qb = $categoryHelper->buildFilterClauses($qb, 'post', $v);
-            } elseif (in_array($k, ['q', 'searchterm'])) {
-                // quick search
-                if (!empty($v)) {
-                    $qb = $this->addSearchFilter($qb, $v);
-                }
-            } else if (!is_array($v)) {
-                // field filter
-                if ((!is_numeric($v) && $v != '') || (is_numeric($v) && $v > 0)) {
-                    if ($k == 'workflowState' && substr($v, 0, 1) == '!') {
-                        $qb->andWhere('tbl.' . $k . ' != :' . $k)
-                           ->setParameter($k, substr($v, 1, strlen($v)-1));
-                    } elseif (substr($v, 0, 1) == '%') {
-                        $qb->andWhere('tbl.' . $k . ' LIKE :' . $k)
-                           ->setParameter($k, '%' . $v . '%');
-                    } else {
-                        $qb->andWhere('tbl.' . $k . ' = :' . $k)
-                           ->setParameter($k, $v);
-                   }
-                }
-            }
-        }
-    
-        $qb = $this->applyDefaultFilters($qb, $parameters);
-    
-        return $qb;
-    }
-    
-    /**
-     * Adds default filters as where clauses.
-     *
-     * @param QueryBuilder $qb         Query builder to be enhanced
-     * @param array        $parameters List of determined filter options
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function applyDefaultFilters(QueryBuilder $qb, $parameters = [])
-    {
-        if (null === $this->getRequest()) {
-            $this->request = \ServiceUtil::get('request_stack')->getCurrentRequest();
-        }
-        $routeName = $this->request->get('_route');
-        $isAdminArea = false !== strpos($routeName, 'mubloggingmodule_post_admin');
-        if ($isAdminArea) {
-            return $qb;
-        }
-    
-        if (!in_array('workflowState', array_keys($parameters)) || empty($parameters['workflowState'])) {
-            // per default we show approved posts only
-            $onlineStates = ['approved'];
-            $qb->andWhere('tbl.workflowState IN (:onlineStates)')
-               ->setParameter('onlineStates', $onlineStates);
-        }
-        $startDate = null !== $this->getRequest() ? $this->getRequest()->query->get('startDate', date('Y-m-d H:i:s')) : date('Y-m-d H:i:s');
-        $qb->andWhere('(tbl.startDate <= :startDate OR tbl.startDate IS NULL)')
-           ->setParameter('startDate', $startDate);
-        $endDate = null !== $this->getRequest() ? $this->getRequest()->query->get('endDate', date('Y-m-d H:i:s')) : date('Y-m-d H:i:s');
-        $qb->andWhere('(tbl.endDate >= :endDate OR tbl.endDate IS NULL)')
-           ->setParameter('endDate', $endDate);
-    
-        return $qb;
+        return $this->retrieveCollectionResult($query, true);
     }
 
     /**
@@ -710,7 +499,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param integer $resultsPerPage Amount of items to select
      * @param boolean $useJoins       Whether to include joining related objects (optional) (default=true)
      *
-     * @return array with retrieved collection and amount of total records affected by this query
+     * @return array Retrieved collection and amount of total records affected by this query
      */
     public function selectSearch($fragment = '', $exclude = [], $orderBy = '', $currentPage = 1, $resultsPerPage = 25, $useJoins = true)
     {
@@ -719,102 +508,24 @@ abstract class AbstractPostRepository extends EntityRepository
             $qb = $this->addExclusion($qb, $exclude);
         }
     
-        $qb = $this->addSearchFilter($qb, $fragment);
+        if (null !== $this->collectionFilterHelper) {
+            $qb = $this->collectionFilterHelper->addSearchFilter('post', $qb, $fragment);
+        }
     
         $query = $this->getSelectWherePaginatedQuery($qb, $currentPage, $resultsPerPage);
     
-        return $this->retrieveCollectionResult($query, $orderBy, true);
-    }
-    
-    /**
-     * Adds where clause for search query.
-     *
-     * @param QueryBuilder $qb       Query builder to be enhanced
-     * @param string       $fragment The fragment to search for
-     *
-     * @return QueryBuilder Enriched query builder instance
-     */
-    protected function addSearchFilter(QueryBuilder $qb, $fragment = '')
-    {
-        if ($fragment == '') {
-            return $qb;
-        }
-    
-        $filters = [];
-        $parameters = [];
-    
-        $filters[] = 'tbl.workflowState = :searchWorkflowState';
-        $parameters['searchWorkflowState'] = $fragment;
-        $filters[] = 'tbl.title LIKE :searchTitle';
-        $parameters['searchTitle'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.permalink LIKE :searchPermalink';
-        $parameters['searchPermalink'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
-        $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.imageForArticle = :searchImageForArticle';
-        $parameters['searchImageForArticle'] = $fragment;
-        $filters[] = 'tbl.descriptionOfImageForArticle LIKE :searchDescriptionOfImageForArticle';
-        $parameters['searchDescriptionOfImageForArticle'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.summaryOfPost LIKE :searchSummaryOfPost';
-        $parameters['searchSummaryOfPost'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.content LIKE :searchContent';
-        $parameters['searchContent'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.content2 LIKE :searchContent2';
-        $parameters['searchContent2'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.advertising LIKE :searchAdvertising';
-        $parameters['searchAdvertising'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.positionOfAdvertising1 = :searchPositionOfAdvertising1';
-        $parameters['searchPositionOfAdvertising1'] = $fragment;
-        $filters[] = 'tbl.positionOfBlock = :searchPositionOfBlock';
-        $parameters['searchPositionOfBlock'] = $fragment;
-        $filters[] = 'tbl.content3 LIKE :searchContent3';
-        $parameters['searchContent3'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.content4 LIKE :searchContent4';
-        $parameters['searchContent4'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.advertising2 LIKE :searchAdvertising2';
-        $parameters['searchAdvertising2'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.positionOfAdvertising2 = :searchPositionOfAdvertising2';
-        $parameters['searchPositionOfAdvertising2'] = $fragment;
-        $filters[] = 'tbl.positionOfBlock2 = :searchPositionOfBlock2';
-        $parameters['searchPositionOfBlock2'] = $fragment;
-        $filters[] = 'tbl.content5 LIKE :searchContent5';
-        $parameters['searchContent5'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.content6 LIKE :searchContent6';
-        $parameters['searchContent6'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.advertising3 LIKE :searchAdvertising3';
-        $parameters['searchAdvertising3'] = '%' . $fragment . '%';
-        $filters[] = 'tbl.positionOfAdvertising3 = :searchPositionOfAdvertising3';
-        $parameters['searchPositionOfAdvertising3'] = $fragment;
-        $filters[] = 'tbl.positionOfBlock3 = :searchPositionOfBlock3';
-        $parameters['searchPositionOfBlock3'] = $fragment;
-        $filters[] = 'tbl.similarArticles = :searchSimilarArticles';
-        $parameters['searchSimilarArticles'] = $fragment;
-        $filters[] = 'tbl.startDate = :searchStartDate';
-        $parameters['searchStartDate'] = $fragment;
-        $filters[] = 'tbl.endDate = :searchEndDate';
-        $parameters['searchEndDate'] = $fragment;
-        $filters[] = 'tbl.parentid = :searchParentid';
-        $parameters['searchParentid'] = $fragment;
-    
-        $qb->andWhere('(' . implode(' OR ', $filters) . ')');
-    
-        foreach ($parameters as $parameterName => $parameterValue) {
-            $qb->setParameter($parameterName, $parameterValue);
-        }
-    
-        return $qb;
+        return $this->retrieveCollectionResult($query, true);
     }
 
     /**
      * Performs a given database selection and post-processed the results.
      *
      * @param Query   $query       The Query instance to be executed
-     * @param string  $orderBy     The order-by clause to use when retrieving the collection (optional) (default='')
      * @param boolean $isPaginated Whether the given query uses a paginator or not (optional) (default=false)
      *
-     * @return array with retrieved collection and (for paginated queries) the amount of total records affected
+     * @return array Retrieved collection and (for paginated queries) the amount of total records affected
      */
-    public function retrieveCollectionResult(Query $query, $orderBy = '', $isPaginated = false)
+    public function retrieveCollectionResult(Query $query, $isPaginated = false)
     {
         $count = 0;
         if (!$isPaginated) {
@@ -841,7 +552,7 @@ abstract class AbstractPostRepository extends EntityRepository
      *
      * @return QueryBuilder Created query builder instance
      */
-    protected function getCountQuery($where = '', $useJoins = false)
+    public function getCountQuery($where = '', $useJoins = false)
     {
         $selection = 'COUNT(tbl.id) AS numPosts';
         if (true === $useJoins) {
@@ -852,15 +563,17 @@ abstract class AbstractPostRepository extends EntityRepository
         $qb->select($selection)
            ->from('MU\BloggingModule\Entity\PostEntity', 'tbl');
     
+        if (!empty($where)) {
+            $qb->andWhere($where);
+        }
+    
         if (true === $useJoins) {
             $this->addJoinsToFrom($qb);
         }
     
-        $this->genericBaseQueryAddWhere($qb, $where);
-    
         return $qb;
     }
-    
+
     /**
      * Selects entity count with a given where clause.
      *
@@ -868,13 +581,15 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins   Whether to include joining related objects (optional) (default=false)
      * @param array   $parameters List of determined filter options
      *
-     * @return integer amount of affected records
+     * @return integer Amount of affected records
      */
     public function selectCount($where = '', $useJoins = false, $parameters = [])
     {
         $qb = $this->getCountQuery($where, $useJoins);
     
-        $qb = $this->applyDefaultFilters($qb, $parameters);
+        if (null !== $this->collectionFilterHelper) {
+            $qb = $this->collectionFilterHelper->applyDefaultFilters('post', $qb, $parameters);
+        }
     
         $query = $qb->getQuery();
     
@@ -889,7 +604,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param string  $fieldValue The value of the property to be checked
      * @param integer $excludeId  Id of posts to exclude (optional)
      *
-     * @return boolean result of this check, true if the given post does not already exist
+     * @return boolean Result of this check, true if the given post does not already exist
      */
     public function detectUniqueState($fieldName, $fieldValue, $excludeId = 0)
     {
@@ -897,7 +612,9 @@ abstract class AbstractPostRepository extends EntityRepository
         $qb->andWhere('tbl.' . $fieldName . ' = :' . $fieldName)
            ->setParameter($fieldName, $fieldValue);
     
-        $qb = $this->addExclusion($qb, [$excludeId]);
+        if ($excludeId > 0) {
+            $qb = $this->addExclusion($qb, [$excludeId]);
+        }
     
         $query = $qb->getQuery();
     
@@ -914,7 +631,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param boolean $useJoins Whether to include joining related objects (optional) (default=true)
      * @param boolean $slimMode If activated only some basic fields are selected without using any joins (optional) (default=false)
      *
-     * @return QueryBuilder query builder instance to be further processed
+     * @return QueryBuilder Query builder instance to be further processed
      */
     public function genericBaseQuery($where = '', $orderBy = '', $useJoins = true, $slimMode = false)
     {
@@ -944,85 +661,11 @@ abstract class AbstractPostRepository extends EntityRepository
             $this->addJoinsToFrom($qb);
         }
     
-        $this->genericBaseQueryAddWhere($qb, $where);
+        if (!empty($where)) {
+            $qb->andWhere($where);
+        }
+    
         $this->genericBaseQueryAddOrderBy($qb, $orderBy);
-    
-        return $qb;
-    }
-
-    /**
-     * Adds WHERE clause to given query builder.
-     *
-     * @param QueryBuilder $qb    Given query builder instance
-     * @param string       $where The where clause to use when retrieving the collection (optional) (default='')
-     *
-     * @return QueryBuilder query builder instance to be further processed
-     */
-    protected function genericBaseQueryAddWhere(QueryBuilder $qb, $where = '')
-    {
-        if (!empty($where) || null !== $this->getRequest()) {
-            // Use FilterUtil to support generic filtering.
-    
-            // Create filter configuration.
-            $filterConfig = new FilterConfig($qb);
-    
-            // Define plugins to be used during filtering.
-            $filterPluginManager = new FilterPluginManager(
-                $filterConfig,
-    
-                // Array of plugins to load.
-                // If no plugin with default = true given the compare plugin is loaded and used for unconfigured fields.
-                // Multiple objects of the same plugin with different configurations are possible.
-                [
-                    new DateFilter(['startDate', 'endDate'/*, 'tblJoin.someJoinedField'*/])
-                ],
-    
-                // Allowed operators per field.
-                // Array in the form "field name => operator array".
-                // If a field is not set in this array all operators are allowed.
-                []
-            );
-    
-            // add category plugins dynamically for all existing registry properties
-            // we need to create one category plugin instance for each one
-            $categoryHelper = \ServiceUtil::get('mu_blogging_module.category_helper');
-            $categoryProperties = $categoryHelper->getAllProperties('post');
-            foreach ($categoryProperties as $propertyName => $registryId) {
-                $config['plugins'][] = new CategoryFilter('MUBloggingModule', $propertyName, 'categories' . ucfirst($propertyName));
-            }
-    
-            // Name of filter variable(s) (filterX).
-            $filterKey = 'filter';
-    
-            // initialise FilterUtil and assign both query builder and configuration
-            $filterUtil = new FilterUtil($filterPluginManager, $this->getRequest(), $filterKey);
-    
-            // set our given filter
-            if (!empty($where)) {
-                $filterUtil->setFilter($where);
-            }
-    
-            // you could add explicit filters at this point, something like
-            // $filterUtil->addFilter('foo:eq:something,bar:gt:100');
-            // read more at https://github.com/zikula/core/tree/1.4/src/docs/Core-2.0/FilterUtil
-    
-            // now enrich the query builder
-            $filterUtil->enrichQuery();
-        }
-    
-        if (null === $this->getRequest()) {
-            // if no request is set we return (#783)
-            return $qb;
-        }
-    
-        
-        $showOnlyOwnEntries = $this->getRequest()->query->getInt('own', 0);
-        if ($showOnlyOwnEntries == 1) {
-            
-            $userId = $this->getRequest()->getSession()->get('uid');
-            $qb->andWhere('tbl.createdBy = :creator')
-               ->setParameter('creator', $userId);
-        }
     
         return $qb;
     }
@@ -1033,7 +676,7 @@ abstract class AbstractPostRepository extends EntityRepository
      * @param QueryBuilder $qb      Given query builder instance
      * @param string       $orderBy The order-by clause to use when retrieving the collection (optional) (default='')
      *
-     * @return QueryBuilder query builder instance to be further processed
+     * @return QueryBuilder Query builder instance to be further processed
      */
     protected function genericBaseQueryAddOrderBy(QueryBuilder $qb, $orderBy = '')
     {
@@ -1041,45 +684,49 @@ abstract class AbstractPostRepository extends EntityRepository
             // random selection
             $qb->addSelect('MOD(tbl.id, ' . mt_rand(2, 15) . ') AS HIDDEN randomIdentifiers')
                ->add('orderBy', 'randomIdentifiers');
-            $orderBy = '';
-        } elseif (empty($orderBy)) {
+    
+            return $qb;
+        }
+    
+        if (empty($orderBy)) {
             $orderBy = $this->defaultSortingField;
         }
     
-        // add order by clause
-        if (!empty($orderBy)) {
-            if (false === strpos($orderBy, '.')) {
-                $orderBy = 'tbl.' . $orderBy;
-            }
-            if (false !== strpos($orderBy, 'tbl.createdBy')) {
-                $qb->addSelect('tblCreator')
-                   ->leftJoin('tbl.createdBy', 'tblCreator');
-                $orderBy = str_replace('tbl.createdBy', 'tblCreator.uname', $orderBy);
-            }
-            if (false !== strpos($orderBy, 'tbl.updatedBy')) {
-                $qb->addSelect('tblUpdater')
-                   ->leftJoin('tbl.updatedBy', 'tblUpdater');
-                $orderBy = str_replace('tbl.updatedBy', 'tblUpdater.uname', $orderBy);
-            }
-            $qb->add('orderBy', $orderBy);
+        if (empty($orderBy)) {
+            return $qb;
         }
+    
+        // add order by clause
+        if (false === strpos($orderBy, '.')) {
+            $orderBy = 'tbl.' . $orderBy;
+        }
+        if (false !== strpos($orderBy, 'tbl.createdBy')) {
+            $qb->addSelect('tblCreator')
+               ->leftJoin('tbl.createdBy', 'tblCreator');
+            $orderBy = str_replace('tbl.createdBy', 'tblCreator.uname', $orderBy);
+        }
+        if (false !== strpos($orderBy, 'tbl.updatedBy')) {
+            $qb->addSelect('tblUpdater')
+               ->leftJoin('tbl.updatedBy', 'tblUpdater');
+            $orderBy = str_replace('tbl.updatedBy', 'tblUpdater.uname', $orderBy);
+        }
+        $qb->add('orderBy', $orderBy);
     
         return $qb;
     }
 
     /**
-     * Retrieves Doctrine query from query builder, applying FilterUtil and other common actions.
+     * Retrieves Doctrine query from query builder.
      *
      * @param QueryBuilder $qb Query builder instance
      *
-     * @return Query query instance to be further processed
+     * @return Query Query instance to be further processed
      */
     public function getQueryFromBuilder(QueryBuilder $qb)
     {
         $query = $qb->getQuery();
     
-        $featureActivationHelper = \ServiceUtil::get('mu_blogging_module.feature_activation_helper');
-        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, 'post')) {
+        if (true === $this->translationsEnabled) {
             // set the translation query hint
             $query->setHint(
                 Query::HINT_CUSTOM_OUTPUT_WALKER,

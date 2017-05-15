@@ -16,9 +16,12 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Zikula\Core\Doctrine\EntityAccess;
 use MU\BloggingModule\BloggingEvents;
@@ -32,14 +35,30 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     use ContainerAwareTrait;
 
     /**
-     * EntityLifecycleListener constructor.
+     * @var EventDispatcherInterface
      */
-    public function __construct(ContainerInterface $container)
+    protected $eventDispatcher;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * EntityLifecycleListener constructor.
+     *
+     * @param ContainerInterface       $container
+     * @param EventDispatcherInterface $eventDispatcher EventDispatcher service instance
+     * @param LoggerInterface          $logger          Logger service instance
+     */
+    public function __construct(
+        ContainerInterface $container,
+        EventDispatcherInterface $eventDispatcher,
+        LoggerInterface $logger)
     {
-        if (null === $container) {
-            $container = \ServiceUtil::getManager();
-        }
         $this->setContainer($container);
+        $this->eventDispatcher = $eventDispatcher;
+        $this->logger = $logger;
     }
 
     /**
@@ -72,35 +91,12 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
+        
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
-        $event = new $filterEventClass($entity);
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_PRE_REMOVE'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_PRE_REMOVE'), $event);
         if ($event->isPropagationStopped()) {
             return false;
-        }
-        
-        // delete workflow for this entity
-        $workflowHelper = $this->container->get('mu_blogging_module.workflow_helper');
-        $workflowHelper->normaliseWorkflowData($entity);
-        $workflow = $entity['__WORKFLOW__'];
-        if ($workflow['id'] > 0) {
-            $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-            $result = true;
-            try {
-                $workflow = $entityManager->find('Zikula\Core\Doctrine\Entity\WorkflowEntity', $workflow['id']);
-                $entityManager->remove($workflow);
-                $entityManager->flush();
-            } catch (\Exception $e) {
-                $result = false;
-            }
-            if (false === $result) {
-                $flashBag = $this->container->get('session')->getFlashBag();
-                $flashBag->add('error', $this->container->get('translator.default')->__('Error! Could not remove stored workflow. Deletion has been aborted.'));
-        
-                return false;
-            }
         }
     }
 
@@ -120,29 +116,29 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
+        
         $objectType = $entity->get_objectType();
-        $objectId = $entity->createCompositeIdentifier();
         
-        $uploadHelper = $this->container->get('mu_blogging_module.upload_helper');
         $uploadFields = $this->getUploadFields($objectType);
-        foreach ($uploadFields as $uploadField) {
-            if (empty($entity[$uploadField])) {
-                continue;
-            }
+        if (count($uploadFields) > 0) {
+            $uploadHelper = $this->container->get('mu_blogging_module.upload_helper');
+            foreach ($uploadFields as $uploadField) {
+                if (empty($entity[$uploadField])) {
+                    continue;
+                }
         
-            // remove upload file
-            $uploadHelper->deleteUploadFile($entity, $uploadField);
+                // remove upload file
+                $uploadHelper->deleteUploadFile($entity, $uploadField);
+            }
         }
         
-        $logger = $this->container->get('logger');
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->container->get('zikula_users_module.current_user')->get('uname'), 'entity' => $objectType, 'id' => $objectId];
-        $logger->debug('{app}: User {user} removed the {entity} with id {id}.', $logArgs);
+        $currentUserApi = $this->container->get('zikula_users_module.current_user');
+        $logArgs = ['app' => 'MUBloggingModule', 'user' => $currentUserApi->get('uname'), 'entity' => $objectType, 'id' => $entity->getKey()];
+        $this->logger->debug('{app}: User {user} removed the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($objectType) . 'Event';
-        $event = new $filterEventClass($entity);
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($objectType) . '_POST_REMOVE'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($objectType) . '_POST_REMOVE'), $event);
     }
 
     /**
@@ -161,7 +157,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
+        
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         foreach ($uploadFields as $uploadField) {
             if (empty($entity[$uploadField])) {
@@ -174,11 +170,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             $entity[$uploadField] = $entity[$uploadField]->getFilename();
         }
         
-        
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
-        $event = new $filterEventClass($entity);
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_PRE_PERSIST'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_PRE_PERSIST'), $event);
         if ($event->isPropagationStopped()) {
             return false;
         }
@@ -197,16 +191,14 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
-        $objectId = $entity->createCompositeIdentifier();
-        $logger = $this->container->get('logger');
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->container->get('zikula_users_module.current_user')->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $objectId];
-        $logger->debug('{app}: User {user} created the {entity} with id {id}.', $logArgs);
+        
+        $currentUserApi = $this->container->get('zikula_users_module.current_user');
+        $logArgs = ['app' => 'MUBloggingModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $entity->getKey()];
+        $this->logger->debug('{app}: User {user} created the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
-        $event = new $filterEventClass($entity);
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_POST_PERSIST'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_POST_PERSIST'), $event);
     }
 
     /**
@@ -223,7 +215,7 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
+        
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         foreach ($uploadFields as $uploadField) {
             if (empty($entity[$uploadField])) {
@@ -236,11 +228,9 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
             $entity[$uploadField] = $entity[$uploadField]->getFilename();
         }
         
-        
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
-        $event = new $filterEventClass($entity, $args->getEntityChangeSet());
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_PRE_UPDATE'), $event);
         if ($event->isPropagationStopped()) {
             return false;
         }
@@ -258,16 +248,14 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
-        $objectId = $entity->createCompositeIdentifier();
-        $logger = $this->container->get('logger');
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->container->get('zikula_users_module.current_user')->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $objectId];
-        $logger->debug('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
+        
+        $currentUserApi = $this->container->get('zikula_users_module.current_user');
+        $logArgs = ['app' => 'MUBloggingModule', 'user' => $currentUserApi->get('uname'), 'entity' => $entity->get_objectType(), 'id' => $entity->getKey()];
+        $this->logger->debug('{app}: User {user} updated the {entity} with id {id}.', $logArgs);
         
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
-        $event = new $filterEventClass($entity);
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_POST_UPDATE'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_POST_UPDATE'), $event);
     }
 
     /**
@@ -287,23 +275,21 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-
+        
         // prepare helper fields for uploaded files
         $uploadFields = $this->getUploadFields($entity->get_objectType());
         if (count($uploadFields) > 0) {
+            $uploadHelper = $this->container->get('mu_blogging_module.upload_helper');
             $request = $this->container->get('request_stack')->getCurrentRequest();
             $baseUrl = $request->getSchemeAndHttpHost() . $request->getBasePath();
-            $uploadHelper = $this->container->get('mu_blogging_module.upload_helper');
             foreach ($uploadFields as $fieldName) {
                 $uploadHelper->initialiseUploadField($entity, $fieldName, $baseUrl);
             }
         }
-
         
         // create the filter event and dispatch it
-        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
-        $event = new $filterEventClass($entity);
-        $this->container->get('event_dispatcher')->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_POST_LOAD'), $event);
+        $event = $this->createFilterEvent($entity);
+        $this->eventDispatcher->dispatch(constant('\\MU\\BloggingModule\\BloggingEvents::' . strtoupper($entity->get_objectType()) . '_POST_LOAD'), $event);
     }
 
     /**
@@ -325,13 +311,28 @@ abstract class AbstractEntityLifecycleListener implements EventSubscriber, Conta
     }
 
     /**
+     * Returns a filter event instance for the given entity.
+     *
+     * @param EntityAccess $entity The given entity
+     *
+     * @return Event The created event instance
+     */
+    protected function createFilterEvent($entity)
+    {
+        $filterEventClass = '\\MU\\BloggingModule\\Event\\Filter' . ucfirst($entity->get_objectType()) . 'Event';
+        $event = new $filterEventClass($entity);
+
+        return $event;
+    }
+
+    /**
      * Returns list of upload fields for the given object type.
      *
      * @param string $objectType The object type
      *
      * @return array List of upload fields
      */
-    protected function getUploadFields($objectType)
+    protected function getUploadFields($objectType = '')
     {
         $uploadFields = [];
         switch ($objectType) {

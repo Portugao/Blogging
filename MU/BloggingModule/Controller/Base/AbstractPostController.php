@@ -142,6 +142,7 @@ abstract class AbstractPostController extends AbstractController
             new Column('workflowState'),
             new Column('title'),
             new Column('descriptionForGoogle'),
+            new Column('forWhichLanguage'),
             new Column('imageForArticle'),
             new Column('descriptionOfImageForArticle'),
             new Column('summaryOfPost'),
@@ -158,7 +159,6 @@ abstract class AbstractPostController extends AbstractController
             new Column('updatedBy'),
             new Column('updatedDate'),
         ]);
-        $sortableColumns->setOrderBy($sortableColumns->getColumn($sort), strtoupper($sortdir));
         
         $templateParameters = $controllerHelper->processViewActionParameters($objectType, $sortableColumns, $templateParameters, true);
         
@@ -167,16 +167,13 @@ abstract class AbstractPostController extends AbstractController
             $templateParameters['items'] = $this->get('mu_blogging_module.category_helper')->filterEntitiesByPermission($templateParameters['items']);
         }
         
-        foreach ($templateParameters['items'] as $k => $entity) {
-            $entity->initWorkflow();
-        }
         
         // fetch and return the appropriate template
         return $viewHelper->processTemplate($objectType, 'view', $templateParameters);
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"id" = "slug", "repository_method" = "selectBySlug"})
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
      * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -194,7 +191,7 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"id" = "slug", "repository_method" = "selectBySlug"})
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
      * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -222,12 +219,11 @@ abstract class AbstractPostController extends AbstractController
             throw new AccessDeniedException();
         }
         // create identifier for permission check
-        $instanceId = $post->createCompositeIdentifier();
+        $instanceId = $post->getKey();
         if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
             throw new AccessDeniedException();
         }
         
-        $post->initWorkflow();
         $templateParameters = [
             'routeArea' => $isAdmin ? 'admin' : '',
             $objectType => $post
@@ -314,7 +310,7 @@ abstract class AbstractPostController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"id" = "slug", "repository_method" = "selectBySlug"})
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
      * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -333,7 +329,7 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"id" = "slug", "repository_method" = "selectBySlug"})
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
      * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
@@ -362,9 +358,7 @@ abstract class AbstractPostController extends AbstractController
             throw new AccessDeniedException();
         }
         $logger = $this->get('logger');
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'post', 'id' => $post->createCompositeIdentifier()];
-        
-        $post->initWorkflow();
+        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->get('zikula_users_module.current_user')->get('uname'), 'entity' => 'post', 'id' => $post->getKey()];
         
         // determine available workflow actions
         $workflowHelper = $this->get('mu_blogging_module.workflow_helper');
@@ -395,7 +389,7 @@ abstract class AbstractPostController extends AbstractController
             return $this->redirectToRoute($redirectRoute);
         }
         
-        $form = $this->createForm('MU\BloggingModule\Form\DeleteEntityType', $post);
+        $form = $this->createForm('Zikula\Bundle\FormExtensionBundle\Form\Type\DeletionType', $post);
         
         if ($form->handleRequest($request)->isValid()) {
             if ($form->get('delete')->isClicked()) {
@@ -498,7 +492,6 @@ abstract class AbstractPostController extends AbstractController
             if (null === $entity) {
                 continue;
             }
-            $entity->initWorkflow();
         
             // check if $action can be applied to this entity (may depend on it's current workflow state)
             $allowedActions = $workflowHelper->getActionsForObject($entity);

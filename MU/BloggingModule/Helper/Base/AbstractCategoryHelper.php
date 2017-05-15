@@ -15,12 +15,12 @@ namespace MU\BloggingModule\Helper\Base;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Zikula\CategoriesModule\Api\CategoryRegistryApi;
-use Zikula\CategoriesModule\Api\CategoryPermissionApi;
+use Zikula\CategoriesModule\Api\ApiInterface\CategoryPermissionApiInterface;
+use Zikula\CategoriesModule\Entity\RepositoryInterface\CategoryRegistryRepositoryInterface;
 use Zikula\Common\Translator\TranslatorInterface;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
 
 /**
  * Category helper base class.
@@ -33,11 +33,6 @@ abstract class AbstractCategoryHelper
     protected $translator;
 
     /**
-     * @var SessionInterface
-     */
-    protected $session;
-
-    /**
      * @var Request
      */
     protected $request;
@@ -48,17 +43,17 @@ abstract class AbstractCategoryHelper
     protected $logger;
 
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
 
     /**
-     * @var CategoryRegistryApi
+     * @var CategoryRegistryRepositoryInterface
      */
-    protected $categoryRegistryApi;
+    protected $categoryRegistryRepository;
 
     /**
-     * @var CategoryPermissionApi
+     * @var CategoryPermissionApiInterface
      */
     protected $categoryPermissionApi;
 
@@ -66,56 +61,28 @@ abstract class AbstractCategoryHelper
      * CategoryHelper constructor.
      *
      * @param TranslatorInterface   $translator            Translator service instance
-     * @param SessionInterface      $session               Session service instance
      * @param RequestStack          $requestStack          RequestStack service instance
      * @param LoggerInterface       $logger                Logger service instance
-     * @param CurrentUserApi        $currentUserApi        CurrentUserApi service instance
-     * @param CategoryRegistryApi   $categoryRegistryApi   CategoryRegistryApi service instance
-     * @param CategoryPermissionApi $categoryPermissionApi CategoryPermissionApi service instance
+     * @param CurrentUserApiInterface $currentUserApi        CurrentUserApi service instance
+     * @param CategoryRegistryRepositoryInterface $categoryRegistryRepository CategoryRegistryRepository service instance
+     * @param CategoryPermissionApiInterface $categoryPermissionApi CategoryPermissionApi service instance
      */
     public function __construct(
         TranslatorInterface $translator,
-        SessionInterface $session,
         RequestStack $requestStack,
         LoggerInterface $logger,
-        CurrentUserApi $currentUserApi,
-        CategoryRegistryApi $categoryRegistryApi,
-        CategoryPermissionApi $categoryPermissionApi
+        CurrentUserApiInterface $currentUserApi,
+        CategoryRegistryRepositoryInterface $categoryRegistryRepository,
+        CategoryPermissionApiInterface $categoryPermissionApi
     ) {
         $this->translator = $translator;
-        $this->session = $session;
         $this->request = $requestStack->getCurrentRequest();
         $this->logger = $logger;
         $this->currentUserApi = $currentUserApi;
-        $this->categoryRegistryApi = $categoryRegistryApi;
+        $this->categoryRegistryRepository = $categoryRegistryRepository;
         $this->categoryPermissionApi = $categoryPermissionApi;
     }
 
-    /**
-     * Retrieves the main/default category of MUBloggingModule.
-     *
-     * @param string $objectType The object type to retrieve
-     * @param string $property   Name of category registry property to be used (optional)
-     * @deprecated Use the methods getAllProperties, getAllPropertiesWithMainCat, getMainCatForProperty and getPrimaryProperty instead
-     *
-     * @return mixed Category array on success, false on failure
-     */
-    public function getMainCat($objectType = '', $property = '')
-    {
-        if (empty($objectType)) {
-            throw new InvalidArgumentException($this->translator->__('Invalid object type received.'));
-    	}
-        if (empty($property)) {
-            // default to the primary registry
-            $property = $this->getPrimaryProperty($objectType);
-        }
-    
-        $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname')];
-        $this->logger->warning('{app}: User {user} called CategoryHelper#getMainCat which is deprecated.', $logArgs);
-    
-        return $this->categoryRegistryApi->getModuleCategoryId('MUBloggingModule', ucfirst($objectType) . 'Entity', $property, 32); // 32 == /__System/Modules/Global
-    }
-    
     /**
      * Defines whether multiple selection is enabled for a given object type
      * or not. Subclass can override this method to apply a custom behaviour
@@ -207,7 +174,7 @@ abstract class AbstractCategoryHelper
      * Adds a list of where clauses for a certain list of categories to a given query builder.
      *
      * @param QueryBuilder $queryBuilder Query builder instance to be enhanced
-     * @param string       $objectType   The object type to be treated (optional)
+     * @param string       $objectType   The treated object type (optional)
      * @param array        $catIds       Category ids grouped by property name
      *
      * @return QueryBuilder The enriched query builder instance
@@ -265,7 +232,17 @@ abstract class AbstractCategoryHelper
             throw new InvalidArgumentException($this->translator->__('Invalid object type received.'));
     	}
     
-        return $this->categoryRegistryApi->getModuleRegistriesIds('MUBloggingModule', ucfirst($objectType) . 'Entity');
+        $moduleRegistries = $this->categoryRegistryRepository->findBy([
+            'modname' => 'MUBloggingModule',
+            'entityname' => ucfirst($objectType) . 'Entity'
+        ]);
+    
+        $result = [];
+        foreach ($moduleRegistries as $registry) {
+            $result[$registry['property']] = $registry['id'];
+        }
+    
+        return $result;
     }
     
     /**
@@ -282,7 +259,18 @@ abstract class AbstractCategoryHelper
             throw new InvalidArgumentException($this->translator->__('Invalid object type received.'));
     	}
     
-        return $this->categoryRegistryApi->getModuleCategoryIds('MUBloggingModule', ucfirst($objectType) . 'Entity', $arrayKey);
+        $moduleRegistries = $this->categoryRegistryRepository->findBy([
+            'modname' => 'MUBloggingModule',
+            'entityname' => ucfirst($objectType) . 'Entity'
+        ], ['id' => 'ASC']);
+    
+        $result = [];
+        foreach ($moduleRegistries as $registry) {
+            $registry = $registry->toArray();
+            $result[$registry[$arrayKey]] = $registry['category']->getId();
+        }
+    
+        return $result;
     }
     
     /**
@@ -299,7 +287,12 @@ abstract class AbstractCategoryHelper
             throw new InvalidArgumentException($this->translator->__('Invalid object type received.'));
     	}
     
-        return $this->categoryRegistryApi->getModuleCategoryId('MUBloggingModule', ucfirst($objectType) . 'Entity', $property);
+        $registries = $this->getAllPropertiesWithMainCat($objectType, 'property');
+        if ($registries && isset($registries[$property]) && $registries[$property]) {
+            return $registries[$property];
+        }
+    
+        return null;
     }
     
     /**
@@ -342,26 +335,6 @@ abstract class AbstractCategoryHelper
      */
     public function hasPermission($entity)
     {
-        $objectType = $entity->get_objectType();
-        $categories = $entity['categories'];
-    
-        $registries = $this->getAllProperties($objectType);
-        $registries = array_flip($registries);
-    
-        $categoryInfo = [];
-        foreach ($categories as $category) {
-            $registryId = $category->getCategoryRegistryId();
-            if (!isset($registries[$registryId])) {
-                // seems this registry has been deleted
-                continue;
-            }
-            $registryName = $registries[$registryId];
-            if (!isset($categoryInfo[$registryName])) {
-                $categoryInfo[$registryName] = [];
-            }
-            $categoryInfo[$registryName][] = $category->getCategory()->toArray();
-        }
-    
-        return $this->categoryPermissionApi->hasCategoryAccess($categoryInfo, ACCESS_OVERVIEW);
+        return $this->categoryPermissionApi->hasCategoryAccess($entity->getCategories()->toArray(), ACCESS_OVERVIEW);
     }
 }

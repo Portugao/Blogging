@@ -1,0 +1,41 @@
+workflow:
+    workflows:
+        mubloggingmodule_standard:
+            type: state_machine
+            marking_store:
+                type: single_state
+                arguments:
+                    - workflowState
+            supports:
+                - MU\BloggingModule\Entity\PostEntity
+            places:
+                - initial
+                - waiting
+                - approved
+                - suspended
+                - deleted
+            transitions:
+                updatewaiting:
+                    from: waiting
+                    to: waiting
+                submit:
+                    from: initial
+                    to: waiting
+                approve:
+                    from: [initial, waiting]
+                    to: approved
+                unpublish:
+                    from: approved
+                    to: suspended
+                publish:
+                    from: suspended
+                    to: approved
+                updateapproved:
+                    from: approved
+                    to: approved
+                updatesuspended:
+                    from: suspended
+                    to: suspended
+                delete:
+                    from: [waiting, approved, suspended]
+                    to: deleted

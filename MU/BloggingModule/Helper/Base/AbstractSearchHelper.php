@@ -14,19 +14,22 @@ namespace MU\BloggingModule\Helper\Base;
 
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Query\Expr\Composite;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\Core\RouteUrl;
-use Zikula\PermissionsModule\Api\PermissionApi;
+use Zikula\PermissionsModule\Api\ApiInterface\PermissionApiInterface;
 use Zikula\SearchModule\Entity\SearchResultEntity;
 use Zikula\SearchModule\SearchableInterface;
-use MU\BloggingModule\Entity\Factory\BloggingFactory;
+use MU\BloggingModule\Entity\Factory\EntityFactory;
 use MU\BloggingModule\Helper\CategoryHelper;
 use MU\BloggingModule\Helper\ControllerHelper;
+use MU\BloggingModule\Helper\EntityDisplayHelper;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
 
 /**
@@ -37,14 +40,9 @@ abstract class AbstractSearchHelper implements SearchableInterface
     use TranslatorTrait;
     
     /**
-     * @var PermissionApi
+     * @var PermissionApiInterface
      */
     protected $permissionApi;
-    
-    /**
-     * @var EngineInterface
-     */
-    private $templateEngine;
     
     /**
      * @var SessionInterface
@@ -57,7 +55,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
     private $request;
     
     /**
-     * @var BloggingFactory
+     * @var EntityFactory
      */
     private $entityFactory;
     
@@ -65,6 +63,11 @@ abstract class AbstractSearchHelper implements SearchableInterface
      * @var ControllerHelper
      */
     private $controllerHelper;
+    
+    /**
+     * @var EntityDisplayHelper
+     */
+    protected $entityDisplayHelper;
     
     /**
      * @var FeatureActivationHelper
@@ -79,34 +82,34 @@ abstract class AbstractSearchHelper implements SearchableInterface
     /**
      * SearchHelper constructor.
      *
-     * @param TranslatorInterface $translator   Translator service instance
-     * @param PermissionApi    $permissionApi   PermissionApi service instance
-     * @param EngineInterface  $templateEngine  Template engine service instance
-     * @param SessionInterface $session         Session service instance
-     * @param RequestStack     $requestStack    RequestStack service instance
-     * @param BloggingFactory $entityFactory EntityFactory service instance
-     * @param ControllerHelper $controllerHelper ControllerHelper service instance
+     * @param TranslatorInterface $translator          Translator service instance
+     * @param PermissionApiInterface    $permissionApi   PermissionApi service instance
+     * @param SessionInterface    $session             Session service instance
+     * @param RequestStack        $requestStack        RequestStack service instance
+     * @param EntityFactory       $entityFactory       EntityFactory service instance
+     * @param ControllerHelper    $controllerHelper    ControllerHelper service instance
+     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
-     * @param CategoryHelper   $categoryHelper CategoryHelper service instance
+     * @param CategoryHelper      $categoryHelper      CategoryHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
-        PermissionApi $permissionApi,
-        EngineInterface $templateEngine,
+        PermissionApiInterface $permissionApi,
         SessionInterface $session,
         RequestStack $requestStack,
-        BloggingFactory $entityFactory,
+        EntityFactory $entityFactory,
         ControllerHelper $controllerHelper,
+        EntityDisplayHelper $entityDisplayHelper,
         FeatureActivationHelper $featureActivationHelper,
         CategoryHelper $categoryHelper
     ) {
         $this->setTranslator($translator);
         $this->permissionApi = $permissionApi;
-        $this->templateEngine = $templateEngine;
         $this->session = $session;
         $this->request = $requestStack->getCurrentRequest();
         $this->entityFactory = $entityFactory;
         $this->controllerHelper = $controllerHelper;
+        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->featureActivationHelper = $featureActivationHelper;
         $this->categoryHelper = $categoryHelper;
     }
@@ -124,21 +127,26 @@ abstract class AbstractSearchHelper implements SearchableInterface
     /**
      * @inheritDoc
      */
-    public function getOptions($active, $modVars = null)
+    public function amendForm(FormBuilderInterface $builder)
     {
         if (!$this->permissionApi->hasPermission('MUBloggingModule::', '::', ACCESS_READ)) {
             return '';
         }
     
-        $templateParameters = [];
+        $builder->add('active', HiddenType::class, [
+            'data' => true
+        ]);
     
         $searchTypes = $this->getSearchTypes();
     
         foreach ($searchTypes as $searchType => $typeInfo) {
-            $templateParameters['active_' . $typeInfo['value']] = true;
+            $builder->add('active_' . $searchType, CheckboxType::class, [
+                'value' => $typeInfo['value'],
+                'label' => $typeInfo['label'],
+                'label_attr' => ['class' => 'checkbox-inline'],
+                'required' => false
+            ]);
         }
-    
-        return $this->templateEngine->renderResponse('@MUBloggingModule/Search/options.html.twig', $templateParameters)->getContent();
     }
     
     /**
@@ -154,16 +162,19 @@ abstract class AbstractSearchHelper implements SearchableInterface
         $results = [];
     
         // retrieve list of activated object types
-        $searchTypes = isset($modVars['objectTypes']) ? (array)$modVars['objectTypes'] : [];
-        if (!is_array($searchTypes) || !count($searchTypes)) {
-            if ($this->request->isMethod('GET')) {
-                $searchTypes = $this->request->query->get('mUBloggingModuleSearchTypes', []);
-            } elseif ($this->request->isMethod('POST')) {
-                $searchTypes = $this->request->request->get('mUBloggingModuleSearchTypes', []);
-            }
-        }
+        $searchTypes = $this->getSearchTypes();
     
-        foreach ($searchTypes as $objectType) {
+        foreach ($searchTypes as $searchTypeCode => $typeInfo) {
+            $objectType = $typeInfo['value'];
+            $isActivated = false;
+            if ($this->request->isMethod('GET')) {
+                $isActivated = $this->request->query->get('active_' . $searchTypeCode, false);
+            } elseif ($this->request->isMethod('POST')) {
+                $isActivated = $this->request->request->get('active_' . $searchTypeCode, false);
+            }
+            if (!$isActivated) {
+                continue;
+            }
             $whereArray = [];
             $languageField = null;
             switch ($objectType) {
@@ -172,6 +183,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.title';
                     $whereArray[] = 'tbl.permalink';
                     $whereArray[] = 'tbl.descriptionForGoogle';
+                    $whereArray[] = 'tbl.forWhichLanguage';
                     $whereArray[] = 'tbl.imageForArticle';
                     $whereArray[] = 'tbl.descriptionOfImageForArticle';
                     $whereArray[] = 'tbl.summaryOfPost';
@@ -216,7 +228,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 continue;
             }
     
-            $descriptionField = $repository->getDescriptionFieldName();
+            $descriptionFieldName = $this->entityDisplayHelper->getDescriptionFieldName($objectType);
     
             $entitiesWithDisplayAction = ['post'];
     
@@ -224,9 +236,8 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 $urlArgs = $entity->createUrlArgs();
                 $hasDisplayAction = in_array($objectType, $entitiesWithDisplayAction);
     
-                $instanceId = $entity->createCompositeIdentifier();
                 // perform permission check
-                if (!$this->permissionApi->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', $instanceId . '::', ACCESS_OVERVIEW)) {
+                if (!$this->permissionApi->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', $entity->getKey() . '::', ACCESS_OVERVIEW)) {
                     continue;
                 }
     
@@ -238,15 +249,16 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     }
                 }
     
-                $description = !empty($descriptionField) ? $entity[$descriptionField] : '';
+                $description = !empty($descriptionFieldName) ? $entity[$descriptionFieldName] : '';
                 $created = isset($entity['createdDate']) ? $entity['createdDate'] : null;
     
                 $urlArgs['_locale'] = (null !== $languageField && !empty($entity[$languageField])) ? $entity[$languageField] : $this->request->getLocale();
     
+                $formattedTitle = $this->entityDisplayHelper->getFormattedTitle($entity);
                 $displayUrl = $hasDisplayAction ? new RouteUrl('mubloggingmodule_' . $objectType . '_display', $urlArgs) : '';
     
                 $result = new SearchResultEntity();
-                $result->setTitle($entity->getTitleFromDisplayPattern())
+                $result->setTitle($formattedTitle)
                     ->setText($description)
                     ->setModule('MUBloggingModule')
                     ->setCreated($created)

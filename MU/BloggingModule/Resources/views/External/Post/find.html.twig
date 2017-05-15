@@ -41,18 +41,18 @@
                                 {% if not onlyImages %}
                                     <li>
                                 {% endif %}
-                                    {% set itemId = post.createCompositeIdentifier() %}
+                                    {% set itemId = post.getKey() %}
                                     <a href="#" data-itemid="{{ itemId }}">
                                         {% if onlyImages %}
                                             {% set thumbOptions = attribute(thumbRuntimeOptions, 'post' ~ imageField[:1]|upper ~ imageField[1:]) %}
-                                            <img src="{{ attribute(post, imageField).getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-rounded" />
+                                            <img src="{{ attribute(post, imageField).getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-rounded" />
                                         {% else %}
-                                            {{ post.getTitleFromDisplayPattern() }}
+                                            {{ post|mubloggingmodule_formattedTitle }}
                                         {% endif %}
                                     </a>
-                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug }) }}" />
-                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug }) }}" />
-                                    <input type="hidden" id="title{{ itemId }}" value="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" />
+                                    <input type="hidden" id="path{{ itemId }}" value="{{ path('mubloggingmodule_post_display', { 'slug': post.slug }) }}" />
+                                    <input type="hidden" id="url{{ itemId }}" value="{{ url('mubloggingmodule_post_display', { 'slug': post.slug }) }}" />
+                                    <input type="hidden" id="title{{ itemId }}" value="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" />
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if post.summaryOfPost is not empty %}{{ post.summaryOfPost }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />
                                     {% if onlyImages %}

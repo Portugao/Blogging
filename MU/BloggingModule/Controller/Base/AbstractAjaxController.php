@@ -16,8 +16,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\Core\Controller\AbstractController;
-use Zikula\Core\Response\Ajax\AjaxResponse;
-use Zikula\Core\Response\Ajax\BadDataResponse;
 
 /**
  * Ajax controller base class.
@@ -61,6 +59,7 @@ abstract class AbstractAjaxController extends AbstractController
             }
         }
         
+        // return response
         return new JsonResponse($resultItems);
     }
     
@@ -71,7 +70,7 @@ abstract class AbstractAjaxController extends AbstractController
      * @param string $sort    Sorting field
      * @param string $sortdir Sorting direction
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      */
     public function getItemListFinderAction(Request $request)
     {
@@ -79,7 +78,7 @@ abstract class AbstractAjaxController extends AbstractController
             return true;
         }
         
-        $objectType = $request->request->getAlnum('ot', 'post');
+        $objectType = $request->query->getAlnum('ot', 'post');
         $controllerHelper = $this->get('mu_blogging_module.controller_helper');
         $contextArgs = ['controller' => 'ajax', 'action' => 'getItemListFinder'];
         if (!in_array($objectType, $controllerHelper->getObjectTypes('controllerAction', $contextArgs))) {
@@ -87,22 +86,21 @@ abstract class AbstractAjaxController extends AbstractController
         }
         
         $repository = $this->get('mu_blogging_module.entity_factory')->getRepository($objectType);
-        $repository->setRequest($request);
+        $entityDisplayHelper = $this->get('mu_blogging_module.entity_display_helper');
+        $descriptionFieldName = $entityDisplayHelper->getDescriptionFieldName($objectType);
         
-        $descriptionField = $repository->getDescriptionFieldName();
-        
-        $sort = $request->request->getAlnum('sort', '');
+        $sort = $request->query->getAlnum('sort', '');
         if (empty($sort) || !in_array($sort, $repository->getAllowedSortingFields())) {
             $sort = $repository->getDefaultSortingField();
         }
         
-        $sdir = strtolower($request->request->getAlpha('sortdir', ''));
+        $sdir = strtolower($request->query->getAlpha('sortdir', ''));
         if ($sdir != 'asc' && $sdir != 'desc') {
             $sdir = 'asc';
         }
         
         $where = ''; // filters are processed inside the repository class
-        $searchTerm = $request->request->get('q', '');
+        $searchTerm = $request->query->get('q', '');
         $sortParam = $sort . ' ' . $sdir;
         
         $entities = [];
@@ -115,14 +113,15 @@ abstract class AbstractAjaxController extends AbstractController
         $slimItems = [];
         $component = 'MUBloggingModule:' . ucfirst($objectType) . ':';
         foreach ($entities as $item) {
-            $itemId = $item->createCompositeIdentifier();
+            $itemId = $item->getKey();
             if (!$this->hasPermission($component, $itemId . '::', ACCESS_READ)) {
                 continue;
             }
-            $slimItems[] = $this->prepareSlimItem($repository, $objectType, $item, $itemId, $descriptionField);
+            $slimItems[] = $this->prepareSlimItem($repository, $objectType, $item, $itemId, $descriptionFieldName);
         }
         
-        return new AjaxResponse($slimItems);
+        // return response
+        return new JsonResponse($slimItems);
     }
     
     /**
@@ -139,16 +138,14 @@ abstract class AbstractAjaxController extends AbstractController
     protected function prepareSlimItem($repository, $objectType, $item, $itemId, $descriptionField)
     {
         $previewParameters = [
-            $objectType => $item,
-            'featureActivationHelper' => $this->get('mu_blogging_module.feature_activation_helper')
+            $objectType => $item
         ];
         $contextArgs = ['controller' => $objectType, 'action' => 'display'];
-        $additionalParameters = $repository->getAdditionalTemplateParameters($this->get('mu_blogging_module.image_helper'), 'controllerAction', $contextArgs);
-        $previewParameters = array_merge($previewParameters, $additionalParameters);
+        $previewParameters = $this->get('mu_blogging_module.controller_helper')->addTemplateParameters($objectType, $previewParameters, 'controllerAction', $contextArgs);
     
         $previewInfo = base64_encode($this->get('twig')->render('@MUBloggingModule/External/' . ucfirst($objectType) . '/info.html.twig', $previewParameters));
     
-        $title = $item->getTitleFromDisplayPattern();
+        $title = $this->get('mu_blogging_module.entity_display_helper')->getFormattedTitle($item);
         $description = $descriptionField != '' ? $item[$descriptionField] : '';
     
         return [
@@ -164,7 +161,7 @@ abstract class AbstractAjaxController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return AjaxResponse
+     * @return JsonResponse
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -174,20 +171,18 @@ abstract class AbstractAjaxController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        $postData = $request->request;
-        
-        $objectType = $postData->getAlnum('ot', 'post');
+        $objectType = $request->query->getAlnum('ot', 'post');
         $controllerHelper = $this->get('mu_blogging_module.controller_helper');
         $contextArgs = ['controller' => 'ajax', 'action' => 'checkForDuplicate'];
         if (!in_array($objectType, $controllerHelper->getObjectTypes('controllerAction', $contextArgs))) {
             $objectType = $controllerHelper->getDefaultObjectType('controllerAction', $contextArgs);
         }
         
-        $fieldName = $postData->getAlnum('fn', '');
-        $value = $postData->get('v', '');
+        $fieldName = $request->query->getAlnum('fn', '');
+        $value = $request->query->get('v', '');
         
         if (empty($fieldName) || empty($value)) {
-            return new BadDataResponse($this->__('Error: invalid input.'));
+            return new JsonResponse($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }
         
         // check if the given field is existing and unique
@@ -198,14 +193,10 @@ abstract class AbstractAjaxController extends AbstractController
                     break;
         }
         if (!count($uniqueFields) || !in_array($fieldName, $uniqueFields)) {
-            return new BadDataResponse($this->__('Error: invalid input.'));
+            return new JsonResponse($this->__('Error: invalid input.'), JsonResponse::HTTP_BAD_REQUEST);
         }
         
-        $exclude = $postData->get('ex', '');
-        /* can probably be removed
-         * $createMethod = 'create' . ucfirst($objectType);
-         * $object = $repository = $this->get('mu_blogging_module.entity_factory')->$createMethod();
-         */
+        $exclude = $request->query->getInt('ex', '');
         
         $result = false;
         switch ($objectType) {
@@ -221,8 +212,6 @@ abstract class AbstractAjaxController extends AbstractController
         }
         
         // return response
-        $result = ['isDuplicate' => $result];
-        
-        return new AjaxResponse($result);
+        return new JsonResponse(['isDuplicate' => $result]);
     }
 }

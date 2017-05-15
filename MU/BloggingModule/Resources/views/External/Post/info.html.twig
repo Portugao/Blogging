@@ -1,11 +1,11 @@
 {# Purpose of this template: Display item information for previewing from other modules #}
-<dl id="post{{ post.id }}">
-<dt>{{ post.getTitleFromDisplayPattern()|notifyFilters('blogging.filter_hooks.posts.filter') }}</dt>
+<dl id="post{{ post.getKey() }}">
+<dt>{{ post|mubloggingmodule_formattedTitle|notifyFilters('blogging.filter_hooks.posts.filter')|safeHtml }}</dt>
 <dd>{% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
-            <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+            <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
 {% if post.imageForArticleMeta.isImage %}
     {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-    <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+    <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
 {% else %}
     {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
 {% endif %}

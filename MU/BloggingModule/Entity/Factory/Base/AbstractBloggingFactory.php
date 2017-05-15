@@ -16,6 +16,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 use MU\BloggingModule\Entity\Factory\EntityInitialiser;
+use MU\BloggingModule\Helper\CollectionFilterHelper;
+use MU\BloggingModule\Helper\FeatureActivationHelper;
 
 /**
  * Factory class used to create entities and receive entity repositories.
@@ -33,15 +35,33 @@ abstract class AbstractBloggingFactory
     protected $entityInitialiser;
 
     /**
+     * @var CollectionFilterHelper
+     */
+    protected $collectionFilterHelper;
+
+    /**
+     * @var FeatureActivationHelper
+     */
+    protected $featureActivationHelper;
+
+    /**
      * BloggingFactory constructor.
      *
-     * @param ObjectManager     $objectManager     The object manager to be used for determining the repositories
-     * @param EntityInitialiser $entityInitialiser The entity initialiser for dynamical application of default values
+     * @param ObjectManager          $objectManager          The object manager to be used for determining the repositories
+     * @param EntityInitialiser      $entityInitialiser      The entity initialiser for dynamical application of default values
+     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
+     * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
      */
-    public function __construct(ObjectManager $objectManager, EntityInitialiser $entityInitialiser)
+    public function __construct(
+        ObjectManager $objectManager,
+        EntityInitialiser $entityInitialiser,
+        CollectionFilterHelper $collectionFilterHelper,
+        FeatureActivationHelper $featureActivationHelper)
     {
         $this->objectManager = $objectManager;
         $this->entityInitialiser = $entityInitialiser;
+        $this->collectionFilterHelper = $collectionFilterHelper;
+        $this->featureActivationHelper = $featureActivationHelper;
     }
 
     /**
@@ -55,7 +75,14 @@ abstract class AbstractBloggingFactory
     {
         $entityClass = 'MU\\BloggingModule\\Entity\\' . ucfirst($objectType) . 'Entity';
 
-        return $this->objectManager->getRepository($entityClass);
+        $repository = $this->objectManager->getRepository($entityClass);
+        $repository->setCollectionFilterHelper($this->collectionFilterHelper);
+
+        if (in_array($objectType, ['post'])) {
+            $repository->setTranslationsEnabled($this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, $objectType));
+        }
+
+        return $repository;
     }
 
     /**

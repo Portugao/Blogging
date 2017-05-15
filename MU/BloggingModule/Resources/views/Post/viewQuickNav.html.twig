@@ -88,6 +88,13 @@
             {% if similarArticlesFilter is defined and similarArticlesFilter != true %}
                 </div>
             {% endif %}
+            {% if forWhichLanguageFilter is defined and forWhichLanguageFilter != true %}
+                <div class="hidden">
+            {% endif %}
+                {{ form_row(quickNavForm.forWhichLanguage) }}
+            {% if forWhichLanguageFilter is defined and forWhichLanguageFilter != true %}
+                </div>
+            {% endif %}
             {% if searchFilter is defined and searchFilter != true %}
                 <div class="hidden">
             {% endif %}

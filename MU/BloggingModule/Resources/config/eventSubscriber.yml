@@ -4,6 +4,8 @@ services:
         class: MU\BloggingModule\Listener\EntityLifecycleListener
         arguments:
             - "@service_container"
+            - "@event_dispatcher"
+            - "@logger"
         tags:
             - { name: doctrine.event_subscriber }
     
@@ -73,4 +75,20 @@ services:
             - "@mu_blogging_module.workflow_helper"
         tags:
             - { name: kernel.event_subscriber }
+    
+    mu_blogging_module.workflow_events_listener:
+        class: MU\BloggingModule\Listener\WorkflowEventsListener
+        arguments:
+            - "@zikula_permissions_module.api.permission"
+            - "@mu_blogging_module.notification_helper"
+        tags:
+            - { name: kernel.event_subscriber }
+    
+    stof_doctrine_extensions.listener.sluggable:
+        class: '%stof_doctrine_extensions.listener.sluggable.class%'
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, ["@annotation_reader"] ]
+            - [ setTransliterator, [[MU\BloggingModule\Helper\SlugTransliterator, 'transliterate']]]
     

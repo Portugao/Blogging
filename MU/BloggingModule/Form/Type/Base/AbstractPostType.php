@@ -14,16 +14,33 @@ namespace MU\BloggingModule\Form\Type\Base;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Zikula\Bundle\FormExtensionBundle\Form\Type\LocaleType;
+use Zikula\CategoriesModule\Form\Type\CategoriesType;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
-use Zikula\ExtensionsModule\Api\VariableApi;
-use MU\BloggingModule\Entity\Factory\BloggingFactory;
+use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
+use Zikula\SettingsModule\Api\ApiInterface\LocaleApiInterface;
+use MU\BloggingModule\Entity\Factory\EntityFactory;
+use MU\BloggingModule\Form\Type\Field\MultiListType;
+use MU\BloggingModule\Form\Type\Field\TranslationType;
+use MU\BloggingModule\Form\Type\Field\UploadType;
+use MU\BloggingModule\Form\Type\Field\UserType;
+use MU\BloggingModule\Helper\CollectionFilterHelper;
+use MU\BloggingModule\Helper\EntityDisplayHelper;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
 use MU\BloggingModule\Helper\ListEntriesHelper;
 use MU\BloggingModule\Helper\TranslatableHelper;
@@ -36,12 +53,22 @@ abstract class AbstractPostType extends AbstractType
     use TranslatorTrait;
 
     /**
-     * @var BloggingFactory
+     * @var EntityFactory
      */
     protected $entityFactory;
 
     /**
-     * @var VariableApi
+     * @var CollectionFilterHelper
+     */
+    protected $collectionFilterHelper;
+
+    /**
+     * @var EntityDisplayHelper
+     */
+    protected $entityDisplayHelper;
+
+    /**
+     * @var VariableApiInterface
      */
     protected $variableApi;
 
@@ -56,6 +83,11 @@ abstract class AbstractPostType extends AbstractType
     protected $listHelper;
 
     /**
+     * @var LocaleApiInterface
+     */
+    protected $localeApi;
+
+    /**
      * @var FeatureActivationHelper
      */
     protected $featureActivationHelper;
@@ -64,25 +96,34 @@ abstract class AbstractPostType extends AbstractType
      * PostType constructor.
      *
      * @param TranslatorInterface $translator     Translator service instance
-     * @param BloggingFactory        $entityFactory Entity factory service instance
-     * @param VariableApi         $variableApi VariableApi service instance
+     * @param EntityFactory       $entityFactory EntityFactory service instance
+     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
+     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
+     * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
+     * @param LocaleApiInterface   $localeApi      LocaleApi service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
-        BloggingFactory $entityFactory,
-        VariableApi $variableApi,
+        EntityFactory $entityFactory,
+        CollectionFilterHelper $collectionFilterHelper,
+        EntityDisplayHelper $entityDisplayHelper,
+        VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
+        LocaleApiInterface $localeApi,
         FeatureActivationHelper $featureActivationHelper
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
+        $this->collectionFilterHelper = $collectionFilterHelper;
+        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->variableApi = $variableApi;
         $this->translatableHelper = $translatableHelper;
         $this->listHelper = $listHelper;
+        $this->localeApi = $localeApi;
         $this->featureActivationHelper = $featureActivationHelper;
     }
 
@@ -138,7 +179,7 @@ abstract class AbstractPostType extends AbstractType
     public function addEntityFields(FormBuilderInterface $builder, array $options)
     {
         
-        $builder->add('title', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('title', TextType::class, [
             'label' => $this->__('Title') . ':',
             'empty_data' => '',
             'attr' => [
@@ -149,7 +190,7 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('permalink', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('permalink', TextType::class, [
             'label' => $this->__('Permalink') . ':',
             'empty_data' => '',
             'attr' => [
@@ -160,8 +201,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('descriptionForGoogle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('descriptionForGoogle', TextType::class, [
             'label' => $this->__('Description for google') . ':',
+            'help' => $this->__f('Note: this value must have a minimum length of %amount% characters.', ['%amount%' => 155]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 170,
@@ -171,7 +213,7 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('descriptionOfImageForArticle', 'Symfony\Component\Form\Extension\Core\Type\TextType', [
+        $builder->add('descriptionOfImageForArticle', TextType::class, [
             'label' => $this->__('Description of image for article') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
@@ -187,8 +229,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('summaryOfPost', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('summaryOfPost', TextareaType::class, [
             'label' => $this->__('Summary of post') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -198,8 +241,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('content', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('content', TextareaType::class, [
             'label' => $this->__('Content') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 20000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
@@ -209,8 +253,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => true,
         ]);
         
-        $builder->add('content2', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('content2', TextareaType::class, [
             'label' => $this->__('Content 2') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 20000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
@@ -220,8 +265,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('advertising', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('advertising', TextareaType::class, [
             'label' => $this->__('Advertising') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -231,8 +277,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('content3', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('content3', TextareaType::class, [
             'label' => $this->__('Content 3') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 20000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
@@ -242,8 +289,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('content4', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('content4', TextareaType::class, [
             'label' => $this->__('Content 4') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 20000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
@@ -253,8 +301,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('advertising2', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('advertising2', TextareaType::class, [
             'label' => $this->__('Advertising 2') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -264,8 +313,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('content5', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('content5', TextareaType::class, [
             'label' => $this->__('Content 5') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 20000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
@@ -275,8 +325,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('content6', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('content6', TextareaType::class, [
             'label' => $this->__('Content 6') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 20000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 20000,
@@ -286,8 +337,9 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
         ]);
         
-        $builder->add('advertising3', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('advertising3', TextareaType::class, [
             'label' => $this->__('Advertising 3') . ':',
+            'help' => $this->__f('Note: this value must not exceed %amount% characters.', ['%amount%' => 2000]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 2000,
@@ -307,7 +359,7 @@ abstract class AbstractPostType extends AbstractType
                     if ($language == $currentLanguage) {
                         continue;
                     }
-                    $builder->add('translations' . $language, 'MU\BloggingModule\Form\Type\Field\TranslationType', [
+                    $builder->add('translations' . $language, TranslationType::class, [
                         'fields' => $translatableFields,
                         'mandatory_fields' => $mandatoryFields[$language],
                         'values' => isset($options['translations'][$language]) ? $options['translations'][$language] : []
@@ -316,7 +368,20 @@ abstract class AbstractPostType extends AbstractType
             }
         }
         
-        $builder->add('imageForArticle', 'MU\BloggingModule\Form\Type\Field\UploadType', [
+        $builder->add('forWhichLanguage', LocaleType::class, [
+            'label' => $this->__('For which language') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => ' validate-nospace',
+                'title' => $this->__('Choose the for which language of the post')
+            ],
+            'required' => true,
+            'choices' => $this->localeApi->getSupportedLocaleNames(),
+            'choices_as_values' => true
+        ]);
+        
+        $builder->add('imageForArticle', UploadType::class, [
             'label' => $this->__('Image for article') . ':',
             'attr' => [
                 'class' => ' validate-upload',
@@ -335,7 +400,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfAdvertising1', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfAdvertising1', ChoiceType::class, [
             'label' => $this->__('Position of advertising 1') . ':',
             'empty_data' => '1',
             'attr' => [
@@ -357,7 +422,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfBlock', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfBlock', ChoiceType::class, [
             'label' => $this->__('Position of block') . ':',
             'empty_data' => 'none',
             'attr' => [
@@ -380,7 +445,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfAdvertising2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfAdvertising2', ChoiceType::class, [
             'label' => $this->__('Position of advertising 2') . ':',
             'empty_data' => 'content3Left',
             'attr' => [
@@ -402,7 +467,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfBlock2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfBlock2', ChoiceType::class, [
             'label' => $this->__('Position of block 2') . ':',
             'empty_data' => 'none',
             'attr' => [
@@ -425,7 +490,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfAdvertising3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfAdvertising3', ChoiceType::class, [
             'label' => $this->__('Position of advertising 3') . ':',
             'empty_data' => 'content5Left',
             'attr' => [
@@ -447,7 +512,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfBlock3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfBlock3', ChoiceType::class, [
             'label' => $this->__('Position of block 3') . ':',
             'empty_data' => 'none',
             'attr' => [
@@ -470,7 +535,7 @@ abstract class AbstractPostType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('similarArticles', 'MU\BloggingModule\Form\Type\Field\MultiListType', [
+        $builder->add('similarArticles', MultiListType::class, [
             'label' => $this->__('Similar articles') . ':',
             'empty_data' => 'none',
             'attr' => [
@@ -486,7 +551,7 @@ abstract class AbstractPostType extends AbstractType
             'expanded' => false
         ]);
         
-        $builder->add('startDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('startDate', DateTimeType::class, [
             'label' => $this->__('Start date') . ':',
             'empty_data' => '',
             'attr' => [
@@ -494,13 +559,13 @@ abstract class AbstractPostType extends AbstractType
                 'title' => $this->__('Enter the start date of the post')
             ],
             'required' => false,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'empty_data' => null,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('endDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('endDate', DateTimeType::class, [
             'label' => $this->__('End date') . ':',
             'empty_data' => '',
             'attr' => [
@@ -508,7 +573,7 @@ abstract class AbstractPostType extends AbstractType
                 'title' => $this->__('Enter the end date of the post')
             ],
             'required' => false,
-            'empty_data' => date('Y-m-d H:i:s'),
+            'empty_data' => null,
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -524,7 +589,7 @@ abstract class AbstractPostType extends AbstractType
      */
     public function addCategoriesField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
+        $builder->add('categories', CategoriesType::class, [
             'label' => $this->__('Categories') . ':',
             'empty_data' => [],
             'attr' => [
@@ -550,9 +615,13 @@ abstract class AbstractPostType extends AbstractType
             // select without joins
             return $er->getListQueryBuilder('', '', false);
         };
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
         $builder->add('post', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
             'class' => 'MUBloggingModule:PostEntity',
-            'choice_label' => 'getTitleFromDisplayPattern',
+            'choice_label' => $choiceLabelClosure,
             'multiple' => false,
             'expanded' => false,
             'query_builder' => $queryBuilder,
@@ -580,7 +649,7 @@ abstract class AbstractPostType extends AbstractType
             $helpText = $this->__('These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators.');
         }
     
-        $builder->add('additionalNotificationRemarks', 'Symfony\Component\Form\Extension\Core\Type\TextareaType', [
+        $builder->add('additionalNotificationRemarks', TextareaType::class, [
             'mapped' => false,
             'label' => $this->__('Additional remarks'),
             'label_attr' => [
@@ -607,7 +676,7 @@ abstract class AbstractPostType extends AbstractType
             return;
         }
     
-        $builder->add('moderationSpecificCreator', 'MU\BloggingModule\Form\Type\Field\UserType', [
+        $builder->add('moderationSpecificCreator', UserType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
@@ -619,7 +688,7 @@ abstract class AbstractPostType extends AbstractType
             'required' => false,
             'help' => $this->__('Here you can choose a user which will be set as creator')
         ]);
-        $builder->add('moderationSpecificCreationDate', 'Symfony\Component\Form\Extension\Core\Type\DateTimeType', [
+        $builder->add('moderationSpecificCreationDate', DateTimeType::class, [
             'mapped' => false,
             'label' => $this->__('Creation date') . ':',
             'attr' => [
@@ -646,7 +715,7 @@ abstract class AbstractPostType extends AbstractType
         if ($options['mode'] != 'create') {
             return;
         }
-        $builder->add('repeatCreation', 'Symfony\Component\Form\Extension\Core\Type\CheckboxType', [
+        $builder->add('repeatCreation', CheckboxType::class, [
             'mapped' => false,
             'label' => $this->__('Create another item after save'),
             'required' => false
@@ -662,16 +731,15 @@ abstract class AbstractPostType extends AbstractType
     public function addSubmitButtons(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['actions'] as $action) {
-            $builder->add($action['id'], 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
-                'label' => $this->__(/** @Ignore */$action['title']),
+            $builder->add($action['id'], SubmitType::class, [
+                'label' => $action['title'],
                 'icon' => ($action['id'] == 'delete' ? 'fa-trash-o' : ''),
                 'attr' => [
-                    'class' => $action['buttonClass'],
-                    'title' => $this->__(/** @Ignore */$action['description'])
+                    'class' => $action['buttonClass']
                 ]
             ]);
         }
-        $builder->add('reset', 'Symfony\Component\Form\Extension\Core\Type\ResetType', [
+        $builder->add('reset', ResetType::class, [
             'label' => $this->__('Reset'),
             'icon' => 'fa-refresh',
             'attr' => [
@@ -679,7 +747,7 @@ abstract class AbstractPostType extends AbstractType
                 'formnovalidate' => 'formnovalidate'
             ]
         ]);
-        $builder->add('cancel', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('cancel', SubmitType::class, [
             'label' => $this->__('Cancel'),
             'icon' => 'fa-times',
             'attr' => [

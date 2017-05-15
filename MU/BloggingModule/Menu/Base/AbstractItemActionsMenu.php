@@ -17,6 +17,7 @@ use Knp\Menu\MenuItem;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\UsersModule\Constant as UsersConstant;
 use MU\BloggingModule\Entity\PostEntity;
 
 /**
@@ -60,12 +61,13 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
 
         $permissionApi = $this->container->get('zikula_permissions_module.api.permission');
         $currentUserApi = $this->container->get('zikula_users_module.current_user');
+        $entityDisplayHelper = $this->container->get('mu_blogging_module.entity_display_helper');
         $menu->setChildrenAttribute('class', 'list-inline');
 
-        $currentUserId = $currentUserApi->isLoggedIn() ? $currentUserApi->get('uid') : 1;
+        $currentUserId = $currentUserApi->isLoggedIn() ? $currentUserApi->get('uid') : UsersConstant::USER_ID_ANONYMOUS;
         if ($entity instanceof PostEntity) {
             $component = 'MUBloggingModule:Post:';
-            $instance = $entity['id'] . '::';
+            $instance = $entity->getKey() . '::';
             $routePrefix = 'mubloggingmodule_post_';
             $isOwner = $currentUserId > 0 && null !== $entity->getCreatedBy() && $currentUserId == $entity->getCreatedBy()->getUid();
         
@@ -82,7 +84,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                     'route' => $routePrefix . $routeArea . 'display',
                     'routeParameters' => $entity->createUrlArgs()
                 ])->setAttribute('icon', 'fa fa-eye');
-                $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entity->getTitleFromDisplayPattern()));
+                $menu[$this->__('Details')]->setLinkAttribute('title', str_replace('"', '', $entityDisplayHelper->getFormattedTitle($entity)));
             }
             if ($permissionApi->hasPermission($component, $instance, ACCESS_EDIT)) {
                 $menu->addChild($this->__('Edit'), [
@@ -92,7 +94,7 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 $menu[$this->__('Edit')]->setLinkAttribute('title', $this->__('Edit this post'));
                 $menu->addChild($this->__('Reuse'), [
                     'route' => $routePrefix . $routeArea . 'edit',
-                    'routeParameters' => ['astemplate' => $entity['id'], 'slug' => $entity['slug']]
+                    'routeParameters' => ['slug' => $entity['slug']]
                 ])->setAttribute('icon', 'fa fa-files-o');
                 $menu[$this->__('Reuse')]->setLinkAttribute('title', $this->__('Reuse for new post'));
             }
@@ -114,12 +116,12 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
             // more actions for adding new related items
             
             $relatedComponent = 'MUBloggingModule:Post:';
-            $relatedInstance = $entity['id'] . '::';
+            $relatedInstance = $entity->getKey() . '::';
             if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
                 $title = $this->__('Create post');
                 $menu->addChild($title, [
                     'route' => 'mubloggingmodule_post_' . $routeArea . 'edit',
-                    'routeParameters' => ['post' => $entity['id']]
+                    'routeParameters' => ['post' => $entity->getKey()]
                 ])->setAttribute('icon', 'fa fa-plus');
                 $menu[$title]->setLinkAttribute('title', $title);
             }

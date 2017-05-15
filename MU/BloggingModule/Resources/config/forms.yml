@@ -6,7 +6,9 @@ services:
         arguments:
             - "@translator.default"
             - "@request_stack"
+            - "@mu_blogging_module.entity_display_helper"
             - "@mu_blogging_module.listentries_helper"
+            - "@zikula_settings_module.locale_api"
             - "@mu_blogging_module.feature_activation_helper"
         tags:
             - { name: form.type }
@@ -41,17 +43,13 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_blogging_module.entity_factory"
+            - "@mu_blogging_module.collection_filter_helper"
+            - "@mu_blogging_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_blogging_module.translatable_helper"
             - "@mu_blogging_module.listentries_helper"
+            - "@zikula_settings_module.locale_api"
             - "@mu_blogging_module.feature_activation_helper"
-        tags:
-            - { name: form.type }
-    
-    mu_blogging_module.form.type.deleteentity:
-        class: MU\BloggingModule\Form\DeleteEntityType
-        arguments:
-            - "@translator.default"
         tags:
             - { name: form.type }
     
@@ -70,11 +68,11 @@ services:
         tags:
             - { name: form.type }
     
-    mu_blogging_module.form.type.appsettings:
-        class: MU\BloggingModule\Form\AppSettingsType
+    mu_blogging_module.form.type.config:
+        class: MU\BloggingModule\Form\Type\ConfigType
         arguments:
             - "@translator.default"
-            - "@zikula_extensions_module.api.variable"
+            - "@=service('zikula_extensions_module.api.variable').getAll('MUBloggingModule')"
             - "@zikula_groups_module.group_repository"
         tags:
             - { name: form.type }

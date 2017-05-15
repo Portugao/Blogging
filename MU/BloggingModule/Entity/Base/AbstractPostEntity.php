@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Zikula\Core\Doctrine\EntityAccess;
-use MU\BloggingModule\Traits\EntityWorkflowTrait;
 use MU\BloggingModule\Traits\StandardFieldsTrait;
 use MU\BloggingModule\Validator\Constraints as BloggingAssert;
 
@@ -37,11 +36,6 @@ use MU\BloggingModule\Validator\Constraints as BloggingAssert;
  */
 abstract class AbstractPostEntity extends EntityAccess implements Translatable
 {
-    /**
-     * Hook entity workflow field and behaviour.
-     */
-    use EntityWorkflowTrait;
-
     /**
      * Hook standard fields behaviour embedding createdBy, updatedBy, createdDate, updatedDate fields.
      */
@@ -95,6 +89,16 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @var string $descriptionForGoogle
      */
     protected $descriptionForGoogle = '';
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/\s/", match=false, message="This value must not contain space chars.")
+     * @Assert\Length(min="0", max="255")
+     * @Assert\Locale()
+     * @var string $forWhichLanguage
+     */
+    protected $forWhichLanguage = '';
     
     /**
      * Image for article meta data array.
@@ -272,16 +276,14 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $similarArticles = 'none';
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @var DateTime $startDate
      */
     protected $startDate;
     
     /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotNull()
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\DateTime()
      * @Assert\Expression("!value or value > this.getStartDate()")
      * @var DateTime $endDate
@@ -357,7 +359,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function __construct()
     {
-        $this->initWorkflow();
         $this->posts = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
@@ -504,6 +505,30 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     {
         if ($this->descriptionForGoogle !== $descriptionForGoogle) {
             $this->descriptionForGoogle = isset($descriptionForGoogle) ? $descriptionForGoogle : '';
+        }
+    }
+    
+    /**
+     * Returns the for which language.
+     *
+     * @return string
+     */
+    public function getForWhichLanguage()
+    {
+        return $this->forWhichLanguage;
+    }
+    
+    /**
+     * Sets the for which language.
+     *
+     * @param string $forWhichLanguage
+     *
+     * @return void
+     */
+    public function setForWhichLanguage($forWhichLanguage)
+    {
+        if ($this->forWhichLanguage !== $forWhichLanguage) {
+            $this->forWhichLanguage = isset($forWhichLanguage) ? $forWhichLanguage : '';
         }
     }
     
@@ -1033,6 +1058,8 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
         if ($this->startDate !== $startDate) {
             if (is_object($startDate) && $startDate instanceOf \DateTime) {
                 $this->startDate = $startDate;
+            } elseif (null === $startDate || empty($startDate)) {
+                $this->startDate = null;
             } else {
                 $this->startDate = new \DateTime($startDate);
             }
@@ -1061,6 +1088,8 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
         if ($this->endDate !== $endDate) {
             if (is_object($endDate) && $endDate instanceOf \DateTime) {
                 $this->endDate = $endDate;
+            } elseif (null === $endDate || empty($endDate)) {
+                $this->endDate = null;
             } else {
                 $this->endDate = new \DateTime($endDate);
             }
@@ -1266,19 +1295,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     
-    /**
-     * Returns the formatted title conforming to the display pattern
-     * specified for this entity.
-     *
-     * @return string The display title
-     */
-    public function getTitleFromDisplayPattern()
-    {
-        $formattedTitle = ''
-                . $this->getTitle();
-    
-        return $formattedTitle;
-    }
     
     /**
      * Return entity data in JSON format.
@@ -1297,27 +1313,19 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function createUrlArgs()
     {
-        $args = [];
-    
-        $args['id'] = $this['id'];
-    
-        if (property_exists($this, 'slug')) {
-            $args['slug'] = $this['slug'];
-        }
-    
-        return $args;
+        return [
+            'slug' => $this->getSlug()
+        ];
     }
     
     /**
-     * Create concatenated identifier string (for composite keys).
+     * Returns the primary key.
      *
-     * @return String concatenated identifiers
+     * @return integer The identifier
      */
-    public function createCompositeIdentifier()
+    public function getKey()
     {
-        $itemId = $this['id'];
-    
-        return $itemId;
+        return $this->getId();
     }
     
     /**
@@ -1360,7 +1368,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function __toString()
     {
-        return 'Post ' . $this->createCompositeIdentifier() . ': ' . $this->getTitleFromDisplayPattern();
+        return 'Post ' . $this->getKey() . ': ' . $this->getTitle();
     }
     
     /**
@@ -1376,17 +1384,17 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function __clone()
     {
         // if the entity has no identity do nothing, do NOT throw an exception
-        if (!($this->id)) {
+        if (!$this->id) {
             return;
         }
     
         // otherwise proceed
     
-        // unset identifiers
+        // unset identifier
         $this->setId(0);
     
         // reset workflow
-        $this->resetWorkflow();
+        $this->setWorkflowState('initial');
     
         // reset upload fields
         $this->setImageForArticle(null);

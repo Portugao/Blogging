@@ -16,9 +16,10 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Core\Event\GenericEvent;
-use Zikula\UsersModule\Api\CurrentUserApi;
+use Zikula\UsersModule\Api\ApiInterface\CurrentUserApiInterface;
+use Zikula\UsersModule\Constant as UsersConstant;
 use Zikula\UsersModule\UserEvents;
-use MU\BloggingModule\Entity\Factory\BloggingFactory;
+use MU\BloggingModule\Entity\Factory\EntityFactory;
 
 /**
  * Event handler base class for user-related events.
@@ -31,12 +32,12 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     protected $translator;
     
     /**
-     * @var BloggingFactory
+     * @var EntityFactory
      */
     protected $entityFactory;
     
     /**
-     * @var CurrentUserApi
+     * @var CurrentUserApiInterface
      */
     protected $currentUserApi;
     
@@ -48,17 +49,17 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     /**
      * UserListener constructor.
      *
-     * @param TranslatorInterface $translator     Translator service instance
-     * @param BloggingFactory $entityFactory BloggingFactory service instance
-     * @param CurrentUserApi      $currentUserApi CurrentUserApi service instance
-     * @param LoggerInterface     $logger         Logger service instance
+     * @param TranslatorInterface $translator    Translator service instance
+     * @param EntityFactory       $entityFactory EntityFactory service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
+     * @param LoggerInterface     $logger        Logger service instance
      *
      * @return void
      */
     public function __construct(
         TranslatorInterface $translator,
-        BloggingFactory $entityFactory,
-        CurrentUserApi $currentUserApi,
+        EntityFactory $entityFactory,
+        CurrentUserApiInterface $currentUserApi,
         LoggerInterface $logger
     ) {
         $this->translator = $translator;
@@ -122,11 +123,11 @@ abstract class AbstractUserListener implements EventSubscriberInterface
     
         
         $repo = $this->entityFactory->getRepository('post');
-        // set creator to admin (2) for all posts created by this user
-        $repo->updateCreator($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set creator to admin (UsersConstant::USER_ID_ADMIN) for all posts created by this user
+        $repo->updateCreator($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
-        // set last editor to admin (2) for all posts updated by this user
-        $repo->updateLastEditor($userId, 2, $this->translator, $this->logger, $this->currentUserApi);
+        // set last editor to admin (UsersConstant::USER_ID_ADMIN) for all posts updated by this user
+        $repo->updateLastEditor($userId, UsersConstant::USER_ID_ADMIN, $this->translator, $this->logger, $this->currentUserApi);
         
         $logArgs = ['app' => 'MUBloggingModule', 'user' => $this->currentUserApi->get('uname'), 'entities' => 'posts'];
         $this->logger->notice('{app}: User {user} has been deleted, so we deleted/updated corresponding {entities}, too.', $logArgs);

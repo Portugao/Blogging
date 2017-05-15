@@ -12,12 +12,22 @@
 
 namespace MU\BloggingModule\Form\Type\QuickNavigation\Base;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Zikula\Bundle\FormExtensionBundle\Form\Type\LocaleType;
+use Zikula\CategoriesModule\Form\Type\CategoriesType;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
+use Zikula\SettingsModule\Api\ApiInterface\LocaleApiInterface;
+use MU\BloggingModule\Form\Type\Field\MultiListType;
+use MU\BloggingModule\Helper\EntityDisplayHelper;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
 use MU\BloggingModule\Helper\ListEntriesHelper;
 
@@ -34,9 +44,19 @@ abstract class AbstractPostQuickNavType extends AbstractType
     protected $request;
 
     /**
+     * @var EntityDisplayHelper
+     */
+    protected $entityDisplayHelper;
+
+    /**
      * @var ListEntriesHelper
      */
     protected $listHelper;
+
+    /**
+     * @var LocaleApiInterface
+     */
+    protected $localeApi;
 
     /**
      * @var FeatureActivationHelper
@@ -48,18 +68,24 @@ abstract class AbstractPostQuickNavType extends AbstractType
      *
      * @param TranslatorInterface $translator   Translator service instance
     * @param RequestStack        $requestStack RequestStack service instance
+    * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param ListEntriesHelper   $listHelper   ListEntriesHelper service instance
+     * @param LocaleApiInterface  $localeApi    LocaleApi service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
      */
     public function __construct(
         TranslatorInterface $translator,
         RequestStack $requestStack,
+        EntityDisplayHelper $entityDisplayHelper,
         ListEntriesHelper $listHelper,
+        LocaleApiInterface $localeApi,
         FeatureActivationHelper $featureActivationHelper
     ) {
         $this->setTranslator($translator);
         $this->request = $requestStack->getCurrentRequest();
+        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->listHelper = $listHelper;
+        $this->localeApi = $localeApi;
         $this->featureActivationHelper = $featureActivationHelper;
     }
 
@@ -80,9 +106,9 @@ abstract class AbstractPostQuickNavType extends AbstractType
     {
         $builder
             ->setMethod('GET')
-            ->add('all', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('own', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
-            ->add('tpl', 'Symfony\Component\Form\Extension\Core\Type\HiddenType')
+            ->add('all', HiddenType::class)
+            ->add('own', HiddenType::class)
+            ->add('tpl', HiddenType::class)
         ;
 
         if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'post')) {
@@ -90,10 +116,11 @@ abstract class AbstractPostQuickNavType extends AbstractType
         }
         $this->addIncomingRelationshipFields($builder, $options);
         $this->addListFields($builder, $options);
+        $this->addLocaleFields($builder, $options);
         $this->addSearchField($builder, $options);
         $this->addSortingFields($builder, $options);
         $this->addAmountField($builder, $options);
-        $builder->add('updateview', 'Symfony\Component\Form\Extension\Core\Type\SubmitType', [
+        $builder->add('updateview', SubmitType::class, [
             'label' => $this->__('OK'),
             'attr' => [
                 'class' => 'btn btn-default btn-sm'
@@ -111,7 +138,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
     {
         $objectType = 'post';
     
-        $builder->add('categories', 'Zikula\CategoriesModule\Form\Type\CategoriesType', [
+        $builder->add('categories', CategoriesType::class, [
             'label' => $this->__('Categories'),
             'empty_data' => [],
             'attr' => [
@@ -142,9 +169,13 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $this->request->query->remove('q');
         }
     
-        $builder->add('post', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
+        $entityDisplayHelper = $this->entityDisplayHelper;
+        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
+            return $entityDisplayHelper->getFormattedTitle($entity);
+        };
+        $builder->add('post', EntityType::class, [
             'class' => 'MUBloggingModule:PostEntity',
-            'choice_label' => 'getTitleFromDisplayPattern',
+            'choice_label' => $choiceLabelClosure,
             'placeholder' => $this->__('All'),
             'required' => false,
             'label' => $this->__('Post'),
@@ -174,7 +205,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('workflowState', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('workflowState', ChoiceType::class, [
             'label' => $this->__('State'),
             'attr' => [
                 'class' => 'input-sm'
@@ -194,7 +225,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfAdvertising1', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfAdvertising1', ChoiceType::class, [
             'label' => $this->__('Position of advertising 1'),
             'attr' => [
                 'class' => 'input-sm'
@@ -214,7 +245,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfBlock', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfBlock', ChoiceType::class, [
             'label' => $this->__('Position of block'),
             'attr' => [
                 'class' => 'input-sm'
@@ -234,7 +265,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfAdvertising2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfAdvertising2', ChoiceType::class, [
             'label' => $this->__('Position of advertising 2'),
             'attr' => [
                 'class' => 'input-sm'
@@ -254,7 +285,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfBlock2', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfBlock2', ChoiceType::class, [
             'label' => $this->__('Position of block 2'),
             'attr' => [
                 'class' => 'input-sm'
@@ -274,7 +305,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfAdvertising3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfAdvertising3', ChoiceType::class, [
             'label' => $this->__('Position of advertising 3'),
             'attr' => [
                 'class' => 'input-sm'
@@ -294,7 +325,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('positionOfBlock3', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('positionOfBlock3', ChoiceType::class, [
             'label' => $this->__('Position of block 3'),
             'attr' => [
                 'class' => 'input-sm'
@@ -314,7 +345,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
             $choices[$entry['text']] = $entry['value'];
             $choiceAttributes[$entry['text']] = ['title' => $entry['title']];
         }
-        $builder->add('similarArticles', 'MU\BloggingModule\Form\Type\Field\MultiListType', [
+        $builder->add('similarArticles', MultiListType::class, [
             'label' => $this->__('Similar articles'),
             'attr' => [
                 'class' => 'input-sm'
@@ -330,6 +361,25 @@ abstract class AbstractPostQuickNavType extends AbstractType
     }
 
     /**
+     * Adds locale fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addLocaleFields(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add('forWhichLanguage', LocaleType::class, [
+            'label' => $this->__('For which language'),
+            'attr' => [
+                'class' => 'input-sm'
+            ],
+            'required' => false,
+            'choices' => $this->localeApi->getSupportedLocaleNames(),
+            'choices_as_values' => true
+        ]);
+    }
+
+    /**
      * Adds a search field.
      *
      * @param FormBuilderInterface $builder The form builder
@@ -337,7 +387,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
      */
     public function addSearchField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('q', 'Symfony\Component\Form\Extension\Core\Type\SearchType', [
+        $builder->add('q', SearchType::class, [
             'label' => $this->__('Search'),
             'attr' => [
                 'maxlength' => 255,
@@ -357,7 +407,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
     public function addSortingFields(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sort', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sort', ChoiceType::class, [
                 'label' => $this->__('Sort by'),
                 'attr' => [
                     'class' => 'input-sm'
@@ -366,6 +416,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
                     $this->__('Workflow state') => 'workflowState',
                     $this->__('Title') => 'title',
                     $this->__('Description for google') => 'descriptionForGoogle',
+                    $this->__('For which language') => 'forWhichLanguage',
                     $this->__('Image for article') => 'imageForArticle',
                     $this->__('Description of image for article') => 'descriptionOfImageForArticle',
                     $this->__('Summary of post') => 'summaryOfPost',
@@ -385,7 +436,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
                 'required' => true,
                 'expanded' => false
             ])
-            ->add('sortdir', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+            ->add('sortdir', ChoiceType::class, [
                 'label' => $this->__('Sort direction'),
                 'empty_data' => 'asc',
                 'attr' => [
@@ -410,7 +461,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
      */
     public function addAmountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('num', 'Symfony\Component\Form\Extension\Core\Type\ChoiceType', [
+        $builder->add('num', ChoiceType::class, [
             'label' => $this->__('Page size'),
             'empty_data' => 20,
             'attr' => [
