@@ -195,8 +195,7 @@ abstract class AbstractCollectionFilterHelper
             } elseif (in_array($k, ['q', 'searchterm'])) {
                 // quick search
                 if (!empty($v)) {
-                    $repository = $this->entityFactory->getRepository('post');
-                    $qb = $repository->addSearchFilter('post', $qb, $v);
+                    $qb = $this->addSearchFilter('post', $qb, $v);
                 }
             } else if (!is_array($v)) {
                 // field filter

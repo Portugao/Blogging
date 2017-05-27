@@ -192,9 +192,8 @@ application "Blogging" {
         }
     }
     relations {
-        one2many {
-            source 
-            "post"
+        one2many bidirectional {
+            source "post"
             sourceAlias "post"
             sourceField "parentid"
             target "post"

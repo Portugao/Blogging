@@ -1263,6 +1263,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function setPosts($posts)
     {
+        foreach ($this->posts as $postSingle) {
+            $this->removePosts($postSingle);
+        }
         foreach ($posts as $postSingle) {
             $this->addPosts($postSingle);
         }

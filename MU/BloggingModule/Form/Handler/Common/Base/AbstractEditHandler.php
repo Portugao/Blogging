@@ -380,11 +380,16 @@ abstract class AbstractEditHandler
             if (empty($this->idValue)) {
                 $this->idValue = $this->request->query->get($this->idField, '');
             }
-        } else {
+        }
+        if (empty($this->idValue)) {
+            if ($this->idField == 'slug') {
+                $this->idField = 'id';
+            }
+    
             if (array_key_exists($this->idField, $routeParams)) {
                 $this->idValue = (int) !empty($routeParams[$this->idField]) ? $routeParams[$this->idField] : 0;
             }
-            if (empty($this->idValue)) {
+            if (0 === $this->idValue) {
                 $this->idValue = $this->request->query->getInt($this->idField, 0);
             }
             if (0 === $this->idValue && $this->idField != 'id') {
