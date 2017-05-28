@@ -90,14 +90,7 @@ abstract class AbstractItemListBlockType extends AbstractType
             'attr' => [
                 'title' => $this->__('If you change this please save the block once to reload the parameters below.')
             ],
-            'help' => $this->__('If you change this please save the block once to reload the parameters below.'),
-            'choices' => [
-                $this->__('Posts') => 'post'
-            ],
-            'choices_as_values' => true,
-            'multiple' => false,
-            'expanded' => false
-        ]);
+            'help' => $this->__('If you change this please save the block once to reload the parameters below.')    ]);
     }
 
     /**
