@@ -13,11 +13,46 @@
 namespace MU\BloggingModule\Block\Form\Type;
 
 use MU\BloggingModule\Block\Form\Type\Base\AbstractItemListBlockType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\FormBuilderInterface;
+use MU\BloggingModule\Helper\FeatureActivationHelper;
 
 /**
  * List block form type implementation class.
  */
 class ItemListBlockType extends AbstractItemListBlockType
 {
-    // feel free to extend the list block form type class here
+    /**
+     * @inheritDoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $this->addObjectTypeField($builder, $options);
+        if ($options['feature_activation_helper']->isEnabled(FeatureActivationHelper::CATEGORIES, $options['object_type'])) {
+            $this->addCategoriesField($builder, $options);
+        }
+        $this->addSortingField($builder, $options);
+        $this->addAmountField($builder, $options);
+        $this->addTemplateFields($builder, $options);
+        $this->addFilterField($builder, $options);
+        $this->addSlideShowOptionFields($builder, $options);
+    }
+    
+    /**
+     * Adds slideshow option fields.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array                $options The options
+     */
+    public function addSlideShowOptionFields(FormBuilderInterface $builder, array $options)
+    {
+
+    	$builder->add('slideshowspeed', IntegerType::class, [
+    			'label' => $this->__('Speed of the slideshow') . ':',
+    			'help' => $this->__('The time from item to item.') . ' ' . $this->__('Only digits are allowed.'),
+    			'empty_data' => 0,
+    			'required' => false,
+    			'scale' => 0
+    	]);
+    }
 }
