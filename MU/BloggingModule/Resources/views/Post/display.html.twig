@@ -10,7 +10,7 @@
     {{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
-        <a id="itemActions{{ post.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
     </div>
 {% endblock %}
@@ -149,9 +149,9 @@
         {% if post.positionOfBlock3 != 'none' %}
             <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
         {% endif %}
-        {% if post.similarArticles != '###none###' %}
-            <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
-        {% endif %}
+        {#% if post.similarArticles != '###none###' and post.similarArticles != '###all###' %}
+            {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
+        {% endif %#}
         {% if post.post|default %}
             <dt>{{ __('Main post') }}</dt>
             <dd>
