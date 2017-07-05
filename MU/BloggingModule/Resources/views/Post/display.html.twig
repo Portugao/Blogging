@@ -6,9 +6,7 @@
 {% extends 'MUBloggingModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ post.getTitleFromDisplayPattern()|default(__('Post')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
-    {{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}
-    {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
+ {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
         <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
@@ -20,8 +18,14 @@
     <div class="mubloggingmodule-post mubloggingmodule-display">
 
     <div class="row">
+        <div class="col-sm-4">
+            {{ block('related_items') }}
+        </div>
+        
         <div class="col-sm-8">
-    <dl>
+        {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
+        <h1>{{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}</h1>
+          
         {#% if post.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ post.workflowState|mubloggingmodule_listEntry('post', 'workflowState') }}</dd>
@@ -60,14 +64,14 @@
         {% if post.advertising != NULL %}
             {% if post.positionOfAdvertising1 == 1 %}
                 {% set bloggerfloat = 'blogger-left' %}
-                    {% endif %}
-                    {% if post.positionOfAdvertising1 == 2 %}
-                        {% set bloggerfloat = 'blogger-right' %}
-                    {% endif %}
-                    {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
-                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
-                    {% endif %}
-                {% endif %}        
+            {% endif %}
+            {% if post.positionOfAdvertising1 == 2 %}
+                {% set bloggerfloat = 'blogger-right' %}
+            {% endif %}
+            {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
+                div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
+            {% endif %}
+            {% endif %}        
             <div class="blogger-display blogger-content">{{ post.content|safeHtml }}</div>
         {% endif %}
         {% if post.content2 != NULL %}
@@ -88,7 +92,7 @@
             {{ showblockposition (post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock')) }}
         {% endif %}
         {% if post.content3 is not empty %}
-            {% if post.advertising2 != NULL %}
+            {% if post.advertising2 != none %}
                     {% if post.positionOfAdvertising2 == 1 %}
                         {% set bloggerfloat = 'blogger-left' %}
                     {% endif %}
@@ -115,7 +119,7 @@
                 {% endif %} 
             <div class="blogger-display blogger-content4">{{ post.content4|safeHtml }}</div>
         {% endif %}
-        {% if post.positionPfBlock2 != 'none' %}
+        {% if post.positionOfBlock2 != 'none' %}
             <dd>{{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}</dd>
         {% endif %}
         {% if post.content5 is not empty %}
@@ -149,12 +153,11 @@
         {% if post.positionOfBlock3 != 'none' %}
             <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
         {% endif %}
-        {#% if post.similarArticles != '###none###' and post.similarArticles != '###all###' %}
+        {% if post.similarArticles != '###none###' and post.similarArticles != '###all###' %}
             {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
-        {% endif %#}
+        {% endif %}
         {% if post.post|default %}
-            <dt>{{ __('Main post') }}</dt>
-            <dd>
+            {{ __('Main post') }}</dt>
               {% if not isQuickView %}
                   <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug }) }}">{% spaceless %}
                     {{ post.post.getTitleFromDisplayPattern() }}
@@ -163,10 +166,7 @@
               {% else %}
                   {{ post.post.getTitleFromDisplayPattern() }}
               {% endif %}
-            </dd>
         {% endif %}
-        
-    </dl>
 
     {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
         {{ include('@MUBloggingModule/Helper/includeCategoriesDisplay.html.twig', { obj: post }) }}
@@ -175,9 +175,7 @@
 
     {{ block('display_hooks') }}
         </div>
-        <div class="col-sm-4">
-            {{ block('related_items') }}
-        </div>
+
     </div>
 </div>
 {% endblock %}
