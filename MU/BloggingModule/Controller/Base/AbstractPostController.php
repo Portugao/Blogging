@@ -535,7 +535,7 @@ abstract class AbstractPostController extends AbstractController
             if ($action != 'delete') {
                 $urlArgs = $entity->createUrlArgs();
                 $urlArgs['_locale'] = $request->getLocale();
-                $url = new RouteUrl('mubloggingmodule_post_' . /*($isAdmin ? 'admin' : '') . */'display', $urlArgs);
+                $url = new RouteUrl('mubloggingmodule_post_display', $urlArgs);
             }
             $hookHelper->callProcessHooks($entity, $hookType, $url);
         }

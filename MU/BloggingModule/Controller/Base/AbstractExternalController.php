@@ -136,8 +136,8 @@ abstract class AbstractExternalController extends AbstractController
         $searchTerm = '';
         
         $formOptions = [
-            'objectType' => $objectType,
-            'editorName' => $editor
+            'object_type' => $objectType,
+            'editor_name' => $editor
         ];
         $form = $this->createForm('MU\BloggingModule\Form\Type\Finder\\' . ucfirst($objectType) . 'FinderType', $templateParameters, $formOptions);
         

@@ -12,7 +12,8 @@
 
 namespace MU\BloggingModule\Helper\Base;
 
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -34,11 +35,6 @@ abstract class AbstractUploadHelper
      * @var SessionInterface
      */
     protected $session;
-
-    /**
-     * @var CacheManager
-     */
-    protected $thumbCacheManager;
 
     /**
      * @var LoggerInterface
@@ -78,18 +74,16 @@ abstract class AbstractUploadHelper
     /**
      * UploadHelper constructor.
      *
-     * @param TranslatorInterface $translator        Translator service instance
-     * @param SessionInterface    $session           Session service instance
-     * @param CacheManager        $thumbCacheManager Imagine thumb cache manager
-     * @param LoggerInterface     $logger            Logger service instance
-     * @param CurrentUserApiInterface $currentUserApi    CurrentUserApi service instance
-     * @param object              $moduleVars        Existing module vars
-     * @param String              $dataDirectory     The data directory name
+     * @param TranslatorInterface $translator     Translator service instance
+     * @param SessionInterface    $session        Session service instance
+     * @param LoggerInterface     $logger         Logger service instance
+     * @param CurrentUserApiInterface $currentUserApi CurrentUserApi service instance
+     * @param object              $moduleVars     Existing module vars
+     * @param String              $dataDirectory  The data directory name
      */
     public function __construct(
         TranslatorInterface $translator,
         SessionInterface $session,
-        CacheManager $thumbCacheManager,
         LoggerInterface $logger,
         CurrentUserApiInterface $currentUserApi,
         $moduleVars,
@@ -97,7 +91,6 @@ abstract class AbstractUploadHelper
     ) {
         $this->setTranslator($translator);
         $this->session = $session;
-        $this->thumbCacheManager = $thumbCacheManager;
         $this->logger = $logger;
         $this->currentUserApi = $currentUserApi;
         $this->moduleVars = $moduleVars;
@@ -195,19 +188,10 @@ abstract class AbstractUploadHelper
                 $imgInfo = getimagesize($destinationFilePath);
                 if ($imgInfo[0] > $maxWidth || $imgInfo[1] > $maxHeight) {
                     // resize to allowed maximum size
-                    $thumbConfig = [
-                        'size' => [$maxWidth, $maxHeight],
-                        'mode' => 'inset'
-                    ];
-    
-                    // create thumbnail image
-                    $thumbFilePath = $this->thumbCacheManager->getBrowserPath($destinationFilePath, 'zkroot', $thumbConfig);
-    
-                    // remove original image
-                    unlink($destinationFilePath);
-    
-                    // rename thumbnail image to original image
-                    rename($thumbFilePath, $destinationFilePath);
+                    $imagine = new Imagine();
+                    $image = $imagine->open($destinationFilePath);
+                    $image->resize(new Box($maxWidth, $maxHeight))
+                          ->save($destinationFilePath);
                 }
             }
         }

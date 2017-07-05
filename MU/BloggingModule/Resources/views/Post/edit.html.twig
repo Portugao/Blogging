@@ -165,7 +165,7 @@
             $(document).ready(function() {
                 // initialise auto completion for user fields
                 {% if form.moderationSpecificCreator is defined %}
-                    mUBloggingInitUserField('mubloggingmodule_post_moderationSpecificCreator', 'getCommonUsersList');
+                    initUserLiveSearch('mubloggingmodule_post_moderationSpecificCreator');
                 {% endif %}
                 mUBloggingInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ post.id }}{% endif %}');
                 mUBloggingInitUploadField('mubloggingmodule_post_imageForArticle_imageForArticle');

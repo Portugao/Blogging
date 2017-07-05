@@ -67,14 +67,14 @@ abstract class AbstractPostFinderType extends AbstractType
         $builder
             ->setMethod('GET')
             ->add('objectType', HiddenType::class, [
-                'data' => $options['objectType']
+                'data' => $options['object_type']
             ])
             ->add('editor', HiddenType::class, [
-                'data' => $options['editorName']
+                'data' => $options['editor_name']
             ])
         ;
 
-        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $options['objectType'])) {
+        if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $options['object_type'])) {
             $this->addCategoriesField($builder, $options);
         }
         $this->addImageFields($builder, $options);
@@ -121,8 +121,8 @@ abstract class AbstractPostFinderType extends AbstractType
             'required' => false,
             'multiple' => true,
             'module' => 'MUBloggingModule',
-            'entity' => ucfirst($options['objectType']) . 'Entity',
-            'entityCategoryClass' => 'MU\BloggingModule\Entity\\' . ucfirst($options['objectType']) . 'CategoryEntity'
+            'entity' => ucfirst($options['object_type']) . 'Entity',
+            'entityCategoryClass' => 'MU\BloggingModule\Entity\\' . ucfirst($options['object_type']) . 'CategoryEntity'
         ]);
     }
 
@@ -282,17 +282,13 @@ abstract class AbstractPostFinderType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'objectType' => 'post',
-                'editorName' => 'ckeditor'
+                'object_type' => 'post',
+                'editor_name' => 'ckeditor'
             ])
-            ->setRequired(['objectType', 'editorName'])
-            ->setAllowedTypes([
-                'objectType' => 'string',
-                'editorName' => 'string'
-            ])
-            ->setAllowedValues([
-                'editorName' => ['tinymce', 'ckeditor']
-            ])
+            ->setRequired(['object_type', 'editor_name'])
+            ->setAllowedTypes('object_type', 'string')
+            ->setAllowedTypes('editor_name', 'string')
+            ->setAllowedValues('editor_name', ['tinymce', 'ckeditor'])
         ;
     }
 }

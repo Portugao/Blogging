@@ -38,7 +38,7 @@ use MU\BloggingModule\Entity\Factory\EntityFactory;
 use MU\BloggingModule\Form\Type\Field\MultiListType;
 use MU\BloggingModule\Form\Type\Field\TranslationType;
 use MU\BloggingModule\Form\Type\Field\UploadType;
-use MU\BloggingModule\Form\Type\Field\UserType;
+use Zikula\UsersModule\Form\Type\UserLiveSearchType;
 use MU\BloggingModule\Helper\CollectionFilterHelper;
 use MU\BloggingModule\Helper\EntityDisplayHelper;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
@@ -676,7 +676,7 @@ abstract class AbstractPostType extends AbstractType
             return;
         }
     
-        $builder->add('moderationSpecificCreator', UserType::class, [
+        $builder->add('moderationSpecificCreator', UserLiveSearchType::class, [
             'mapped' => false,
             'label' => $this->__('Creator') . ':',
             'attr' => [
@@ -792,19 +792,15 @@ abstract class AbstractPostType extends AbstractType
                 'inline_usage' => false
             ])
             ->setRequired(['entity', 'mode', 'actions'])
-            ->setAllowedTypes([
-                'mode' => 'string',
-                'is_moderator' => 'bool',
-                'is_creator' => 'bool',
-                'actions' => 'array',
-                'has_moderate_permission' => 'bool',
-                'translations' => 'array',
-                'filter_by_ownership' => 'bool',
-                'inline_usage' => 'bool'
-            ])
-            ->setAllowedValues([
-                'mode' => ['create', 'edit']
-            ])
+            ->setAllowedTypes('mode', 'string')
+            ->setAllowedTypes('is_moderator', 'bool')
+            ->setAllowedTypes('is_creator', 'bool')
+            ->setAllowedTypes('actions', 'array')
+            ->setAllowedTypes('has_moderate_permission', 'bool')
+            ->setAllowedTypes('translations', 'array')
+            ->setAllowedTypes('filter_by_ownership', 'bool')
+            ->setAllowedTypes('inline_usage', 'bool')
+            ->setAllowedValues('mode', ['create', 'edit'])
         ;
     }
 }

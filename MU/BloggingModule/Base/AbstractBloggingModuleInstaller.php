@@ -37,7 +37,7 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
         // Check if upload directories exist and if needed create them
         try {
             $container = $this->container;
-            $uploadHelper = new \MU\BloggingModule\Helper\UploadHelper($container->get('translator.default'), $container->get('session'), $container->get('liip_imagine.cache.manager'), $container->get('logger'), $container->get('zikula_users_module.current_user'), $container->get('zikula_extensions_module.api.variable'), $container->getParameter('datadir'));
+            $uploadHelper = new \MU\BloggingModule\Helper\UploadHelper($container->get('translator.default'), $container->get('session'), $container->get('logger'), $container->get('zikula_users_module.current_user'), $container->get('zikula_extensions_module.api.variable'), $container->getParameter('datadir'));
             $uploadHelper->checkAndCreateAllUploadFolders();
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());

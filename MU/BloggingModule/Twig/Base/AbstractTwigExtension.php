@@ -16,7 +16,6 @@ use Twig_Extension;
 use Zikula\Common\Translator\TranslatorInterface;
 use Zikula\Common\Translator\TranslatorTrait;
 use Zikula\ExtensionsModule\Api\ApiInterface\VariableApiInterface;
-use Zikula\UsersModule\Entity\RepositoryInterface\UserRepositoryInterface;
 use MU\BloggingModule\Helper\ListEntriesHelper;
 use MU\BloggingModule\Helper\EntityDisplayHelper;
 use MU\BloggingModule\Helper\WorkflowHelper;
@@ -32,11 +31,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
      * @var VariableApiInterface
      */
     protected $variableApi;
-    
-    /**
-     * @var UserRepositoryInterface
-     */
-    protected $userRepository;
     
     /**
      * @var EntityDisplayHelper
@@ -58,7 +52,6 @@ abstract class AbstractTwigExtension extends Twig_Extension
      *
      * @param TranslatorInterface $translator     Translator service instance
      * @param VariableApiInterface $variableApi    VariableApi service instance
-     * @param UserRepositoryInterface $userRepository UserRepository service instance
      * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param WorkflowHelper      $workflowHelper WorkflowHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
@@ -66,14 +59,12 @@ abstract class AbstractTwigExtension extends Twig_Extension
     public function __construct(
         TranslatorInterface $translator,
         VariableApiInterface $variableApi,
-        UserRepositoryInterface $userRepository,
         EntityDisplayHelper $entityDisplayHelper,
         WorkflowHelper $workflowHelper,
         ListEntriesHelper $listHelper)
     {
         $this->setTranslator($translator);
         $this->variableApi = $variableApi;
-        $this->userRepository = $userRepository;
         $this->entityDisplayHelper = $entityDisplayHelper;
         $this->workflowHelper = $workflowHelper;
         $this->listHelper = $listHelper;
@@ -99,8 +90,7 @@ abstract class AbstractTwigExtension extends Twig_Extension
         return [
             new \Twig_SimpleFunction('mubloggingmodule_moderationObjects', [$this, 'getModerationObjects']),
             new \Twig_SimpleFunction('mubloggingmodule_objectTypeSelector', [$this, 'getObjectTypeSelector']),
-            new \Twig_SimpleFunction('mubloggingmodule_templateSelector', [$this, 'getTemplateSelector']),
-            new \Twig_SimpleFunction('mubloggingmodule_userAvatar', [$this, 'getUserAvatar'], ['is_safe' => ['html']])
+            new \Twig_SimpleFunction('mubloggingmodule_templateSelector', [$this, 'getTemplateSelector'])
         ];
     }
     
@@ -308,52 +298,5 @@ abstract class AbstractTwigExtension extends Twig_Extension
     public function getFormattedEntityTitle($entity)
     {
         return $this->entityDisplayHelper->getFormattedTitle($entity);
-    }
-    
-    /**
-     * Displays the avatar of a given user.
-     *
-     * @param int|string $uid    The user's id or name
-     * @param int        $width  Image width (optional)
-     * @param int        $height Image height (optional)
-     * @param int        $size   Gravatar size (optional)
-     * @param string     $rating Gravatar self-rating [g|pg|r|x] see: http://en.gravatar.com/site/implement/images/ (optional)
-     *
-     * @return string
-     */
-    public function getUserAvatar($uid = 0, $width = 0, $height = 0, $size = 0, $rating = '')
-    {
-        if (!is_numeric($uid)) {
-            $limit = 1;
-            $filter = [
-                'uname' => ['operator' => '=', 'operand' => $uid]
-            ];
-            $results = $this->userRepository->query($filter, [], $limit);
-            if (!count($results)) {
-                return '';
-            }
-    
-            $uid = $results->getIterator()->getArrayCopy()[0]->getUname();
-        }
-        $params = ['uid' => $uid];
-        if ($width > 0) {
-            $params['width'] = $width;
-        }
-        if ($height > 0) {
-            $params['height'] = $height;
-        }
-        if ($size > 0) {
-            $params['size'] = $size;
-        }
-        if ($rating != '') {
-            $params['rating'] = $rating;
-        }
-    
-        include_once 'lib/legacy/viewplugins/function.useravatar.php';
-    
-        $view = \Zikula_View::getInstance('MUBloggingModule');
-        $result = smarty_function_useravatar($params, $view);
-    
-        return $result;
     }
 }

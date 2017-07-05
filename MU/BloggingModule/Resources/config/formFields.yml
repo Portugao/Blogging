@@ -22,7 +22,7 @@ services:
             - "@mu_blogging_module.upload_helper"
         tags:
             - { name: form.type }
-    
+            
     mu_blogging_module.form.type.field.user:
         class: MU\BloggingModule\Form\Type\Field\UserType
         arguments:

@@ -255,7 +255,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                 $urlArgs['_locale'] = (null !== $languageField && !empty($entity[$languageField])) ? $entity[$languageField] : $this->request->getLocale();
     
                 $formattedTitle = $this->entityDisplayHelper->getFormattedTitle($entity);
-                $displayUrl = $hasDisplayAction ? new RouteUrl('mubloggingmodule_' . $objectType . '_display', $urlArgs) : '';
+                $displayUrl = $hasDisplayAction ? new RouteUrl('mubloggingmodule_' . strtolower($objectType) . '_display', $urlArgs) : '';
     
                 $result = new SearchResultEntity();
                 $result->setTitle($formattedTitle)

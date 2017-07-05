@@ -248,11 +248,12 @@ abstract class AbstractViewHelper
     
         // create name of the pdf output file
         $siteName = $this->variableApi->getSystemVar('sitename');
-        $pageTitle = $this->controllerHelper->formatPermalink($this->themePageVars->get('title', ''));
-        $fileTitle = $this->controllerHelper->formatPermalink($siteName)
+        $pageTitle = iconv('UTF-8', 'ASCII//TRANSLIT', $this->pageVars->get('title', ''));
+        $fileTitle = iconv('UTF-8', 'ASCII//TRANSLIT', $siteName)
                    . '-'
                    . ($pageTitle != '' ? $pageTitle . '-' : '')
                    . date('Ymd') . '.pdf';
+       $fileTitle = str_replace(' ', '_', $fileTitle);
     
         /*
         if (true === $this->request->query->getBoolean('dbg', false)) {

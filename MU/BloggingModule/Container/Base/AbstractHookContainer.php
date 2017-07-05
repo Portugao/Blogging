@@ -14,6 +14,8 @@ namespace MU\BloggingModule\Container\Base;
 
 use Zikula\Bundle\HookBundle\AbstractHookContainer as ZikulaHookContainer;
 use Zikula\Bundle\HookBundle\Bundle\SubscriberBundle;
+use Zikula\Bundle\HookBundle\Category\FilterHooksCategory;
+use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 
 /**
  * Base class for hook container methods.
@@ -27,27 +29,27 @@ abstract class AbstractHookContainer extends ZikulaHookContainer
      */
     protected function setupHookBundles()
     {
-        $bundle = new SubscriberBundle('MUBloggingModule', 'subscriber.mubloggingmodule.ui_hooks.posts', 'ui_hooks', $this->__('mubloggingmodule. Posts Display Hooks'));
+        $bundle = new SubscriberBundle('MUBloggingModule', 'subscriber.mubloggingmodule.ui_hooks.posts', UiHooksCategory::NAME, $this->__('mubloggingmodule. Posts Display Hooks'));
         
         // Display hook for view/display templates.
-        $bundle->addEvent('display_view', 'mubloggingmodule.ui_hooks.posts.display_view');
+        $bundle->addEvent(UiHooksCategory::TYPE_DISPLAY_VIEW, 'mubloggingmodule.ui_hooks.posts.display_view');
         // Display hook for create/edit forms.
-        $bundle->addEvent('form_edit', 'mubloggingmodule.ui_hooks.posts.form_edit');
+        $bundle->addEvent(UiHooksCategory::TYPE_FORM_EDIT, 'mubloggingmodule.ui_hooks.posts.form_edit');
         // Display hook for delete dialogues.
-        $bundle->addEvent('form_delete', 'mubloggingmodule.ui_hooks.posts.form_delete');
+        $bundle->addEvent(UiHooksCategory::TYPE_FORM_DELETE, 'mubloggingmodule.ui_hooks.posts.form_delete');
         // Validate input from an ui create/edit form.
-        $bundle->addEvent('validate_edit', 'mubloggingmodule.ui_hooks.posts.validate_edit');
+        $bundle->addEvent(UiHooksCategory::TYPE_VALIDATE_EDIT, 'mubloggingmodule.ui_hooks.posts.validate_edit');
         // Validate input from an ui delete form.
-        $bundle->addEvent('validate_delete', 'mubloggingmodule.ui_hooks.posts.validate_delete');
+        $bundle->addEvent(UiHooksCategory::TYPE_VALIDATE_DELETE, 'mubloggingmodule.ui_hooks.posts.validate_delete');
         // Perform the final update actions for a ui create/edit form.
-        $bundle->addEvent('process_edit', 'mubloggingmodule.ui_hooks.posts.process_edit');
+        $bundle->addEvent(UiHooksCategory::TYPE_PROCESS_EDIT, 'mubloggingmodule.ui_hooks.posts.process_edit');
         // Perform the final delete actions for a ui form.
-        $bundle->addEvent('process_delete', 'mubloggingmodule.ui_hooks.posts.process_delete');
+        $bundle->addEvent(UiHooksCategory::TYPE_PROCESS_DELETE, 'mubloggingmodule.ui_hooks.posts.process_delete');
         $this->registerHookSubscriberBundle($bundle);
         
-        $bundle = new SubscriberBundle('MUBloggingModule', 'subscriber.mubloggingmodule.filter_hooks.posts', 'filter_hooks', $this->__('mubloggingmodule. Posts Filter Hooks'));
+        $bundle = new SubscriberBundle('MUBloggingModule', 'subscriber.mubloggingmodule.filter_hooks.posts', FilterHooksCategory::NAME, $this->__('mubloggingmodule. Posts Filter Hooks'));
         // A filter applied to the given area.
-        $bundle->addEvent('filter', 'mubloggingmodule.filter_hooks.posts.filter');
+        $bundle->addEvent(FilterHooksCategory::TYPE_FILTER, 'mubloggingmodule.filter_hooks.posts.filter');
         $this->registerHookSubscriberBundle($bundle);
         
         

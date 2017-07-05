@@ -676,7 +676,7 @@ abstract class AbstractEditHandler
                 if ($action != 'delete') {
                     $urlArgs = $entity->createUrlArgs();
                     $urlArgs['_locale'] = $this->request->getLocale();
-                    $url = new RouteUrl('mubloggingmodule_' . $this->objectType . '_display', $urlArgs);
+                    $url = new RouteUrl('mubloggingmodule_' . $this->objectTypeLower . '_display', $urlArgs);
                 }
                 $this->hookHelper->callProcessHooks($entity, $hookType, $url);
             }
@@ -778,7 +778,7 @@ abstract class AbstractEditHandler
     
         if ($args['commandName'] != 'cancel') {
             if (true === $this->hasSlugUpdatableField && isset($entityData['slug'])) {
-                $entityData['slug'] = $this->controllerHelper->formatPermalink($entityData['slug']);
+                $entityData['slug'] = iconv('UTF-8', 'ASCII//TRANSLIT', $entityData['slug']);
             }
         }
     
