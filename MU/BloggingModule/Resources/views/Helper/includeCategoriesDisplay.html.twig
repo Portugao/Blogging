@@ -2,7 +2,8 @@
 {% if obj.categories is defined %}
     <h3>{{ __('Categories') }}</h3>
     {% if tabs|default(false) == true %}
-        <div role="tabpanel" class="tab-pane fade" id="tabCategories" aria-labelledby="categoriesTab">           
+        <div role="tabpanel" class="tab-pane fade" id="tabCategories" aria-labelledby="categoriesTab">
+            <h3>{{ __('Categories') }}</h3>
     {% else %}
         {#<h3 class="categories">{{ __('Categories') }}</h3>#}
     {% endif %}
