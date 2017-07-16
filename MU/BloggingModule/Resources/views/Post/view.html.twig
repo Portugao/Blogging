@@ -6,41 +6,14 @@
 <div class="mubloggingmodule-post mubloggingmodule-view">
 
     {{ block('page_nav_links') }}
-    
-            {% if routeArea != 'admin' %}
-            {% for post in items %}
-                <div class="blogger-view-item">
-					<p class="blogger-view-item-title">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</p>
-                    {% if post.summaryOfPost is not empty %}
-					<div class="blogger-view-item-summary">
-			        {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
-				        {% if post.imageForArticleMeta.isImage %}
-                       <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
-                        {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-						   <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" /></a>
-                        {% endif %}
-                    {% endif %}
-                    {{ post.summaryOfPost|safeHtml }}</div>
-                    {% endif %}
-                    {% if post.content is not empty %}
-					<div class="blogger-view-item-content"><a class="btn btn-danger" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ __('Read more of') }} {{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a></div>
-                    {% endif %}
-                </div>
-            
-            {% endfor %}
-        
-        {% endif %}
 
-    {% if routeArea == 'admin' %}
     {{ include('@MUBloggingModule/Post/viewQuickNav.html.twig') }}{# see template file for available options #}
-    {% endif %}
 
     {% if routeArea == 'admin' %}
     <form action="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'handleselectedentries') }}" method="post" id="postsViewForm" class="form-horizontal" role="form">
         <div>
     {% endif %}
-    {% if routeArea == 'admin' %}
-        <div class="table-responsive">   
+        <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover table-condensed">
             <colgroup>
                 {% if routeArea == 'admin' %}
@@ -52,6 +25,7 @@
                 {% endif %}
                 <col id="cTitle" />
                 <col id="cDescriptionForGoogle" />
+                <col id="cForWhichLanguage" />
                 <col id="cImageForArticle" />
                 <col id="cDescriptionOfImageForArticle" />
                 <col id="cSummaryOfPost" />
@@ -82,6 +56,9 @@
                 </th>
                 <th id="hDescriptionForGoogle" scope="col" class="text-left">
                     <a href="{{ sort.descriptionForGoogle.url }}" title="{{ __f('Sort by %s', {'%s': 'description for google'}) }}" class="{{ sort.descriptionForGoogle.class }}">{{ __('Description for google') }}</a>
+                </th>
+                <th id="hForWhichLanguage" scope="col" class="text-left">
+                    <a href="{{ sort.forWhichLanguage.url }}" title="{{ __f('Sort by %s', {'%s': 'for which language'}) }}" class="{{ sort.forWhichLanguage.class }}">{{ __('For which language') }}</a>
                 </th>
                 <th id="hImageForArticle" scope="col" class="text-left">
                     <a href="{{ sort.imageForArticle.url }}" title="{{ __f('Sort by %s', {'%s': 'image for article'}) }}" class="{{ sort.imageForArticle.class }}">{{ __('Image for article') }}</a>
@@ -124,10 +101,10 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ post.id }}" class="mublogging-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ post.getKey() }}" class="mublogging-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ post.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ post.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
                         <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
@@ -138,10 +115,13 @@
                     {{ post.workflowState|mubloggingmodule_objectState }}
                 </td>
                 {% endif %}<td headers="hTitle" class="text-left">
-                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a>
+                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts')|safeHtml }}</a>
                 </td>
                 <td headers="hDescriptionForGoogle" class="text-left">
-                    {{ post.descriptionForGoogle|truncate(50) }}
+                    {{ post.descriptionForGoogle }}
+                </td>
+                <td headers="hForWhichLanguage" class="text-left">
+                    {{ post.forWhichLanguage|languageName }}
                 </td>
                 <td headers="hImageForArticle" class="text-left">
                     {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
@@ -184,10 +164,10 @@
                 </td>
                 <td headers="hPost" class="text-left">
                     {% if post.post|default %}
-                        <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug }) }}">{% spaceless %}
-                          {{ post.post.getTitleFromDisplayPattern() }}
+                        <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug }) }}">{% spaceless %}
+                          {{ post.post|mubloggingmodule_formattedTitle }}
                         {% endspaceless %}</a>
-                        <a id="postItem{{ post.id }}_rel_{{ post.post.id }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', {'id': post.post.id, 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post.getTitleFromDisplayPattern()|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                        <a id="postItem{{ post.getKey() }}_rel_{{ post.post.getKey() }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post|mubloggingmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
@@ -195,7 +175,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}17{% else %}16{% endif %}">
             {{ __('No posts found.') }}
               </td>
             </tr>
@@ -203,10 +183,8 @@
         
             </tbody>
         </table>
-        
-
         </div>
-        {% endif %}
+        
         {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'mubloggingmodule_post_' ~ routeArea ~ 'view'}) }}
         {% endif %}
@@ -219,7 +197,6 @@
                         <option value="approve" title="{{ __('Update content and approve for immediate publishing.') }}">{{ __('Approve') }}</option>
                         <option value="unpublish" title="{{ __('Hide content temporarily.') }}">{{ __('Unpublish') }}</option>
                         <option value="publish" title="{{ __('Make content available again.') }}">{{ __('Publish') }}</option>
-                        <option value="archive" title="{{ __('Move content into the archive.') }}">{{ __('Archive') }}</option>
                         <option value="delete" title="{{ __('Delete content permanently.') }}">{{ __('Delete') }}</option>
                     </select>
                 </div>

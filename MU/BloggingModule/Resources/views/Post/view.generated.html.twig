@@ -25,14 +25,16 @@
                 {% endif %}
                 <col id="cTitle" />
                 <col id="cDescriptionForGoogle" />
+                <col id="cForWhichLanguage" />
                 <col id="cImageForArticle" />
+                <col id="cDescriptionOfImageForArticle" />
                 <col id="cSummaryOfPost" />
-                <col id="cBlock" />
                 <col id="cAdvertising" />
+                <col id="cPositionOfBlock" />
                 <col id="cAdvertising2" />
+                <col id="cPositionOfBlock2" />
                 <col id="cAdvertising3" />
-                <col id="cBlock2" />
-                <col id="cBlock3" />
+                <col id="cPositionOfBlock3" />
                 <col id="cSimilarArticles" />
                 <col id="cPost" />
             </colgroup>
@@ -55,29 +57,35 @@
                 <th id="hDescriptionForGoogle" scope="col" class="text-left">
                     <a href="{{ sort.descriptionForGoogle.url }}" title="{{ __f('Sort by %s', {'%s': 'description for google'}) }}" class="{{ sort.descriptionForGoogle.class }}">{{ __('Description for google') }}</a>
                 </th>
+                <th id="hForWhichLanguage" scope="col" class="text-left">
+                    <a href="{{ sort.forWhichLanguage.url }}" title="{{ __f('Sort by %s', {'%s': 'for which language'}) }}" class="{{ sort.forWhichLanguage.class }}">{{ __('For which language') }}</a>
+                </th>
                 <th id="hImageForArticle" scope="col" class="text-left">
                     <a href="{{ sort.imageForArticle.url }}" title="{{ __f('Sort by %s', {'%s': 'image for article'}) }}" class="{{ sort.imageForArticle.class }}">{{ __('Image for article') }}</a>
+                </th>
+                <th id="hDescriptionOfImageForArticle" scope="col" class="text-left">
+                    <a href="{{ sort.descriptionOfImageForArticle.url }}" title="{{ __f('Sort by %s', {'%s': 'description of image for article'}) }}" class="{{ sort.descriptionOfImageForArticle.class }}">{{ __('Description of image for article') }}</a>
                 </th>
                 <th id="hSummaryOfPost" scope="col" class="text-left">
                     <a href="{{ sort.summaryOfPost.url }}" title="{{ __f('Sort by %s', {'%s': 'summary of post'}) }}" class="{{ sort.summaryOfPost.class }}">{{ __('Summary of post') }}</a>
                 </th>
-                <th id="hBlock" scope="col" class="text-left">
-                    <a href="{{ sort.block.url }}" title="{{ __f('Sort by %s', {'%s': 'block'}) }}" class="{{ sort.block.class }}">{{ __('Block') }}</a>
-                </th>
                 <th id="hAdvertising" scope="col" class="text-left">
                     <a href="{{ sort.advertising.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising'}) }}" class="{{ sort.advertising.class }}">{{ __('Advertising') }}</a>
+                </th>
+                <th id="hPositionOfBlock" scope="col" class="text-left">
+                    <a href="{{ sort.positionOfBlock.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block'}) }}" class="{{ sort.positionOfBlock.class }}">{{ __('Position of block') }}</a>
                 </th>
                 <th id="hAdvertising2" scope="col" class="text-left">
                     <a href="{{ sort.advertising2.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 2'}) }}" class="{{ sort.advertising2.class }}">{{ __('Advertising 2') }}</a>
                 </th>
+                <th id="hPositionOfBlock2" scope="col" class="text-left">
+                    <a href="{{ sort.positionOfBlock2.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block 2'}) }}" class="{{ sort.positionOfBlock2.class }}">{{ __('Position of block 2') }}</a>
+                </th>
                 <th id="hAdvertising3" scope="col" class="text-left">
                     <a href="{{ sort.advertising3.url }}" title="{{ __f('Sort by %s', {'%s': 'advertising 3'}) }}" class="{{ sort.advertising3.class }}">{{ __('Advertising 3') }}</a>
                 </th>
-                <th id="hBlock2" scope="col" class="text-left">
-                    <a href="{{ sort.block2.url }}" title="{{ __f('Sort by %s', {'%s': 'block 2'}) }}" class="{{ sort.block2.class }}">{{ __('Block 2') }}</a>
-                </th>
-                <th id="hBlock3" scope="col" class="text-left">
-                    <a href="{{ sort.block3.url }}" title="{{ __f('Sort by %s', {'%s': 'block 3'}) }}" class="{{ sort.block3.class }}">{{ __('Block 3') }}</a>
+                <th id="hPositionOfBlock3" scope="col" class="text-left">
+                    <a href="{{ sort.positionOfBlock3.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block 3'}) }}" class="{{ sort.positionOfBlock3.class }}">{{ __('Position of block 3') }}</a>
                 </th>
                 <th id="hSimilarArticles" scope="col" class="text-left">
                     <a href="{{ sort.similarArticles.url }}" title="{{ __f('Sort by %s', {'%s': 'similar articles'}) }}" class="{{ sort.similarArticles.class }}">{{ __('Similar articles') }}</a>
@@ -93,13 +101,13 @@
             <tr>
                 {% if routeArea == 'admin' %}
                     <td headers="hSelect" class="fixed-column text-center z-w02">
-                        <input type="checkbox" name="items[]" value="{{ post.id }}" class="mublogging-toggle-checkbox" />
+                        <input type="checkbox" name="items[]" value="{{ post.getKey() }}" class="mublogging-toggle-checkbox" />
                     </td>
                 {% endif %}
-                <td id="itemActions{{ post.id }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
+                <td id="itemActions{{ post.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
                     {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'view' }) %}
                     <div class="dropdown">
-                        <a id="itemActions{{ post.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
+                        <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
                         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
                     </div>
                 </td>
@@ -107,53 +115,59 @@
                     {{ post.workflowState|mubloggingmodule_objectState }}
                 </td>
                 {% endif %}<td headers="hTitle" class="text-left">
-                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a>
+                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts')|safeHtml }}</a>
                 </td>
                 <td headers="hDescriptionForGoogle" class="text-left">
                     {{ post.descriptionForGoogle }}
                 </td>
+                <td headers="hForWhichLanguage" class="text-left">
+                    {{ post.forWhichLanguage|languageName }}
+                </td>
                 <td headers="hImageForArticle" class="text-left">
                     {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
-                                <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+                                <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
                     {% if post.imageForArticleMeta.isImage %}
                         {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-                        <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                        <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
                     {% else %}
                         {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
                     {% endif %}
                     </a>
                     {% else %}&nbsp;{% endif %}
                 </td>
+                <td headers="hDescriptionOfImageForArticle" class="text-left">
+                    {{ post.descriptionOfImageForArticle }}
+                </td>
                 <td headers="hSummaryOfPost" class="text-left">
                     {{ post.summaryOfPost|safeHtml|truncate(50) }}
-                </td>
-                <td headers="hBlock" class="text-left">
-                    {{ post.block|mubloggingmodule_listEntry('post', 'block') }}
                 </td>
                 <td headers="hAdvertising" class="text-left">
                     {{ post.advertising|safeHtml|truncate(50) }}
                 </td>
+                <td headers="hPositionOfBlock" class="text-left">
+                    {{ post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock') }}
+                </td>
                 <td headers="hAdvertising2" class="text-left">
                     {{ post.advertising2|safeHtml|truncate(50) }}
+                </td>
+                <td headers="hPositionOfBlock2" class="text-left">
+                    {{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}
                 </td>
                 <td headers="hAdvertising3" class="text-left">
                     {{ post.advertising3|safeHtml|truncate(50) }}
                 </td>
-                <td headers="hBlock2" class="text-left">
-                    {{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}
-                </td>
-                <td headers="hBlock3" class="text-left">
-                    {{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}
+                <td headers="hPositionOfBlock3" class="text-left">
+                    {{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}
                 </td>
                 <td headers="hSimilarArticles" class="text-left">
                     {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
                 </td>
                 <td headers="hPost" class="text-left">
                     {% if post.post|default %}
-                        <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug }) }}">{% spaceless %}
-                          {{ post.post.getTitleFromDisplayPattern() }}
+                        <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug }) }}">{% spaceless %}
+                          {{ post.post|mubloggingmodule_formattedTitle }}
                         {% endspaceless %}</a>
-                        <a id="postItem{{ post.id }}_rel_{{ post.post.id }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', {'id': post.post.id, 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post.getTitleFromDisplayPattern()|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                        <a id="postItem{{ post.getKey() }}_rel_{{ post.post.getKey() }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post|mubloggingmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
                     {% else %}
                         {{ __('Not set.') }}
                     {% endif %}
@@ -161,7 +175,7 @@
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}15{% else %}14{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}17{% else %}16{% endif %}">
             {{ __('No posts found.') }}
               </td>
             </tr>
@@ -171,7 +185,7 @@
         </table>
         </div>
         
-        {% if showAllEntries != 1 and pager|default %}
+        {% if all != 1 and pager|default %}
             {{ pager({ rowcount: pager.amountOfItems, limit: pager.itemsPerPage, display: 'page', route: 'mubloggingmodule_post_' ~ routeArea ~ 'view'}) }}
         {% endif %}
     {% if routeArea == 'admin' %}
@@ -205,7 +219,7 @@
                 <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'edit') }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
             {% endif %}
         {% endif %}
-        {% if showAllEntries == 1 %}
+        {% if all == 1 %}
             {% set linkTitle = __('Back to paginated view') %}
             <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'view') }}" title="{{ linkTitle|e('html_attr') }}" class="fa fa-table">{{ linkTitle }}</a>
         {% else %}

@@ -18,7 +18,7 @@ application "Blogging" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
     skipFiles "README.md"
-        markFiles "Block/Form/Type/ItemListBlockType.php,\r\nController/PostController.php,\r\nEntity/PostEntity,\r\nEntity/Repository/PostRepository.php,\r\nResources/public/css/style.css,\r\nResources/views/base.html.twig,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+        markFiles ""
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {

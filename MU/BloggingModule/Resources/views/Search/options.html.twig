@@ -1,8 +1,0 @@
-{# Purpose of this template: Display search options #}
-<input type="hidden" id="mUBloggingModuleActive" name="active[MUBloggingModule]" value="1" />
-{% if active_post is defined %}
-    <div>
-        <input type="checkbox" id="active_mUBloggingModulePosts" name="mUBloggingModuleSearchTypes[]" value="post"{% if active_post %} checked="checked"{% endif %} />
-        <label for="active_mUBloggingModulePosts">{{ __('Posts', 'mubloggingmodule') }}</label>
-    </div>
-{% endif %}

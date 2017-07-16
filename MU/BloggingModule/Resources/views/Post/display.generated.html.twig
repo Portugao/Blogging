@@ -1,13 +1,13 @@
 {# purpose of this template: posts display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUBloggingModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ post.getTitleFromDisplayPattern()|default(__('Post')) }}{% endblock %}
+{% block pageTitle %}{{ post|mubloggingmodule_formattedTitle|default(__('Post')) }}{% endblock %}
 {% block title %}
-    {% set templateTitle = post.getTitleFromDisplayPattern()|default(__('Post')) %}
-    {{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}
+    {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
+    {{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}
     {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
-        <a id="itemActions{{ post.id }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
+        <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
     </div>
 {% endblock %}
@@ -31,19 +31,27 @@
             <dt>{{ __('Description for google') }}</dt>
             <dd>{{ post.descriptionForGoogle }}</dd>
         {% endif %}
+        {% if post.forWhichLanguage is not empty %}
+            <dt>{{ __('For which language') }}</dt>
+            <dd>{{ post.forWhichLanguage|languageName }}</dd>
+        {% endif %}
         {% if post.imageForArticle is not empty %}
             <dt>{{ __('Image for article') }}</dt>
             <dd>{% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
-                        <a href="{{ post.imageForArticleUrl }}" title="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+                        <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
             {% if post.imageForArticleMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post.getTitleFromDisplayPattern()|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
             {% else %}
                 {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
             {% endif %}
             </a>
             {% else %}&nbsp;{% endif %}
             </dd>
+        {% endif %}
+        {% if post.descriptionOfImageForArticle is not empty %}
+            <dt>{{ __('Description of image for article') }}</dt>
+            <dd>{{ post.descriptionOfImageForArticle }}</dd>
         {% endif %}
         {% if post.summaryOfPost is not empty %}
             <dt>{{ __('Summary of post') }}</dt>
@@ -53,37 +61,49 @@
             <dt>{{ __('Content') }}</dt>
             <dd>{{ post.content|safeHtml }}</dd>
         {% endif %}
-        {% if post.block is not empty %}
-            <dt>{{ __('Block') }}</dt>
-            <dd>{{ post.block|mubloggingmodule_listEntry('post', 'block') }}</dd>
+        {% if post.content2 is not empty %}
+            <dt>{{ __('Content 2') }}</dt>
+            <dd>{{ post.content2|safeHtml }}</dd>
         {% endif %}
         {% if post.advertising is not empty %}
             <dt>{{ __('Advertising') }}</dt>
             <dd>{{ post.advertising|safeHtml }}</dd>
         {% endif %}
-        {% if post.content2 is not empty %}
-            <dt>{{ __('Content 2') }}</dt>
-            <dd>{{ post.content2|safeHtml }}</dd>
-        {% endif %}
-        {% if post.advertising2 is not empty %}
-            <dt>{{ __('Advertising 2') }}</dt>
-            <dd>{{ post.advertising2|safeHtml }}</dd>
+        {% if post.positionOfBlock is not empty %}
+            <dt>{{ __('Position of block') }}</dt>
+            <dd>{{ post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock') }}</dd>
         {% endif %}
         {% if post.content3 is not empty %}
             <dt>{{ __('Content 3') }}</dt>
             <dd>{{ post.content3|safeHtml }}</dd>
         {% endif %}
+        {% if post.content4 is not empty %}
+            <dt>{{ __('Content 4') }}</dt>
+            <dd>{{ post.content4|safeHtml }}</dd>
+        {% endif %}
+        {% if post.advertising2 is not empty %}
+            <dt>{{ __('Advertising 2') }}</dt>
+            <dd>{{ post.advertising2|safeHtml }}</dd>
+        {% endif %}
+        {% if post.positionOfBlock2 is not empty %}
+            <dt>{{ __('Position of block 2') }}</dt>
+            <dd>{{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}</dd>
+        {% endif %}
+        {% if post.content5 is not empty %}
+            <dt>{{ __('Content 5') }}</dt>
+            <dd>{{ post.content5|safeHtml }}</dd>
+        {% endif %}
+        {% if post.content6 is not empty %}
+            <dt>{{ __('Content 6') }}</dt>
+            <dd>{{ post.content6|safeHtml }}</dd>
+        {% endif %}
         {% if post.advertising3 is not empty %}
             <dt>{{ __('Advertising 3') }}</dt>
             <dd>{{ post.advertising3|safeHtml }}</dd>
         {% endif %}
-        {% if post.block2 is not empty %}
-            <dt>{{ __('Block 2') }}</dt>
-            <dd>{{ post.block2|mubloggingmodule_listEntry('post', 'block2') }}</dd>
-        {% endif %}
-        {% if post.block3 is not empty %}
-            <dt>{{ __('Block 3') }}</dt>
-            <dd>{{ post.block3|mubloggingmodule_listEntry('post', 'block3') }}</dd>
+        {% if post.positionOfBlock3 is not empty %}
+            <dt>{{ __('Position of block 3') }}</dt>
+            <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
         {% endif %}
         {% if post.similarArticles is not empty %}
             <dt>{{ __('Similar articles') }}</dt>
@@ -93,12 +113,12 @@
             <dt>{{ __('Post') }}</dt>
             <dd>
               {% if not isQuickView %}
-                  <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug }) }}">{% spaceless %}
-                    {{ post.post.getTitleFromDisplayPattern() }}
+                  <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug }) }}">{% spaceless %}
+                    {{ post.post|mubloggingmodule_formattedTitle }}
                   {% endspaceless %}</a>
-                  <a id="postItem{{ post.post.id }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post.getTitleFromDisplayPattern()|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+                  <a id="postItem{{ post.post.getKey() }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post|mubloggingmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
               {% else %}
-                  {{ post.post.getTitleFromDisplayPattern() }}
+                  {{ post.post|mubloggingmodule_formattedTitle }}
               {% endif %}
             </dd>
         {% endif %}
@@ -136,12 +156,12 @@
     {% if mayManage %}
         <p class="managelink">
             {% set createTitle = __('Create post') %}
-            <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'edit', { post: post.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+            <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'edit', { post: post.getKey() }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
         </p>
     {% endif %}
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.id, urlObject=currentUrlObject) %}
+    {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.getKey(), urlObject=currentUrlObject) %}
     {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
         <h4>{{ providerArea }}</h4>
         {{ hook }}
