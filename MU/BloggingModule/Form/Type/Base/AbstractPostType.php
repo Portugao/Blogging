@@ -559,18 +559,6 @@ abstract class AbstractPostType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
-        $builder->add('parentid', IntegerType::class, [
-            'label' => $this->__('Parentid') . ':',
-            'empty_data' => '0',
-            'attr' => [
-                'maxlength' => 11,
-                'class' => ' validate-digits',
-                'title' => $this->__('Enter the parentid of the post.') . ' ' . $this->__('Only digits are allowed.')
-            ],
-            'required' => true,
-            'scale' => 0
-        ]);
-        
         $builder->add('relevantArticles', TextType::class, [
             'label' => $this->__('Relevant articles') . ':',
             'empty_data' => '',

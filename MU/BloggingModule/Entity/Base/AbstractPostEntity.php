@@ -294,16 +294,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $endDate;
     
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\Type(type="integer")
-     * @Assert\NotBlank()
-     * @Assert\NotEqualTo(value=0)
-     * @Assert\LessThan(value=100000000000)
-     * @var integer $parentid
-     */
-    protected $parentid = 0;
-    
-    /**
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
@@ -1082,30 +1072,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
             } else {
                 $this->endDate = new \DateTime($endDate);
             }
-        }
-    }
-    
-    /**
-     * Returns the parentid.
-     *
-     * @return integer
-     */
-    public function getParentid()
-    {
-        return $this->parentid;
-    }
-    
-    /**
-     * Sets the parentid.
-     *
-     * @param integer $parentid
-     *
-     * @return void
-     */
-    public function setParentid($parentid)
-    {
-        if (intval($this->parentid) !== intval($parentid)) {
-            $this->parentid = intval($parentid);
         }
     }
     

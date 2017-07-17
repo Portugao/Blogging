@@ -176,11 +176,6 @@ application "Blogging" {
                     mandatory false
                 displayType NONE
                 },
-                integer "parentid" {
-                    defaultValue "0"
-                    displayType NONE
-                }
-            ,
                 string "relevantArticles" {
                     mandatory false
                 }

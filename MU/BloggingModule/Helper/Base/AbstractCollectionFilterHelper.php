@@ -337,8 +337,6 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchStartDate'] = $fragment;
             $filters[] = 'tbl.endDate = :searchEndDate';
             $parameters['searchEndDate'] = $fragment;
-            $filters[] = 'tbl.parentid = :searchParentid';
-            $parameters['searchParentid'] = $fragment;
             $filters[] = 'tbl.relevantArticles LIKE :searchRelevantArticles';
             $parameters['searchRelevantArticles'] = '%' . $fragment . '%';
         }
