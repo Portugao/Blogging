@@ -1,11 +1,12 @@
 {# purpose of this template: posts display view #}
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUBloggingModule::' ~ baseTemplate ~ '.html.twig' %}
-{% block pageTitle %}{{ post|mubloggingmodule_formattedTitle|default(__('Post')) }}{% endblock %}
+{% block pageTitle %}{{ post|mubloggingmodule_formattedTitle|default(__('Post')) }}
+{{ pageSetVar('meta.description', post.descriptionForGoogle) }}
+{% endblock %}
+
 {% block title %}
-    {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
-    {{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}
-    {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
+ {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
     <div class="dropdown">
         <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
         {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
@@ -16,8 +17,16 @@
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="mubloggingmodule-post mubloggingmodule-display">
 
-    <dl>
-        {% if post.workflowState is not empty and routeArea == 'admin' %}
+    <div class="row">
+        <div class="col-sm-4">
+            {{ block('related_items') }}
+        </div>
+        
+        <div class="col-sm-8">
+        {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
+        <h1>{{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}</h1>
+          
+        {#% if post.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
             <dd>{{ post.workflowState|mubloggingmodule_listEntry('post', 'workflowState') }}</dd>
         {% endif %}
@@ -28,18 +37,19 @@
         {% if post.descriptionForGoogle is not empty %}
             <dt>{{ __('Description for google') }}</dt>
             <dd>{{ post.descriptionForGoogle }}</dd>
-        {% endif %}
-        {% if post.forWhichLanguage is not empty %}
-            <dt>{{ __('For which language') }}</dt>
-            <dd>{{ post.forWhichLanguage|languageName }}</dd>
-        {% endif %}
+        {% endif %#}
         {% if post.imageForArticle is not empty %}
-            <dt>{{ __('Image for article') }}</dt>
-            <dd>{% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
-                        <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
-            {% if post.imageForArticleMeta.isImage %}
+            {% if post.imageForArticle is not empty and post.imageForArticleMeta|default %}
+                {% if post.descriptionOfImageForArticle is not empty %}
+                    {% set imageDescription = post.descriptionOfImageForArticle %}
+                {% else %}
+                    {% set imageDescription = post|mubloggingmodule_formattedTitle|e('html_attr') %}
+                {% endif %}
+                <div id="blogger-display-image">
+                    <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+                {% if post.imageForArticleMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
-                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" />
+                <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageDescription }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-responsive" /></div>
             {% else %}
                 {{ __('Download') }} ({{ post.imageForArticleMeta.size|mubloggingmodule_fileSize(post.imageForArticle.getPathname(), false, false) }})
             {% endif %}
@@ -47,83 +57,145 @@
             {% else %}&nbsp;{% endif %}
             </dd>
         {% endif %}
-        {% if post.descriptionOfImageForArticle is not empty %}
-            <dt>{{ __('Description of image for article') }}</dt>
-            <dd>{{ post.descriptionOfImageForArticle }}</dd>
+        {% if post.summaryOfPost != NULL %}
+            <div class="blogger-display blogger-summary">{{ post.summaryOfPost|safeHtml }}</div>
         {% endif %}
-        {% if post.summaryOfPost is not empty %}
-            <dt>{{ __('Summary of post') }}</dt>
-            <dd>{{ post.summaryOfPost|safeHtml }}</dd>
+        {% if post.content != NULL %}
+        {% if post.advertising != NULL %}
+            {% if post.positionOfAdvertising1 == 1 %}
+                {% set bloggerfloat = 'blogger-left' %}
+            {% endif %}
+            {% if post.positionOfAdvertising1 == 2 %}
+                {% set bloggerfloat = 'blogger-right' %}
+            {% endif %}
+            {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
+                div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
+            {% endif %}
+            {% endif %}        
+            <div class="blogger-display blogger-content">{{ post.content|safeHtml }}</div>
         {% endif %}
-        {% if post.content is not empty %}
-            <dt>{{ __('Content') }}</dt>
-            <dd>{{ post.content|safeHtml }}</dd>
+        {% if post.content2 != NULL %}
+            {% if post.advertising != NULL %}
+                    {% if post.positionOfAdvertising1 == 3 %}
+                        {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising1 == 4 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising1 == 3 or post.positionOfAdvertising1 == 4 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
+                    {% endif %}
+                {% endif %} 
+            <div class="blogger-display blogger-content2">{{ post.content2|safeHtml }}</div>
         {% endif %}
-        {% if post.content2 is not empty %}
-            <dt>{{ __('Content 2') }}</dt>
-            <dd>{{ post.content2|safeHtml }}</dd>
-        {% endif %}
-        {% if post.advertising is not empty %}
-            <dt>{{ __('Advertising') }}</dt>
-            <dd>{{ post.advertising|safeHtml }}</dd>
-        {% endif %}
-        {% if post.positionOfBlock is not empty %}
-            <dt>{{ __('Position of block') }}</dt>
-            <dd>{{ post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock') }}</dd>
+        {% if post.positionOfBlock != 'none' %}
+            {{ showblockposition (post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock')) }}
         {% endif %}
         {% if post.content3 is not empty %}
-            <dt>{{ __('Content 3') }}</dt>
-            <dd>{{ post.content3|safeHtml }}</dd>
+            {% if post.advertising2 != none %}
+                    {% if post.positionOfAdvertising2 == 1 %}
+                        {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 2 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 1 or post.positionOfAdvertising2 == 2 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising2|safeHtml }}</div>
+                    {% endif %}
+                {% endif %}         
+            <div class="blogger-display blogger-content3">{{ post.content3|safeHtml }}</div>
         {% endif %}
         {% if post.content4 is not empty %}
-            <dt>{{ __('Content 4') }}</dt>
-            <dd>{{ post.content4|safeHtml }}</dd>
+            {% if post.advertising2 != NULL %}
+                    {% if post.positionOfAdvertising2 == 3 %}
+                        {% set bloggerfloat = 'blogger-left' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 4 %}
+                        {% set bloggerfloat = 'blogger-right' %}
+                    {% endif %}
+                    {% if post.positionOfAdvertising2 == 3 or post.positionOfAdvertising2 == 4 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising2|safeHtml }}</div>
+                    {% endif %}
+                {% endif %} 
+            <div class="blogger-display blogger-content4">{{ post.content4|safeHtml }}</div>
         {% endif %}
-        {% if post.advertising2 is not empty %}
-            <dt>{{ __('Advertising 2') }}</dt>
-            <dd>{{ post.advertising2|safeHtml }}</dd>
-        {% endif %}
-        {% if post.positionOfBlock2 is not empty %}
-            <dt>{{ __('Position of block 2') }}</dt>
+        {% if post.positionOfBlock2 != 'none' %}
             <dd>{{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}</dd>
         {% endif %}
         {% if post.content5 is not empty %}
-            <dt>{{ __('Content 5') }}</dt>
-            <dd>{{ post.content5|safeHtml }}</dd>
+            {% if post.advertising3 != NULL %}
+                {% if post.positionOfAdvertising3 == 1 %}
+                    {% set bloggerfloat = 'blogger-left' %}
+                {% endif %}
+                {% if post.positionOfAdvertising1 == 2 %}
+                    {% set bloggerfloat = 'blogger-right' %}
+                {% endif %}
+                {% if post.positionOfAdvertising3 == 1 or post.positionOfAdvertising3 == 2 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising3|safeHtml }}</div>
+                {% endif %}
+            {% endif %} 
+            <div class="blogger-display blogger-content5">{{ post.content5|safeHtml }}</div>
         {% endif %}
         {% if post.content6 is not empty %}
-            <dt>{{ __('Content 6') }}</dt>
-            <dd>{{ post.content6|safeHtml }}</dd>
+            {% if post.advertising3 != NULL %}
+                {% if post.positionOfAdvertising3 == 3 %}
+                    {% set bloggerfloat = 'blogger-left' %}
+                {% endif %}
+                {% if post.positionOfAdvertising1 == 4 %}
+                    {% set bloggerfloat = 'blogger-right' %}
+                {% endif %}
+                {% if post.positionOfAdvertising3 == 3 or post.positionOfAdvertising3 == 4 %}
+                    <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising3|safeHtml }}</div>
+                {% endif %}
+            {% endif %} 
+            <div class="blogger-display blogger-content6">{{ post.content6|safeHtml }}</div>
         {% endif %}
-        {% if post.advertising3 is not empty %}
-            <dt>{{ __('Advertising 3') }}</dt>
-            <dd>{{ post.advertising3|safeHtml }}</dd>
-        {% endif %}
-        {% if post.positionOfBlock3 is not empty %}
-            <dt>{{ __('Position of block 3') }}</dt>
+        {% if post.positionOfBlock3 != 'none' %}
             <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
         {% endif %}
-        {% if post.similarArticles is not empty %}
-            <dt>{{ __('Similar articles') }}</dt>
-            <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
+        {% if post.similarArticles != '###none###' and post.similarArticles != '###all###' %}
+            {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
         {% endif %}
-        {% if post.relevantArticles is not empty %}
-            <dt>{{ __('Relevant articles') }}</dt>
-            <dd>{{ post.relevantArticles }}</dd>
+        {% if post.post|default %}
+            {{ __('Main post') }}</dt>
+              {% if not isQuickView %}
+                  <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug }) }}">{% spaceless %}
+                    {{ post.post.getTitleFromDisplayPattern() }}
+                  {% endspaceless %}</a>
+                  <a id="postItem{{ post.post.id }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.post.id, 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post.getTitleFromDisplayPattern()|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
+              {% else %}
+                  {{ post.post.getTitleFromDisplayPattern() }}
+              {% endif %}
         {% endif %}
-        
-    </dl>
 
     {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
         {{ include('@MUBloggingModule/Helper/includeCategoriesDisplay.html.twig', { obj: post }) }}
     {% endif %}
-    {{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }}
+    {#{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }#}
 
     {{ block('display_hooks') }}
+        </div>
+
+    </div>
 </div>
 {% endblock %}
+{% block related_items %}
+    {% if routeArea == 'admin' %}
+        <h4>{{ __('Main posts') }}</h4>
+
+    {% endif %}
+    
+    {% set mayManage = hasPermission('MUBloggingModule:Post:', '::', 'ACCESS_COMMENT') %}
+    {% if mayManage %}
+        <p class="managelink">
+            {% set createTitle = __('Create post') %}
+            <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'edit', { post: post.id }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
+        </p>
+    {% endif %}
+    
+{% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.getKey(), urlObject=currentUrlObject) %}
+    {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.id, urlObject=currentUrlObject) %}
     {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
         <h4>{{ providerArea }}</h4>
         {{ hook }}
