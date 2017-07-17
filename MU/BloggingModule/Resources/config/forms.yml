@@ -5,8 +5,6 @@ services:
         class: MU\BloggingModule\Form\Type\QuickNavigation\PostQuickNavType
         arguments:
             - "@translator.default"
-            - "@request_stack"
-            - "@mu_blogging_module.entity_display_helper"
             - "@mu_blogging_module.listentries_helper"
             - "@zikula_settings_module.locale_api"
             - "@mu_blogging_module.feature_activation_helper"
@@ -43,8 +41,6 @@ services:
         arguments:
             - "@translator.default"
             - "@mu_blogging_module.entity_factory"
-            - "@mu_blogging_module.collection_filter_helper"
-            - "@mu_blogging_module.entity_display_helper"
             - "@zikula_extensions_module.api.variable"
             - "@mu_blogging_module.translatable_helper"
             - "@mu_blogging_module.listentries_helper"

@@ -36,7 +36,7 @@
                 <col id="cAdvertising3" />
                 <col id="cPositionOfBlock3" />
                 <col id="cSimilarArticles" />
-                <col id="cPost" />
+                <col id="cRelevantArticles" />
             </colgroup>
             <thead>
             <tr>
@@ -90,8 +90,8 @@
                 <th id="hSimilarArticles" scope="col" class="text-left">
                     <a href="{{ sort.similarArticles.url }}" title="{{ __f('Sort by %s', {'%s': 'similar articles'}) }}" class="{{ sort.similarArticles.class }}">{{ __('Similar articles') }}</a>
                 </th>
-                <th id="hPost" scope="col" class="text-left">
-                    <a href="{{ sort.post.url }}" title="{{ __f('Sort by %s', {'%s': 'post'}) }}" class="{{ sort.post.class }}">{{ __('Post') }}</a>
+                <th id="hRelevantArticles" scope="col" class="text-left">
+                    <a href="{{ sort.relevantArticles.url }}" title="{{ __f('Sort by %s', {'%s': 'relevant articles'}) }}" class="{{ sort.relevantArticles.class }}">{{ __('Relevant articles') }}</a>
                 </th>
             </tr>
             </thead>
@@ -162,15 +162,8 @@
                 <td headers="hSimilarArticles" class="text-left">
                     {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
                 </td>
-                <td headers="hPost" class="text-left">
-                    {% if post.post|default %}
-                        <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug }) }}">{% spaceless %}
-                          {{ post.post|mubloggingmodule_formattedTitle }}
-                        {% endspaceless %}</a>
-                        <a id="postItem{{ post.getKey() }}_rel_{{ post.post.getKey() }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post|mubloggingmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-                    {% else %}
-                        {{ __('Not set.') }}
-                    {% endif %}
+                <td headers="hRelevantArticles" class="text-left">
+                    {{ post.relevantArticles }}
                 </td>
             </tr>
         {% else %}

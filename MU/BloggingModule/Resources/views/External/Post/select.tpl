@@ -57,6 +57,7 @@
                     <option value="advertising3"{if $sort eq 'advertising3'} selected="selected"{/if}>{gt text='Advertising 3'}</option>
                     <option value="positionOfBlock3"{if $sort eq 'positionOfBlock3'} selected="selected"{/if}>{gt text='Position of block 3'}</option>
                     <option value="similarArticles"{if $sort eq 'similarArticles'} selected="selected"{/if}>{gt text='Similar articles'}</option>
+                    <option value="relevantArticles"{if $sort eq 'relevantArticles'} selected="selected"{/if}>{gt text='Relevant articles'}</option>
                     <option value="createdDate"{if $sort eq 'createdDate'} selected="selected"{/if}>{gt text='Creation date'}</option>
                     <option value="createdBy"{if $sort eq 'createdBy'} selected="selected"{/if}>{gt text='Creator'}</option>
                     <option value="updatedDate"{if $sort eq 'updatedDate'} selected="selected"{/if}>{gt text='Update date'}</option>

@@ -50,6 +50,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer", unique=true)
+     * @Assert\Type(type="integer")
+     * @Assert\NotNull()
+     * @Assert\LessThan(value=1000000000)
      * @var integer $id
      */
     protected $id = 0;
@@ -292,9 +295,21 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Type(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\NotEqualTo(value=0)
+     * @Assert\LessThan(value=100000000000)
      * @var integer $parentid
      */
     protected $parentid = 0;
+    
+    /**
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $relevantArticles
+     */
+    protected $relevantArticles = '';
     
     
     /**
@@ -324,31 +339,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     protected $categories = null;
     
-    /**
-     * Bidirectional - Many posts [posts] are linked by one post [post] (OWNING SIDE).
-     *
-     * @ORM\ManyToOne(targetEntity="MU\BloggingModule\Entity\PostEntity", inversedBy="posts")
-     * @ORM\JoinTable(name="mu_blogging_post",
-     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="parentid", referencedColumnName="id" )}
-     * )
-     * @Assert\Type(type="MU\BloggingModule\Entity\PostEntity")
-     * @var \MU\BloggingModule\Entity\PostEntity $post
-     */
-    protected $post;
-    
-    /**
-     * Bidirectional - One post [post] has many posts [posts] (INVERSE SIDE).
-     *
-     * @ORM\OneToMany(targetEntity="MU\BloggingModule\Entity\PostEntity", mappedBy="post")
-     * @ORM\JoinTable(name="mu_blogging_postposts",
-     *      joinColumns={@ORM\JoinColumn(name="parentid", referencedColumnName="id" )},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id" )}
-     * )
-     * @var \MU\BloggingModule\Entity\PostEntity[] $posts
-     */
-    protected $posts = null;
-    
     
     /**
      * PostEntity constructor.
@@ -359,7 +349,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      */
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
         $this->categories = new ArrayCollection();
     }
     
@@ -1121,6 +1110,30 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
+     * Returns the relevant articles.
+     *
+     * @return string
+     */
+    public function getRelevantArticles()
+    {
+        return $this->relevantArticles;
+    }
+    
+    /**
+     * Sets the relevant articles.
+     *
+     * @param string $relevantArticles
+     *
+     * @return void
+     */
+    public function setRelevantArticles($relevantArticles)
+    {
+        if ($this->relevantArticles !== $relevantArticles) {
+            $this->relevantArticles = isset($relevantArticles) ? $relevantArticles : '';
+        }
+    }
+    
+    /**
      * Returns the slug.
      *
      * @return string
@@ -1220,81 +1233,6 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
         }
     
         return false;
-    }
-    
-    /**
-     * Returns the post.
-     *
-     * @return \MU\BloggingModule\Entity\PostEntity
-     */
-    public function getPost()
-    {
-        return $this->post;
-    }
-    
-    /**
-     * Sets the post.
-     *
-     * @param \MU\BloggingModule\Entity\PostEntity $post
-     *
-     * @return void
-     */
-    public function setPost($post = null)
-    {
-        $this->post = $post;
-    }
-    
-    /**
-     * Returns the posts.
-     *
-     * @return \MU\BloggingModule\Entity\PostEntity[]
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-    
-    /**
-     * Sets the posts.
-     *
-     * @param \MU\BloggingModule\Entity\PostEntity[] $posts
-     *
-     * @return void
-     */
-    public function setPosts($posts)
-    {
-        foreach ($this->posts as $postSingle) {
-            $this->removePosts($postSingle);
-        }
-        foreach ($posts as $postSingle) {
-            $this->addPosts($postSingle);
-        }
-    }
-    
-    /**
-     * Adds an instance of \MU\BloggingModule\Entity\PostEntity to the list of posts.
-     *
-     * @param \MU\BloggingModule\Entity\PostEntity $post The instance to be added to the collection
-     *
-     * @return void
-     */
-    public function addPosts(\MU\BloggingModule\Entity\PostEntity $post)
-    {
-        $this->posts->add($post);
-        $post->setPost($this);
-    }
-    
-    /**
-     * Removes an instance of \MU\BloggingModule\Entity\PostEntity from the list of posts.
-     *
-     * @param \MU\BloggingModule\Entity\PostEntity $post The instance to be removed from the collection
-     *
-     * @return void
-     */
-    public function removePosts(\MU\BloggingModule\Entity\PostEntity $post)
-    {
-        $this->posts->removeElement($post);
-        $post->setPost(null);
     }
     
     

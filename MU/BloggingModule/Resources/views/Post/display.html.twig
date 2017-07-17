@@ -16,8 +16,6 @@
     {% set isQuickView = app.request.query.getBoolean('raw', false) %}
     <div class="mubloggingmodule-post mubloggingmodule-display">
 
-    <div class="row">
-        <div class="col-sm-9">
     <dl>
         {% if post.workflowState is not empty and routeArea == 'admin' %}
             <dt>{{ __('State') }}</dt>
@@ -109,18 +107,9 @@
             <dt>{{ __('Similar articles') }}</dt>
             <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
         {% endif %}
-        {% if post.post|default %}
-            <dt>{{ __('Post') }}</dt>
-            <dd>
-              {% if not isQuickView %}
-                  <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug }) }}">{% spaceless %}
-                    {{ post.post|mubloggingmodule_formattedTitle }}
-                  {% endspaceless %}</a>
-                  <a id="postItem{{ post.post.getKey() }}Display" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.post.slug, 'raw': 1 }) }}" title="{{ __('Open quick view window')|e('html_attr') }}" class="mublogging-inline-window hidden" data-modal-title="{{ post.post|mubloggingmodule_formattedTitle|e('html_attr') }}"><span class="fa fa-id-card-o"></span></a>
-              {% else %}
-                  {{ post.post|mubloggingmodule_formattedTitle }}
-              {% endif %}
-            </dd>
+        {% if post.relevantArticles is not empty %}
+            <dt>{{ __('Relevant articles') }}</dt>
+            <dd>{{ post.relevantArticles }}</dd>
         {% endif %}
         
     </dl>
@@ -131,34 +120,7 @@
     {{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }}
 
     {{ block('display_hooks') }}
-        </div>
-        <div class="col-sm-3">
-            {{ block('related_items') }}
-        </div>
-    </div>
 </div>
-{% endblock %}
-{% block related_items %}
-    {% if routeArea == 'admin' %}
-        <h4>{{ __('Posts') }}</h4>
-    {% else %}
-        <h3>{{ __('Posts') }}</h3>
-    {% endif %}
-    
-    {% if post.posts|default %}
-        {{ include(
-            '@MUBloggingModule/Post/includeDisplayItemListMany.html.twig',
-            { items: post.posts }
-        ) }}
-    {% endif %}
-    
-    {% set mayManage = hasPermission('MUBloggingModule:Post:', '::', 'ACCESS_COMMENT') %}
-    {% if mayManage %}
-        <p class="managelink">
-            {% set createTitle = __('Create post') %}
-            <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'edit', { post: post.getKey() }) }}" title="{{ createTitle|e('html_attr') }}" class="fa fa-plus">{{ createTitle }}</a>
-        </p>
-    {% endif %}
 {% endblock %}
 {% block display_hooks %}
     {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.getKey(), urlObject=currentUrlObject) %}

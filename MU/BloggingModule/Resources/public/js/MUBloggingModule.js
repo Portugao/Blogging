@@ -138,66 +138,6 @@ function mUBloggingInitItemActions(context)
 }
 
 /**
- * Helper function to create new Bootstrap modal window instances.
- */
-function mUBloggingInitInlineWindow(containerElem)
-{
-    var newWindowId;
-    var modalTitle;
-
-    // show the container (hidden for users without JavaScript)
-    containerElem.removeClass('hidden');
-
-    // define name of window
-    newWindowId = containerElem.attr('id') + 'Dialog';
-
-    containerElem.unbind('click').click(function(event) {
-        event.preventDefault();
-
-        // check if window exists already
-        if (jQuery('#' + newWindowId).length < 1) {
-            // create new window instance
-            jQuery('<div id="' + newWindowId + '"></div>')
-                .append(
-                    jQuery('<iframe width="100%" height="100%" marginWidth="0" marginHeight="0" frameBorder="0" scrolling="auto" />')
-                        .attr('src', containerElem.attr('href'))
-                )
-                .dialog({
-                    autoOpen: false,
-                    show: {
-                        effect: 'blind',
-                        duration: 1000
-                    },
-                    hide: {
-                        effect: 'explode',
-                        duration: 1000
-                    },
-                    title: containerElem.data('modal-title'),
-                    width: 600,
-                    height: 400,
-                    modal: false
-                });
-        }
-
-        // open the window
-        jQuery('#' + newWindowId).dialog('open');
-    });
-
-    // return the dialog selector id;
-    return newWindowId;
-}
-
-/**
- * Initialises modals for inline display of related items.
- */
-function mUBloggingInitQuickViewModals()
-{
-    jQuery('.mublogging-inline-window').each(function (index) {
-        mUBloggingInitInlineWindow(jQuery(this));
-    });
-}
-
-/**
  * Initialises image viewing behaviour.
  */
 function mUBloggingInitImageViewer()
@@ -244,6 +184,4 @@ jQuery(document).ready(function() {
     } else if (isDisplayPage) {
         mUBloggingInitItemActions('display');
     }
-
-    mUBloggingInitQuickViewModals();
 });

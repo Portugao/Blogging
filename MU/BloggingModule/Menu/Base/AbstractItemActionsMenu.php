@@ -112,19 +112,6 @@ class AbstractItemActionsMenu implements ContainerAwareInterface
                 ])->setAttribute('icon', 'fa fa-reply');
                 $menu[$title]->setLinkAttribute('title', $title);
             }
-            
-            // more actions for adding new related items
-            
-            $relatedComponent = 'MUBloggingModule:Post:';
-            $relatedInstance = $entity->getKey() . '::';
-            if ($isOwner || $permissionApi->hasPermission($relatedComponent, $relatedInstance, ACCESS_COMMENT)) {
-                $title = $this->__('Create post');
-                $menu->addChild($title, [
-                    'route' => 'mubloggingmodule_post_' . $routeArea . 'edit',
-                    'routeParameters' => ['post' => $entity->getKey()]
-                ])->setAttribute('icon', 'fa fa-plus');
-                $menu[$title]->setLinkAttribute('title', $title);
-            }
         }
 
         return $menu;

@@ -180,6 +180,10 @@ application "Blogging" {
                     defaultValue "0"
                     displayType NONE
                 }
+            ,
+                string "relevantArticles" {
+                    mandatory false
+                }
             }
             actions {
                 mainAction "Index",
@@ -191,13 +195,4 @@ application "Blogging" {
             }
         }
     }
-    relations {
-        one2many bidirectional {
-            source "post"
-            sourceAlias "post"
-            sourceField "parentid"
-            target "post"
-            targetAlias "posts"
-        }
     }
-}

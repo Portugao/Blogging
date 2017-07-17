@@ -198,6 +198,7 @@ abstract class AbstractPostFinderType extends AbstractType
                     $this->__('Advertising 3') => 'advertising3',
                     $this->__('Position of block 3') => 'positionOfBlock3',
                     $this->__('Similar articles') => 'similarArticles',
+                    $this->__('Relevant articles') => 'relevantArticles',
                     $this->__('Creation date') => 'createdDate',
                     $this->__('Creator') => 'createdBy',
                     $this->__('Update date') => 'updatedDate',

@@ -153,7 +153,7 @@ abstract class AbstractPostController extends AbstractController
             new Column('advertising3'),
             new Column('positionOfBlock3'),
             new Column('similarArticles'),
-            new Column('post'),
+            new Column('relevantArticles'),
             new Column('createdBy'),
             new Column('createdDate'),
             new Column('updatedBy'),

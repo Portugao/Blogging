@@ -123,20 +123,6 @@ abstract class AbstractEditHandler
      * @var string
      */
     protected $repeatReturnUrl = null;
-    
-    /**
-     * List of identifiers for predefined relationships.
-     *
-     * @var mixed
-     */
-    protected $relationPresets = [];
-
-    /**
-     * Full prefix for related items.
-     *
-     * @var string
-     */
-    protected $idPrefix = '';
 
     /**
      * Whether the PageLock extension is used for this entity type or not.
@@ -348,8 +334,6 @@ abstract class AbstractEditHandler
     {
         $this->templateParameters = $templateParameters;
     
-        $this->idPrefix = $this->request->query->get('idp', '');
-    
         // initialise redirect goal
         $this->returnTo = $this->request->query->get('returnTo', null);
         // default to referer
@@ -449,8 +433,6 @@ abstract class AbstractEditHandler
         if (true === $this->hasTranslatableFields) {
             $this->initTranslationsForEditing();
         }
-        
-        $this->initRelationPresets();
     
         $actions = $this->workflowHelper->getActionsForObject($entity);
         if (false === $actions || !is_array($actions)) {
@@ -495,15 +477,6 @@ abstract class AbstractEditHandler
     {
         // to be customised in sub classes
         return null;
-    }
-    
-    
-    /**
-     * Initialises relationship presets.
-     */
-    protected function initRelationPresets()
-    {
-        // to be customised in sub classes
     }
     
     /**

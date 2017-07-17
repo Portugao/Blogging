@@ -25,13 +25,6 @@
                     </div>
                     <div class="col-sm-9">
             {% endif %}
-            {% if postFilter is defined and postFilter != true %}
-                <div class="hidden">
-            {% endif %}
-                {{ form_row(quickNavForm.post) }}
-            {% if postFilter is defined and postFilter != true %}
-                </div>
-            {% endif %}
             {% if workflowStateFilter is defined and workflowStateFilter != true %}
                 <div class="hidden">
             {% endif %}

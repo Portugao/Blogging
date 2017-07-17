@@ -93,12 +93,10 @@
             {{ form_row(form.similarArticles) }}
             {{ form_row(form.startDate) }}
             {{ form_row(form.endDate) }}
+            {{ form_row(form.parentid) }}
+            {{ form_row(form.relevantArticles) }}
         </fieldset>
         
-        {{ include(
-            '@MUBloggingModule/Post/includeSelectOne.html.twig',
-            { group: 'post', alias: 'post', aliasReverse: 'posts', mandatory: false, idPrefix: 'bloggingPost_Post', linkingItem: post, displayMode: 'choices' }
-        ) }}
         {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
             {{ include('@MUBloggingModule/Helper/includeCategoriesEdit.html.twig', { obj: post }) }}
         {% endif %}

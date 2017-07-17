@@ -148,7 +148,6 @@ abstract class AbstractCollectionFilterHelper
     
         $parameters['catId'] = $this->request->query->get('catId', '');
         $parameters['catIdList'] = $this->categoryHelper->retrieveCategoriesFromRequest('post', 'GET');
-        $parameters['post'] = $this->request->query->get('post', 0);
         $parameters['workflowState'] = $this->request->query->get('workflowState', '');
         $parameters['positionOfAdvertising1'] = $this->request->query->get('positionOfAdvertising1', '');
         $parameters['positionOfBlock'] = $this->request->query->get('positionOfBlock', '');
@@ -340,6 +339,8 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchEndDate'] = $fragment;
             $filters[] = 'tbl.parentid = :searchParentid';
             $parameters['searchParentid'] = $fragment;
+            $filters[] = 'tbl.relevantArticles LIKE :searchRelevantArticles';
+            $parameters['searchRelevantArticles'] = '%' . $fragment . '%';
         }
     
         $qb->andWhere('(' . implode(' OR ', $filters) . ')');

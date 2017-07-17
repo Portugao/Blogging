@@ -69,6 +69,7 @@ abstract class AbstractPostRepository extends EntityRepository
             'advertising3',
             'positionOfBlock3',
             'similarArticles',
+            'relevantArticles',
             'createdBy',
             'createdDate',
             'updatedBy',
@@ -531,7 +532,7 @@ abstract class AbstractPostRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, true);
+            $paginator = new Paginator($query, false);
     
             $count = count($paginator);
             $result = $paginator;
@@ -744,7 +745,7 @@ abstract class AbstractPostRepository extends EntityRepository
      */
     protected function addJoinsToSelection()
     {
-        $selection = ', tblPost, tblPosts';
+        $selection = '';
     
         $selection = ', tblCategories';
     
@@ -760,8 +761,6 @@ abstract class AbstractPostRepository extends EntityRepository
      */
     protected function addJoinsToFrom(QueryBuilder $qb)
     {
-        $qb->leftJoin('tbl.post', 'tblPost');
-        $qb->leftJoin('tbl.posts', 'tblPosts');
     
         $qb->leftJoin('tbl.categories', 'tblCategories');
     

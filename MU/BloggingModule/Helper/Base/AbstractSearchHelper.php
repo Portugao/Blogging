@@ -203,6 +203,7 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.positionOfAdvertising3';
                     $whereArray[] = 'tbl.positionOfBlock3';
                     $whereArray[] = 'tbl.similarArticles';
+                    $whereArray[] = 'tbl.relevantArticles';
                     break;
             }
     

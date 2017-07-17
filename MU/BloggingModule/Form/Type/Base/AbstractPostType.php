@@ -12,7 +12,6 @@
 
 namespace MU\BloggingModule\Form\Type\Base;
 
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -39,8 +38,6 @@ use MU\BloggingModule\Form\Type\Field\MultiListType;
 use MU\BloggingModule\Form\Type\Field\TranslationType;
 use MU\BloggingModule\Form\Type\Field\UploadType;
 use Zikula\UsersModule\Form\Type\UserLiveSearchType;
-use MU\BloggingModule\Helper\CollectionFilterHelper;
-use MU\BloggingModule\Helper\EntityDisplayHelper;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
 use MU\BloggingModule\Helper\ListEntriesHelper;
 use MU\BloggingModule\Helper\TranslatableHelper;
@@ -56,16 +53,6 @@ abstract class AbstractPostType extends AbstractType
      * @var EntityFactory
      */
     protected $entityFactory;
-
-    /**
-     * @var CollectionFilterHelper
-     */
-    protected $collectionFilterHelper;
-
-    /**
-     * @var EntityDisplayHelper
-     */
-    protected $entityDisplayHelper;
 
     /**
      * @var VariableApiInterface
@@ -97,8 +84,6 @@ abstract class AbstractPostType extends AbstractType
      *
      * @param TranslatorInterface $translator     Translator service instance
      * @param EntityFactory       $entityFactory EntityFactory service instance
-     * @param CollectionFilterHelper $collectionFilterHelper CollectionFilterHelper service instance
-     * @param EntityDisplayHelper $entityDisplayHelper EntityDisplayHelper service instance
      * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper  $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper   $listHelper     ListEntriesHelper service instance
@@ -108,8 +93,6 @@ abstract class AbstractPostType extends AbstractType
     public function __construct(
         TranslatorInterface $translator,
         EntityFactory $entityFactory,
-        CollectionFilterHelper $collectionFilterHelper,
-        EntityDisplayHelper $entityDisplayHelper,
         VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
@@ -118,8 +101,6 @@ abstract class AbstractPostType extends AbstractType
     ) {
         $this->setTranslator($translator);
         $this->entityFactory = $entityFactory;
-        $this->collectionFilterHelper = $collectionFilterHelper;
-        $this->entityDisplayHelper = $entityDisplayHelper;
         $this->variableApi = $variableApi;
         $this->translatableHelper = $translatableHelper;
         $this->listHelper = $listHelper;
@@ -146,7 +127,6 @@ abstract class AbstractPostType extends AbstractType
         if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, 'post')) {
             $this->addCategoriesField($builder, $options);
         }
-        $this->addIncomingRelationshipFields($builder, $options);
         $this->addAdditionalNotificationRemarksField($builder, $options);
         $this->addModerationFields($builder, $options);
         $this->addReturnControlField($builder, $options);
@@ -579,6 +559,28 @@ abstract class AbstractPostType extends AbstractType
             'time_widget' => 'single_text'
         ]);
         
+        $builder->add('parentid', IntegerType::class, [
+            'label' => $this->__('Parentid') . ':',
+            'empty_data' => '0',
+            'attr' => [
+                'maxlength' => 11,
+                'class' => ' validate-digits',
+                'title' => $this->__('Enter the parentid of the post.') . ' ' . $this->__('Only digits are allowed.')
+            ],
+            'required' => true,
+            'scale' => 0
+        ]);
+        
+        $builder->add('relevantArticles', TextType::class, [
+            'label' => $this->__('Relevant articles') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the relevant articles of the post')
+            ],
+            'required' => false,
+        ]);
     }
 
     /**
@@ -600,37 +602,6 @@ abstract class AbstractPostType extends AbstractType
             'module' => 'MUBloggingModule',
             'entity' => 'PostEntity',
             'entityCategoryClass' => 'MU\BloggingModule\Entity\PostCategoryEntity'
-        ]);
-    }
-
-    /**
-     * Adds fields for incoming relationships.
-     *
-     * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
-     */
-    public function addIncomingRelationshipFields(FormBuilderInterface $builder, array $options)
-    {
-        $queryBuilder = function(EntityRepository $er) {
-            // select without joins
-            return $er->getListQueryBuilder('', '', false);
-        };
-        $entityDisplayHelper = $this->entityDisplayHelper;
-        $choiceLabelClosure = function ($entity) use ($entityDisplayHelper) {
-            return $entityDisplayHelper->getFormattedTitle($entity);
-        };
-        $builder->add('post', 'Symfony\Bridge\Doctrine\Form\Type\EntityType', [
-            'class' => 'MUBloggingModule:PostEntity',
-            'choice_label' => $choiceLabelClosure,
-            'multiple' => false,
-            'expanded' => false,
-            'query_builder' => $queryBuilder,
-            'placeholder' => $this->__('Please choose an option'),
-            'required' => false,
-            'label' => $this->__('Post'),
-            'attr' => [
-                'title' => $this->__('Choose the post')
-            ]
         ]);
     }
 
@@ -788,8 +759,6 @@ abstract class AbstractPostType extends AbstractType
                 'actions' => [],
                 'has_moderate_permission' => false,
                 'translations' => [],
-                'filter_by_ownership' => true,
-                'inline_usage' => false
             ])
             ->setRequired(['entity', 'mode', 'actions'])
             ->setAllowedTypes('mode', 'string')
@@ -798,8 +767,6 @@ abstract class AbstractPostType extends AbstractType
             ->setAllowedTypes('actions', 'array')
             ->setAllowedTypes('has_moderate_permission', 'bool')
             ->setAllowedTypes('translations', 'array')
-            ->setAllowedTypes('filter_by_ownership', 'bool')
-            ->setAllowedTypes('inline_usage', 'bool')
             ->setAllowedValues('mode', ['create', 'edit'])
         ;
     }
