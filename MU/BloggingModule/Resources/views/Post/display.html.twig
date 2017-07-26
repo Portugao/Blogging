@@ -69,7 +69,7 @@
                 {% set bloggerfloat = 'blogger-right' %}
             {% endif %}
             {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
-                div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
+                <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
             {% endif %}
             {% endif %}        
             <div class="blogger-display blogger-content">{{ post.content|safeHtml }}</div>
