@@ -80,3 +80,51 @@ div.mubloggingmodule-view .avatar img {
         padding: 0;
     }
 }
+
+/********************OWN************************/
+
+.blogger-view-item-title {
+	font-size: 2em;
+}
+.blogger-view-item-content {
+	margin: 15px 0;
+}
+
+#blogger-display-image {
+	float: right;
+	margin: 0 0 0 15px;
+}
+
+.blogger-left {
+	float: left;
+	margin: 0 25px 10px 0;
+	font-size: 0.9em;
+	width: 50%;
+}
+
+.blogger-right {
+	float: right;
+	margin: 0 0 10px 25px;
+	font-size: 0.9em;
+	width: 50%;
+}
+
+.blogger-right img {
+	margin: 0 0 15px 25px;
+}
+
+@media (max-width: 800px) {
+	.blogger-left {
+	float: left;
+	margin: 0 25px 10px 0;
+	font-size: 0.9em;
+	width: 96%;
+}
+
+.blogger-right {
+	float: right;
+	margin: 0 0 10px 25px;
+	font-size: 0.9em;
+	width: 96%;
+}
+}
