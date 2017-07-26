@@ -7,7 +7,7 @@
 
     {{ block('page_nav_links') }}
     
-            {% if routeArea != 'admin' %}
+        {% if routeArea != 'admin' %}
             {% for post in items %}
                 <div class="blogger-view-item">
 					<p class="blogger-view-item-title">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</p>
@@ -25,10 +25,8 @@
                     {% if post.content is not empty %}
 					<div class="blogger-view-item-content"><a class="btn btn-danger" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ __('Read more of') }} {{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a></div>
                     {% endif %}
-                </div>
-            
-            {% endfor %}
-        
+                </div>           
+            {% endfor %}       
         {% endif %}
 
     {% if routeArea == 'admin' %}
