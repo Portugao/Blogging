@@ -92,7 +92,28 @@ div.mubloggingmodule-view .avatar img {
 
 #blogger-display-image {
 	float: right;
-	margin: 0 0 0 15px;
+	margin: 0 0 15px 15px;
+}
+.blogger-view-item {
+	
+}
+
+.blogger-view-item-title {
+	font-size: 2em;
+}
+
+.blogger-view-item-summary {
+	margin: 15px 0;	
+}
+
+.blogger-view-item-summary .img-thumbnail {
+	float: left;
+	margin: 0 15px 10px 0;
+}
+
+
+.blogger-view-item-content {
+	margin: 15px 0;
 }
 
 .blogger-left {
@@ -113,6 +134,12 @@ div.mubloggingmodule-view .avatar img {
 	margin: 0 0 15px 25px;
 }
 
+.carousel-inner {
+	padding: 15px;
+}
+
+
+
 @media (max-width: 800px) {
 	.blogger-left {
 	float: left;
@@ -127,4 +154,10 @@ div.mubloggingmodule-view .avatar img {
 	font-size: 0.9em;
 	width: 96%;
 }
+}
+@media (max-width: 767px) {
+    div.form-group div.category-selector {
+        height: auto;
+        padding: 0;
+    }
 }
