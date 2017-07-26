@@ -19,5 +19,30 @@ use MU\BloggingModule\Helper\Base\AbstractListEntriesHelper;
  */
 class ListEntriesHelper extends AbstractListEntriesHelper
 {
-    // feel free to add your own convenience methods here
+    /**
+     * Get 'similar articles' list entries.
+     *
+     * @return array Array with desired list entries
+     */
+    public function getSimilarArticlesEntriesForPost()
+    {
+    	$posts = 
+        $states = [];
+        $states[] = [
+            'value'   => 'all',
+            'text'    => $this->__('All'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+        $states[] = [
+            'value'   => 'none',
+            'text'    => $this->__('None'),
+            'title'   => '',
+            'image'   => '',
+            'default' => false
+        ];
+    
+        return $states;
+    }
 }
