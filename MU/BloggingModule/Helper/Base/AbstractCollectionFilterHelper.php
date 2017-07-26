@@ -246,7 +246,7 @@ abstract class AbstractCollectionFilterHelper
         if ($showOnlyOwnEntries) {
             $qb = $this->addCreatorFilter($qb);
         }
-    
+
         if (true === (bool)$this->filterDataByLocale) {
             $allowedLocales = ['', $this->request->getLocale()];
             if (!in_array('forWhichLanguage', array_keys($parameters)) || empty($parameters['forWhichLanguage'])) {
