@@ -1,8 +1,10 @@
 {# Purpose of this template: Edit block for generic item list #}
 {{ form_row(form.objectType) }}
-{% if isCategorisable %}
+<div class="hidden">
+{#% if isCategorisable %#}
     {{ form_row(form.categories) }}
-{% endif %}
+{#% endif %#}
+</div>
 {{ form_row(form.sorting) }}
 {{ form_row(form.amount) }}
 
