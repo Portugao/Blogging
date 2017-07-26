@@ -36,8 +36,8 @@
 {% endblock %}
 {% block entry_content %}
     <title><![CDATA[{% if post.updatedDate|default %}{{ post.updatedDate|localizeddate('medium', 'short') }} - {% endif %}{{ post|mubloggingmodule_formattedTitle|notifyFilters('mubloggingmodule.filterhook.posts')|safeHtml }}]]></title>
-    <link>{{ url('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.slug }) }}</link>
-    <guid>{{ url('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.slug }) }}</guid>
+    <link>{{ url('mubloggingmodule_post_' ~ routeArea ~ 'display', {'slug': post.slug}) }}</link>
+    <guid>{{ url('mubloggingmodule_post_' ~ routeArea ~ 'display', {'slug': post.slug}) }}</guid>
     {% if post.createdBy|default and post.createdBy.getUid() > 0 %}
         {% set creatorAttributes = post.createdBy.getAttributes() %}
         <author>{{ post.createdBy.getEmail() }} ({{ creatorAttributes.get('realname')|default(creatorAttributes.get('name'))|default(post.createdBy.getUname()) }})</author>
@@ -45,7 +45,7 @@
     <category><![CDATA[{{ __('Categories') }}: {% for propName, catMapping in post.categories %}{{ catMapping.category.display_name[lang] }}{% if not loop.last %}, {% endif %}{% endfor %}]]></category>
     <description>
         <![CDATA[
-        {{ post.summaryOfPost|replace({ '<br>': '<br />' }) }}
+        {{ post.summaryOfPost|replace({'<br>': '<br />'}) }}
         ]]>
     </description>
     {% if post.createdDate|default %}

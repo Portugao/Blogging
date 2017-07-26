@@ -5,7 +5,7 @@
         {% if post.summaryOfPost %}
             <dd>{{ post.summaryOfPost|striptags|truncate(200, true, '&hellip;') }}</dd>
         {% endif %}
-        <dd><a href="{{ path('mubloggingmodule_post_display', { 'slug': post.slug }) }}">{{ __('Read more') }}</a>
+        <dd><a href="{{ path('mubloggingmodule_post_display', {'slug': post.slug}) }}">{{ __('Read more') }}</a>
         </dd>
     {% else %}
         <dt>{{ __('No entries found.') }}</dt>

@@ -90,28 +90,25 @@
             {{ form_row(form.positionOfBlock2) }}
             {{ form_row(form.positionOfAdvertising3) }}
             {{ form_row(form.positionOfBlock3) }}
-            {{ form_row(form.relevantArticles) }}
             {{ form_row(form.similarArticles) }}
             {{ form_row(form.startDate) }}
             {{ form_row(form.endDate) }}
+            {{ form_row(form.relevantArticles) }}
         </fieldset>
         
         {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
-            {{ include('@MUBloggingModule/Helper/includeCategoriesEdit.html.twig', { obj: post }) }}
+            {{ include('@MUBloggingModule/Helper/includeCategoriesEdit.html.twig', {obj: post}) }}
         {% endif %}
         {% if mode != 'create' %}
-            {{ include('@MUBloggingModule/Helper/includeStandardFieldsEdit.html.twig', { obj: post }) }}
+            {{ include('@MUBloggingModule/Helper/includeStandardFieldsEdit.html.twig', {obj: post}) }}
         {% endif %}
         
-        {% set hookId = mode != 'create' ? post.id : null %}
-        {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.form_edit', id=hookId) %}
-        {% if hooks is iterable and hooks|length > 0 %}
-            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-                <fieldset>
-                    <legend>{{ providerArea }}</legend>
-                    {{ hook }}
-                </fieldset>
-            {% endfor %}
+        {% if formHookTemplates|length > 0 %}
+            <fieldset>
+                {% for hookTemplate in formHookTemplates %}
+                    {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
+                {% endfor %}
+            </fieldset>
         {% endif %}
         
         <fieldset>
@@ -148,28 +145,40 @@
             </div>
         </div>
         {{ form_end(form) }}
+        {% set hookId = mode != 'create' ? post.id : null %}
+        {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.form_edit', id=hookId) %}
+        {% if hooks is iterable and hooks|length > 0 %}
+            <h3>{{ __('Hooks') }}</h3>
+            {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
+                <h4>{{ providerArea }}</h4>
+                {{ hook }}
+            {% endfor %}
+        {% endif %}
+        
     </div>
 {% endblock %}
 {% block footer %}
     {{ parent() }}
     {% set editImage = '<span class="fa fa-pencil-square-o"></span>' %}
     {% set removeImage = '<span class="fa fa-trash-o"></span>' %}
-    
-    <script type="text/javascript">
-    /* <![CDATA[ */
-        
-        ( function($) {
-            $(document).ready(function() {
-                // initialise auto completion for user fields
-                {% if form.moderationSpecificCreator is defined %}
-                    initUserLiveSearch('mubloggingmodule_post_moderationSpecificCreator');
-                {% endif %}
-                mUBloggingInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ post.id }}{% endif %}');
-                mUBloggingInitUploadField('mubloggingmodule_post_imageForArticle_imageForArticle');
-                mUBloggingInitDateField('mubloggingmodule_post_startDate');
-                mUBloggingInitDateField('mubloggingmodule_post_endDate');
-            });
-        })(jQuery);
-    /* ]]> */
-    </script>
+    {% set formInitScript %}
+        <script type="text/javascript">
+        /* <![CDATA[ */
+            
+            ( function($) {
+                $(document).ready(function() {
+                    // initialise auto completion for user fields
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('mubloggingmodule_post_moderationSpecificCreator');
+                    {% endif %}
+                    mUBloggingInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ post.id }}{% endif %}');
+                    mUBloggingInitUploadField('mubloggingmodule_post_imageForArticle_imageForArticle');
+                    mUBloggingInitDateField('mubloggingmodule_post_startDate');
+                    mUBloggingInitDateField('mubloggingmodule_post_endDate');
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
+    {{ pageAddAsset('footer', formInitScript) }}
 {% endblock %}

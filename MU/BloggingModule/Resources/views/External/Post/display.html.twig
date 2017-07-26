@@ -2,10 +2,10 @@
 {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
 {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
 {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.js')) }}
-<div id="post{$post->getKey()}" class="mubloggingmodule-external-post">
+<div id="post{{ post.getKey() }}" class="mubloggingmodule-external-post">
 {% if displayMode == 'link' %}
     <p class="mubloggingmodule-external-link">
-    <a href="{{ path('mubloggingmodule_post_display', { 'slug': post.slug }) }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}">
+    <a href="{{ path('mubloggingmodule_post_display', {'slug': post.slug}) }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}">
     {{ post|mubloggingmodule_formattedTitle|notifyFilters('blogging.filter_hooks.posts.filter')|safeHtml }}
     </a>
     </p>

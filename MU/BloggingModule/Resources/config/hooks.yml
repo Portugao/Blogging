@@ -1,0 +1,22 @@
+services:
+    mu_blogging_module.hook_subscriber.filter_hooks.posts:
+        class: MU\BloggingModule\HookSubscriber\PostFilterHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.mubloggingmodule.filter_hooks.posts' }
+
+    mu_blogging_module.hook_subscriber.form_aware_hook.posts:
+        class: MU\BloggingModule\HookSubscriber\PostFormAwareHookSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.mubloggingmodule.form_aware_hook.posts' }
+
+    mu_blogging_module.hook_subscriber.ui_hooks.posts:
+        class: MU\BloggingModule\HookSubscriber\PostUiHooksSubscriber
+        arguments:
+            - "@translator.default"
+        tags:
+            - { name: zikula.hook_subscriber, areaName: 'subscriber.mubloggingmodule.ui_hooks.posts' }
+

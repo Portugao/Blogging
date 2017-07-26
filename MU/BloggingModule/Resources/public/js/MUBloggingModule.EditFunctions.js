@@ -15,7 +15,7 @@ function mUBloggingResetUploadField(fieldName)
  */
 function mUBloggingInitUploadField(fieldName)
 {
-    jQuery('#' + fieldName + 'ResetVal').click( function (event) {
+    jQuery('#' + fieldName + 'ResetVal').click(function (event) {
         event.preventDefault();
         mUBloggingResetUploadField(fieldName);
     }).removeClass('hidden');
@@ -26,7 +26,7 @@ function mUBloggingInitUploadField(fieldName)
  */
 function mUBloggingInitDateField(fieldName)
 {
-    jQuery('#' + fieldName + 'ResetVal').click( function (event) {
+    jQuery('#' + fieldName + 'ResetVal').click(function (event) {
         event.preventDefault();
         jQuery('#' + fieldName).val('');
     }).removeClass('hidden');

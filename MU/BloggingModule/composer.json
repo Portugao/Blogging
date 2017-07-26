@@ -33,8 +33,7 @@
                     "entities": [
                         "MU\\BloggingModule\\Entity\\PostEntity"
                     ]
-                },
-                "hook_subscriber": {"class": "MU\\BloggingModule\\Container\\HookContainer"}
+                }
             },
             "securityschema": {
                 "MUBloggingModule::": "::",
