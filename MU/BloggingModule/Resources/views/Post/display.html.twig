@@ -23,6 +23,7 @@
         </div>
         
         <div class="col-sm-8">
+        <div class="blogging-display-content">
         {% set templateTitle = post|mubloggingmodule_formattedTitle|default(__('Post')) %}
         <h1>{{ templateTitle|notifyFilters('mubloggingmodule.filter_hooks.posts.filter') }}{% if routeArea == 'admin' %} <small>({{ post.workflowState|mubloggingmodule_objectState(false)|lower }})</small>{% endif %}</h1>
           
@@ -175,7 +176,7 @@
 
     {{ block('display_hooks') }}
         </div>
-
+    </div>
     </div>
 </div>
 {% endblock %}

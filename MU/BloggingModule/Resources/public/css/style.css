@@ -83,6 +83,10 @@ div.mubloggingmodule-view .avatar img {
 
 /********************OWN************************/
 
+.blogging-display-content {
+	padding: 10px;
+}
+
 .blogger-view-item-title {
 	font-size: 2em;
 }
@@ -135,7 +139,23 @@ div.mubloggingmodule-view .avatar img {
 }
 
 .carousel-inner {
-	padding: 15px;
+	padding: 0 30px 30px;
+}
+
+.carousel-control {
+	top: 50%;
+	bottom: 0;
+	width: 1%;
+}
+
+.left .carousel-control,
+.right .carousel-control {
+	background: none;
+	backround-image: none;
+}
+
+.carousel-indicators {
+	bottom: -20px;
 }
 
 
