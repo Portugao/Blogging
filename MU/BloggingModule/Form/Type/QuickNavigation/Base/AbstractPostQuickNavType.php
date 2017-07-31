@@ -317,6 +317,7 @@ abstract class AbstractPostQuickNavType extends AbstractType
                 'class' => 'input-sm'
             ],
             'required' => false,
+            'placeholder' => $this->__('All'),
             'choices' => $this->localeApi->getSupportedLocaleNames(),
             'choices_as_values' => true
         ]);

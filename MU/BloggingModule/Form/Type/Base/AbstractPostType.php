@@ -356,7 +356,8 @@ abstract class AbstractPostType extends AbstractType
                 'class' => ' validate-nospace',
                 'title' => $this->__('Choose the for which language of the post')
             ],
-            'required' => true,
+            'required' => false,
+            'placeholder' => $this->__('All'),
             'choices' => $this->localeApi->getSupportedLocaleNames(),
             'choices_as_values' => true
         ]);

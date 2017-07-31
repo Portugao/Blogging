@@ -18,7 +18,7 @@ application "Blogging" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
     skipFiles "composer.json,\r\nREADME.md"
-        markFiles "Block/Form/Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+        markFiles "zikula.manifest.json,\r\nBlock/Form/Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -46,6 +46,7 @@ application "Blogging" {
                     length 170
                 },
                 string "forWhichLanguage" locale {
+                    mandatory false
                     role LOCALE
                 },
                 upload "imageForArticle" {
