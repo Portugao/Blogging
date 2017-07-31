@@ -93,7 +93,9 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * @ORM\Column(length=255)
      * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/\s/", match=false, message="This value must not contain space chars.")
      * @Assert\Length(min="0", max="255")
+     * @Assert\Locale()
      * @var string $forWhichLanguage
      */
     protected $forWhichLanguage = '';

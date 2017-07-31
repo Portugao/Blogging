@@ -17,8 +17,8 @@ application "Blogging" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    skipFiles "README.md"
-        markFiles "Block/Form//Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+    skipFiles "composer.json,\r\nREADME.md"
+        markFiles "Block/Form/Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -45,7 +45,9 @@ application "Blogging" {
                     minLength 155
                     length 170
                 },
-                string "forWhichLanguage" locale,
+                string "forWhichLanguage" locale {
+                    role LOCALE
+                },
                 upload "imageForArticle" {
                     mandatory false
                 },
