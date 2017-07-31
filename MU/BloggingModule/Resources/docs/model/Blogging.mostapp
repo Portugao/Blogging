@@ -2,7 +2,7 @@ application "Blogging" {
     vendor "MU"
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
-    url "http://homepages-mit-zikula.de"
+    url "https://homepages-mit-zikula.de"
     prefix "blogging"
     generatorSettings {
         settingsContainer "Settings"
@@ -18,7 +18,7 @@ application "Blogging" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
     skipFiles "README.md"
-        markFiles "Block/Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+        markFiles "Block/Form//Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -33,7 +33,7 @@ application "Blogging" {
                     sluggablePosition 0
                     length 57
                 },
-                string "permalink" translatable {
+                string "permalink" nullable translatable {
                     mandatory false
                     displayType NONE
                     sluggablePosition 1

@@ -16,7 +16,7 @@ Note you can even include custom views in `app/Resources/MUBloggingModule/views/
 
 `php app/console translation:extract en --bundle=MUBloggingModule --enable-extractor=jms_i18n_routing --output-format=po --dir=./modules/MU/BloggingModule --dir=./app/Resources/MUBloggingModule`
 
-For questions and other remarks visit our homepage http://homepages-mit-zikula.de.
+For questions and other remarks visit our homepage https://homepages-mit-zikula.de.
 
 Michael Ueberschaer (info@homepages-mit-zikula.de)
-http://homepages-mit-zikula.de
+https://homepages-mit-zikula.de

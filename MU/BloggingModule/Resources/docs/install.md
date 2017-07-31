@@ -6,7 +6,7 @@
    Note this step is optional as the install process can create these folders, too.
 4. Make the directory `/userdata/MUBloggingModule/` writable including all sub folders.
 
-For questions and other remarks visit our homepage http://homepages-mit-zikula.de.
+For questions and other remarks visit our homepage https://homepages-mit-zikula.de.
 
 Michael Ueberschaer (info@homepages-mit-zikula.de)
-http://homepages-mit-zikula.de
+https://homepages-mit-zikula.de

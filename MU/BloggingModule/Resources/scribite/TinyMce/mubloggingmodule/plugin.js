@@ -77,8 +77,8 @@
             return {
                 longname: 'MUBloggingModule for TinyMCE',
                 author: 'Michael Ueberschaer',
-                authorurl: 'http://homepages-mit-zikula.de',
-                infourl: 'http://homepages-mit-zikula.de',
+                authorurl: 'https://homepages-mit-zikula.de',
+                infourl: 'https://homepages-mit-zikula.de',
                 version: '1.0.0'
             };
         }
