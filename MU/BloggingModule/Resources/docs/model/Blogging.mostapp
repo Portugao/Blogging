@@ -45,7 +45,7 @@ application "Blogging" {
                     minLength 155
                     length 170
                 },
-                string "forWhichLanguage" locale {
+                string "forWhichLanguage" nullable {
                     mandatory false
                     role LOCALE
                 },

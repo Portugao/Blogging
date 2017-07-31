@@ -91,8 +91,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $descriptionForGoogle = '';
     
     /**
-     * @ORM\Column(length=255)
-     * @Assert\NotNull()
+     * @ORM\Column(length=255, nullable=true)
      * @Assert\Regex(pattern="/\s/", match=false, message="This value must not contain space chars.")
      * @Assert\Length(min="0", max="255")
      * @Assert\Locale()
@@ -504,7 +503,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function setForWhichLanguage($forWhichLanguage)
     {
         if ($this->forWhichLanguage !== $forWhichLanguage) {
-            $this->forWhichLanguage = isset($forWhichLanguage) ? $forWhichLanguage : '';
+            $this->forWhichLanguage = $forWhichLanguage;
         }
     }
     
