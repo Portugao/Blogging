@@ -1,0 +1,1352 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.0.2\n"
+
+msgid "%title%"
+msgstr "%title%"
+
+msgid "10"
+msgstr "10"
+
+msgid "100"
+msgstr "100"
+
+msgid "15"
+msgstr "15"
+
+msgid "20"
+msgstr "20"
+
+msgid "30"
+msgstr "30"
+
+msgid "5"
+msgstr "5"
+
+msgid "50"
+msgstr "50"
+
+msgid "A user changed his post \"%entity%\"."
+msgstr "A user changed his post \"%entity%\". Ein benutzer hat seine  Post \"%entity%\" bearbeitet."
+
+msgid "Absolute url to the post"
+msgstr "Absolute url des Posts"
+
+msgid "Actions"
+msgstr "Actionen"
+
+msgid "Additional remarks"
+msgstr "Zusätzliche Bemerkungen"
+
+msgid "Additional remarks:"
+msgstr "Zusätzliche Bemerkungen:"
+
+msgid "Advertising"
+msgstr "Werbung"
+
+msgid "Advertising 2"
+msgstr "Werbung 2"
+
+msgid "Advertising 3"
+msgstr "Werbung 3"
+
+msgid "All"
+msgstr "Alle"
+
+msgid "All except approved"
+msgstr "Alle ausgenommen freigegebene"
+
+msgid "All except suspended"
+msgstr "Alle ausgenommen abgelehnte"
+
+msgid "All except waiting"
+msgstr "Alle ausgenommen wartende"
+
+msgid "Allowed file extensions"
+msgstr "Erlaubte Dateiendungen"
+
+msgid "Allowed file size"
+msgstr "Erlaubte Dateigröße"
+
+msgid "Amount"
+msgstr "Anzahl"
+
+#, fuzzy
+msgid "An error occured during creation of the .htaccess file in directory \"%path%\"."
+msgstr "An error occured during creation of the .htaccess file in directory \"%path%\"."
+
+msgid "Approve"
+msgstr "Freigeben"
+
+msgid "Approved"
+msgstr "Freigegeben"
+
+msgid "Archive"
+msgstr "Archiv"
+
+msgid "Ascending"
+msgstr "Aufsteigend"
+
+msgid "Back to overview"
+msgstr "Zur Übersicht"
+
+msgid "Back to paginated view"
+msgstr "Zurück zur Seitenansicht"
+
+msgid "Backend"
+msgstr "Backend"
+
+msgid "Blogging Backend"
+msgstr "Blogging Backend"
+
+msgid "Bytes"
+msgstr "Bytes"
+
+msgid "Cancel"
+msgstr "Abbrechen"
+
+msgid "Categories"
+msgstr "Kategorien"
+
+msgid "Category"
+msgstr "Kategorie"
+
+msgid "Change selection"
+msgstr "Auswahl ändern"
+
+msgid "Choose action"
+msgstr "Auswahlaktion"
+
+msgid "Choose an option"
+msgstr "Wähle eine Option"
+
+msgid "Choose the enabled finder types."
+msgstr "Wähle die aktivierten Finder Typen."
+
+msgid "Choose the for which language of the post"
+msgstr "Wähle die Sprache für den Beitrag"
+
+msgid "Choose the moderation group for posts."
+msgstr "Wähle die Moderatorengruppe"
+
+msgid "Choose the position of advertising 1"
+msgstr "Wähle die Position der 1. Werbung"
+
+msgid "Choose the position of advertising 2"
+msgstr "Wähle die Position der 2. Werbung"
+
+msgid "Choose the position of advertising 3"
+msgstr "Wähle die Position der 3. Werbung"
+
+msgid "Choose the position of block"
+msgstr "Wähle die Position des 1. Blocks"
+
+msgid "Choose the position of block 2"
+msgstr "Wähle die Position des 2. Blocks"
+
+msgid "Choose the position of block 3"
+msgstr "Wähle die Position des 3. Blocks"
+
+msgid "Choose the similar articles"
+msgstr "Wähle ähnliche Artikel"
+
+msgid "Choose the thumbnail mode."
+msgstr "Wähle den Thumbnail Modus"
+
+msgid "Communication"
+msgstr "Kommunikation"
+
+msgid "Configuration"
+msgstr "Einstellungen"
+
+msgid "Confirmation prompt"
+msgstr "Sicherheitsabfrage"
+
+msgid "Content"
+msgstr "Inhalt"
+
+msgid "Content 1 left"
+msgstr "Inhalt 1 links"
+
+msgid "Content 1 right"
+msgstr "Inhalt 1 rechts"
+
+msgid "Content 2"
+msgstr "Inhalt 2"
+
+msgid "Content 2 left"
+msgstr "Inhalt 2 links"
+
+msgid "Content 2 right"
+msgstr "Inhalt 2 rechts"
+
+msgid "Content 3"
+msgstr "Inhalt 3"
+
+msgid "Content 3 left"
+msgstr "Inhalt 3 links"
+
+msgid "Content 3 right"
+msgstr "Inhalt 3 rechts"
+
+msgid "Content 4"
+msgstr "Inhalt 4"
+
+msgid "Content 4 left"
+msgstr "Inhalt 4 links"
+
+msgid "Content 4 right"
+msgstr "Inhalt 4 rechts"
+
+msgid "Content 5"
+msgstr "Inhalt 5"
+
+msgid "Content 5 left"
+msgstr "Inhalt 5 links"
+
+msgid "Content 5 right"
+msgstr "Inhalt 5 rechts"
+
+msgid "Content 6"
+msgstr "Inhalt 6"
+
+msgid "Content 6 left"
+msgstr "Inhalt 6 links"
+
+msgid "Content 6 right"
+msgstr "Inhalt 6 rechts"
+
+#, fuzzy
+msgid "Content has been approved and is available online."
+msgstr "Content has been approved and is available online."
+
+#, fuzzy
+msgid "Content has been approved, but is temporarily offline."
+msgstr "Content has been approved, but is temporarily offline."
+
+#, fuzzy
+msgid "Content has been deleted"
+msgstr "Content has been deleted"
+
+#, fuzzy
+msgid "Content has been submitted and waits for approval."
+msgstr "Content has been submitted and waits for approval."
+
+#, fuzzy
+msgid "Content has been updated"
+msgstr "Content has been updated"
+
+#, fuzzy
+msgid "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
+msgstr "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
+
+#, fuzzy
+msgid "Create another item after save"
+msgstr "Create another item after save"
+
+msgid "Create post"
+msgstr "Erstelle Beitrag"
+
+#, fuzzy
+msgid "Created by %user"
+msgstr "Created by %user"
+
+#, fuzzy
+msgid "Created by %user on %date"
+msgstr "Created by %user on %date"
+
+#, fuzzy
+msgid "Created on %date"
+msgstr "Created on %date"
+
+#, fuzzy
+msgid "Creation"
+msgstr "Creation"
+
+#, fuzzy
+msgid "Creation and update"
+msgstr "Creation and update"
+
+#, fuzzy
+msgid "Creation date"
+msgstr "Creation date"
+
+#, fuzzy
+msgid "Creator"
+msgstr "Creator"
+
+#, fuzzy
+msgid "Current file"
+msgstr "Current file"
+
+#, fuzzy
+msgid "Custom template"
+msgstr "Custom template"
+
+#, fuzzy
+msgid "Default"
+msgstr "Default"
+
+#, fuzzy
+msgid "Delete"
+msgstr "Delete"
+
+#, fuzzy
+msgid "Delete content permanently."
+msgstr "Delete content permanently."
+
+#, fuzzy
+msgid "Delete existing file"
+msgstr "Delete existing file"
+
+#, fuzzy
+msgid "Delete post"
+msgstr "Delete post"
+
+#, fuzzy
+msgid "Delete this file ?"
+msgstr "Delete this file ?"
+
+#, fuzzy
+msgid "Delete this post"
+msgstr "Delete this post"
+
+#, fuzzy
+msgid "Deleted"
+msgstr "Deleted"
+
+#, fuzzy
+msgid "Descending"
+msgstr "Descending"
+
+#, fuzzy
+msgid "Description for google"
+msgstr "Description for google"
+
+#, fuzzy
+msgid "Description of image for article"
+msgstr "Description of image for article"
+
+#, fuzzy
+msgid "Details"
+msgstr "Details"
+
+#, fuzzy
+msgid "Display list of MUBloggingModule objects."
+msgstr "Display list of MUBloggingModule objects."
+
+#, fuzzy
+msgid "Display or link a single MUBloggingModule object."
+msgstr "Display or link a single MUBloggingModule object."
+
+#, fuzzy
+msgid "Do you really want to delete this post: \"%name%\" ?"
+msgstr "Do you really want to delete this post: \"%name%\" ?"
+
+#, fuzzy
+msgid "Doctrine Exception"
+msgstr "Doctrine Exception"
+
+#, fuzzy
+msgid "Done! Item created."
+msgstr "Done! Item created."
+
+#, fuzzy
+msgid "Done! Item deleted."
+msgstr "Done! Item deleted."
+
+#, fuzzy
+msgid "Done! Item updated."
+msgstr "Done! Item updated."
+
+#, fuzzy
+msgid "Done! Module configuration updated."
+msgstr "Done! Module configuration updated."
+
+#, fuzzy
+msgid "Done! Post created."
+msgstr "Done! Post created."
+
+#, fuzzy
+msgid "Done! Post deleted."
+msgstr "Done! Post deleted."
+
+#, fuzzy
+msgid "Done! Post updated."
+msgstr "Done! Post updated."
+
+#, fuzzy
+msgid "Download"
+msgstr "Download"
+
+#, fuzzy
+msgid "Edit"
+msgstr "Edit"
+
+#, fuzzy
+msgid "Edit post"
+msgstr "Edit post"
+
+#, fuzzy
+msgid "Edit posts workflow"
+msgstr "Edit posts workflow"
+
+#, fuzzy
+msgid "Edit the post:"
+msgstr "Edit the post:"
+
+#, fuzzy
+msgid "Edit this post"
+msgstr "Edit this post"
+
+#, fuzzy
+msgid "Edit workflow for posts"
+msgstr "Edit workflow for posts"
+
+#, fuzzy
+msgid "Edit your post:"
+msgstr "Edit your post:"
+
+#, fuzzy
+msgid "Enable shrinking"
+msgstr "Enable shrinking"
+
+#, fuzzy
+msgid "Enable this option to insert images"
+msgstr "Enable this option to insert images"
+
+#, fuzzy
+msgid "Enabled finder types"
+msgstr "Enabled finder types"
+
+#, fuzzy
+msgid "End date"
+msgstr "End date"
+
+#, fuzzy
+msgid "Enter any additions about your changes"
+msgstr "Enter any additions about your changes"
+
+#, fuzzy
+msgid "Enter any additions about your content"
+msgstr "Enter any additions about your content"
+
+#, fuzzy
+msgid "Enter the advertising 2 of the post"
+msgstr "Enter the advertising 2 of the post"
+
+#, fuzzy
+msgid "Enter the advertising 3 of the post"
+msgstr "Enter the advertising 3 of the post"
+
+#, fuzzy
+msgid "Enter the advertising of the post"
+msgstr "Enter the advertising of the post"
+
+#, fuzzy
+msgid "Enter the content 2 of the post"
+msgstr "Enter the content 2 of the post"
+
+#, fuzzy
+msgid "Enter the content 3 of the post"
+msgstr "Enter the content 3 of the post"
+
+#, fuzzy
+msgid "Enter the content 4 of the post"
+msgstr "Enter the content 4 of the post"
+
+#, fuzzy
+msgid "Enter the content 5 of the post"
+msgstr "Enter the content 5 of the post"
+
+#, fuzzy
+msgid "Enter the content 6 of the post"
+msgstr "Enter the content 6 of the post"
+
+#, fuzzy
+msgid "Enter the content of the post"
+msgstr "Enter the content of the post"
+
+#, fuzzy
+msgid "Enter the description for google of the post"
+msgstr "Enter the description for google of the post"
+
+#, fuzzy
+msgid "Enter the description of image for article of the post"
+msgstr "Enter the description of image for article of the post"
+
+#, fuzzy
+msgid "Enter the end date of the post"
+msgstr "Enter the end date of the post"
+
+#, fuzzy
+msgid "Enter the image for article of the post"
+msgstr "Enter the image for article of the post"
+
+#, fuzzy
+msgid "Enter the permalink of the post"
+msgstr "Enter the permalink of the post"
+
+#, fuzzy
+msgid "Enter the post entries per page."
+msgstr "Enter the post entries per page."
+
+#, fuzzy
+msgid "Enter the relevant articles of the post"
+msgstr "Enter the relevant articles of the post"
+
+#, fuzzy
+msgid "Enter the shrink height."
+msgstr "Enter the shrink height."
+
+#, fuzzy
+msgid "Enter the shrink width."
+msgstr "Enter the shrink width."
+
+#, fuzzy
+msgid "Enter the start date of the post"
+msgstr "Enter the start date of the post"
+
+#, fuzzy
+msgid "Enter the summary of post of the post"
+msgstr "Enter the summary of post of the post"
+
+#, fuzzy
+msgid "Enter the thumbnail height display."
+msgstr "Enter the thumbnail height display."
+
+#, fuzzy
+msgid "Enter the thumbnail height edit."
+msgstr "Enter the thumbnail height edit."
+
+#, fuzzy
+msgid "Enter the thumbnail height view."
+msgstr "Enter the thumbnail height view."
+
+#, fuzzy
+msgid "Enter the thumbnail width display."
+msgstr "Enter the thumbnail width display."
+
+#, fuzzy
+msgid "Enter the thumbnail width edit."
+msgstr "Enter the thumbnail width edit."
+
+#, fuzzy
+msgid "Enter the thumbnail width view."
+msgstr "Enter the thumbnail width view."
+
+#, fuzzy
+msgid "Enter the title of the post"
+msgstr "Enter the title of the post"
+
+#, fuzzy
+msgid "Error! Could not create a category registry for the %entity% entity."
+msgstr "Error! Could not create a category registry for the %entity% entity."
+
+#, fuzzy
+msgid "Error! Could not determine workflow actions."
+msgstr "Error! Could not determine workflow actions."
+
+#, fuzzy
+msgid "Error! Creation attempt failed."
+msgstr "Error! Creation attempt failed."
+
+#, fuzzy
+msgid "Error! Deletion attempt failed."
+msgstr "Error! Deletion attempt failed."
+
+#, fuzzy
+msgid "Error! Invalid object type received."
+msgstr "Error! Invalid object type received."
+
+#, fuzzy
+msgid "Error! It is not allowed to delete this post."
+msgstr "Error! It is not allowed to delete this post."
+
+#, fuzzy
+msgid "Error! This file type is not allowed. Please choose another file format."
+msgstr "Error! This file type is not allowed. Please choose another file format."
+
+#, fuzzy
+msgid "Error! This file type seems not to be a valid image."
+msgstr "Error! This file type seems not to be a valid image."
+
+#, fuzzy
+msgid "Error! Update attempt failed."
+msgstr "Error! Update attempt failed."
+
+#, fuzzy
+msgid "Error: Invalid editor context given for external controller action."
+msgstr "Error: Invalid editor context given for external controller action."
+
+#, fuzzy
+msgid "Error: invalid input."
+msgstr "Error: invalid input."
+
+#, fuzzy
+msgid "Errors"
+msgstr "Errors"
+
+#, fuzzy
+msgid "Example"
+msgstr "Example"
+
+#, fuzzy
+msgid "Filter"
+msgstr "Filter"
+
+#, fuzzy
+msgid "Filter (expert option)"
+msgstr "Filter (expert option)"
+
+#, fuzzy
+msgid "Filter data by locale"
+msgstr "Filter data by locale"
+
+#, fuzzy
+msgid "For which language"
+msgstr "For which language"
+
+#, fuzzy
+msgid "Frontend"
+msgstr "Frontend"
+
+#, fuzzy
+msgid "Further properties"
+msgstr "Further properties"
+
+#, fuzzy
+msgid "GB"
+msgstr "GB"
+
+#, fuzzy
+msgid "Hello %recipient%"
+msgstr "Hello %recipient%"
+
+#, fuzzy
+msgid "Here you can assign moderation groups for enhanced workflow actions."
+msgstr "Here you can assign moderation groups for enhanced workflow actions."
+
+#, fuzzy
+msgid "Here you can choose a custom creation date"
+msgstr "Here you can choose a custom creation date"
+
+#, fuzzy
+msgid "Here you can choose a user which will be set as creator"
+msgstr "Here you can choose a user which will be set as creator"
+
+#, fuzzy
+msgid "Here you can configure parameters for list views."
+msgstr "Here you can configure parameters for list views."
+
+#, fuzzy
+msgid "Here you can inspect and amend the existing workflows."
+msgstr "Here you can inspect and amend the existing workflows."
+
+#, fuzzy
+msgid "Hide content temporarily."
+msgstr "Hide content temporarily."
+
+#, fuzzy
+msgid "Hooks"
+msgstr "Hooks"
+
+#, fuzzy
+msgid "ID of post"
+msgstr "ID of post"
+
+#, fuzzy
+msgid "If you change this please save the block once to reload the parameters below."
+msgstr "If you change this please save the block once to reload the parameters below."
+
+#, fuzzy
+msgid "Image"
+msgstr "Image"
+
+#, fuzzy
+msgid "Image for article"
+msgstr "Image for article"
+
+#, fuzzy
+msgid "Image settings for posts image for article"
+msgstr "Image settings for posts image for article"
+
+#, fuzzy
+msgid "Image with absolute url to the post"
+msgstr "Image with absolute url to the post"
+
+#, fuzzy
+msgid "Image with relative link to the post"
+msgstr "Image with relative link to the post"
+
+#, fuzzy
+msgid "Images"
+msgstr "Images"
+
+#, fuzzy
+msgid "Initial"
+msgstr "Initial"
+
+#, fuzzy
+msgid "Inset"
+msgstr "Inset"
+
+#, fuzzy
+msgid "Integration"
+msgstr "Integration"
+
+#, fuzzy
+msgid "Invalid object type received."
+msgstr "Invalid object type received."
+
+#, fuzzy
+msgid "Invalid user identifier received."
+msgstr "Invalid user identifier received."
+
+#, fuzzy
+msgid "It's new state is: %state%"
+msgstr "It's new state is: %state%"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "Last update"
+msgstr "Letzte Aktualisierung"
+
+#, fuzzy
+msgid "Link own posts on account page"
+msgstr "Link own posts on account page"
+
+#, fuzzy
+msgid "Link to the post:"
+msgstr "Link to the post:"
+
+#, fuzzy
+msgid "Link to your post:"
+msgstr "Link to your post:"
+
+msgid "List views"
+msgstr "Listensicht"
+
+msgid "MB"
+msgstr "MB"
+
+#, fuzzy
+msgid "MUBloggingModule detail view"
+msgstr "MUBloggingModule detail view"
+
+#, fuzzy
+msgid "MUBloggingModule items"
+msgstr "MUBloggingModule items"
+
+#, fuzzy
+msgid "MUBloggingModule list view"
+msgstr "MUBloggingModule list view"
+
+#, fuzzy
+msgid "Main post"
+msgstr "Main post"
+
+#, fuzzy
+msgid "Main posts"
+msgstr "Main posts"
+
+#, fuzzy
+msgid "Make content available again."
+msgstr "Make content available again."
+
+#, fuzzy
+msgid "Manage settings for this application"
+msgstr "Manage settings for this application"
+
+msgid "Moderation"
+msgstr "Moderation"
+
+#, fuzzy
+msgid "Moderation group for posts"
+msgstr "Moderation group for posts"
+
+msgid "More about"
+msgstr "Mehr über"
+
+#, fuzzy
+msgid "Move content into the archive."
+msgstr "Move content into the archive."
+
+msgid "My posts"
+msgstr "Meine Beiträge"
+
+#, fuzzy
+msgid "New content has been submitted"
+msgstr "New content has been submitted"
+
+#, fuzzy
+msgid "Newest"
+msgstr "Newest"
+
+#, fuzzy
+msgid "No entries found."
+msgstr "No entries found."
+
+#, fuzzy
+msgid "No item selected."
+msgstr "No item selected."
+
+#, fuzzy
+msgid "No posts found."
+msgstr "No posts found."
+
+#, fuzzy
+msgid "No such item found."
+msgstr "No such item found."
+
+#, fuzzy
+msgid "No such item."
+msgstr "No such item."
+
+msgid "None"
+msgstr "Nichts"
+
+#, fuzzy
+msgid "Note: this value must have a minimum length of %amount% characters."
+msgstr "Note: this value must have a minimum length of %amount% characters."
+
+#, fuzzy
+msgid "Note: this value must not exceed %amount% characters."
+msgstr "Note: this value must not exceed %amount% characters."
+
+#, fuzzy
+msgid "OK"
+msgstr "OK"
+
+#, fuzzy
+msgid "Object type"
+msgstr "Object type"
+
+#, fuzzy
+msgid "One post is waiting for approval.|%amount% posts are waiting for approval."
+msgstr "One post is waiting for approval.|%amount% posts are waiting for approval."
+
+#, fuzzy
+msgid "Only digits are allowed."
+msgstr "Only digits are allowed."
+
+#, fuzzy
+msgid "Only images"
+msgstr "Only images"
+
+#, fuzzy
+msgid "Only item titles"
+msgstr "Only item titles"
+
+#, fuzzy
+msgid "Open file"
+msgstr "Open file"
+
+#, fuzzy
+msgid "Open preview page"
+msgstr "Open preview page"
+
+#, fuzzy
+msgid "Open quick view window"
+msgstr "Open quick view window"
+
+msgid "Operation cancelled."
+msgstr "Aktion abgebrochen."
+
+#, fuzzy
+msgid "Outbound"
+msgstr "Outbound"
+
+#, fuzzy
+msgid "Page size"
+msgstr "Page size"
+
+msgid "Paste as"
+msgstr "Einfügen als"
+
+#, fuzzy
+msgid "Permalink"
+msgstr "Permalink"
+
+#, fuzzy
+msgid "Position of advertising 1"
+msgstr "Position of advertising 1"
+
+#, fuzzy
+msgid "Position of advertising 2"
+msgstr "Position of advertising 2"
+
+#, fuzzy
+msgid "Position of advertising 3"
+msgstr "Position of advertising 3"
+
+#, fuzzy
+msgid "Position of block"
+msgstr "Position of block"
+
+#, fuzzy
+msgid "Position of block 2"
+msgstr "Position of block 2"
+
+#, fuzzy
+msgid "Position of block 3"
+msgstr "Position of block 3"
+
+msgid "Post"
+msgstr "Beitrag"
+
+#, fuzzy
+msgid "Post entries per page"
+msgstr "Post entries per page"
+
+#, fuzzy
+msgid "Post filter hooks subscriber"
+msgstr "Post filter hooks subscriber"
+
+#, fuzzy
+msgid "Post form aware subscriber"
+msgstr "Post form aware subscriber"
+
+msgid "Post list"
+msgstr "Beitragsliste"
+
+#, fuzzy
+msgid "Post ui hooks subscriber"
+msgstr "Post ui hooks subscriber"
+
+msgid "Posts"
+msgstr "Beiträge"
+
+#, fuzzy
+msgid "Posts image for article"
+msgstr "Posts image for article"
+
+msgid "Posts list"
+msgstr "Liste der Beiträge"
+
+#, fuzzy
+msgid "Posts pending approval"
+msgstr "Posts pending approval"
+
+msgid "Preview"
+msgstr "Vorschau"
+
+msgid "Publish"
+msgstr "Veröffentlichen"
+
+msgid "Quick navigation"
+msgstr "Schnellnavigation"
+
+msgid "Random"
+msgstr "Zufall"
+
+msgid "Read more"
+msgstr "Mehr lesen"
+
+msgid "Read more of"
+msgstr "Mehr lesen von"
+
+#, fuzzy
+msgid "Relative link to the image"
+msgstr "Relative link to the image"
+
+#, fuzzy
+msgid "Relative link to the post"
+msgstr "Relative link to the post"
+
+#, fuzzy
+msgid "Relevant articles"
+msgstr "Relevant articles"
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#, fuzzy
+msgid "Reset to empty value"
+msgstr "Reset to empty value"
+
+#, fuzzy
+msgid "Return control"
+msgstr "Return control"
+
+#, fuzzy
+msgid "Reuse"
+msgstr "Reuse"
+
+#, fuzzy
+msgid "Reuse for new post"
+msgstr "Reuse for new post"
+
+#, fuzzy
+msgid "Search"
+msgstr "Search"
+
+#, fuzzy
+msgid "Search and select post"
+msgstr "Search and select post"
+
+#, fuzzy
+msgid "Search for"
+msgstr "Search for"
+
+#, fuzzy
+msgid "Send private message to %userName%"
+msgstr "Send private message to %userName%"
+
+#, fuzzy
+msgid "Settings"
+msgstr "Settings"
+
+#, fuzzy
+msgid "Show all entries"
+msgstr "Show all entries"
+
+#, fuzzy
+msgid "Shows all items except these which are approved"
+msgstr "Shows all items except these which are approved"
+
+#, fuzzy
+msgid "Shows all items except these which are suspended"
+msgstr "Shows all items except these which are suspended"
+
+#, fuzzy
+msgid "Shows all items except these which are waiting"
+msgstr "Shows all items except these which are waiting"
+
+#, fuzzy
+msgid "Shrink height"
+msgstr "Shrink height"
+
+#, fuzzy
+msgid "Shrink width"
+msgstr "Shrink width"
+
+#, fuzzy
+msgid "Similar articles"
+msgstr "Similar articles"
+
+#, fuzzy
+msgid "Sorry, but an error occured during the %action% action."
+msgstr "Sorry, but an error occured during the %action% action."
+
+#, fuzzy
+msgid "Sorry, but an error occured during the %action% action. Please apply the changes again!"
+msgstr "Sorry, but an error occured during the %action% action. Please apply the changes again!"
+
+#, fuzzy
+msgid "Sorry, but you can not create the post yet as other items are required which must be created before!"
+msgstr "Sorry, but you can not create the post yet as other items are required which must be created before!"
+
+#, fuzzy
+msgid "Sort by"
+msgstr "Sort by"
+
+#, fuzzy
+msgid "Sort by %s"
+msgstr "Sort by %s"
+
+#, fuzzy
+msgid "Sort direction"
+msgstr "Sort direction"
+
+#, fuzzy
+msgid "Sorting"
+msgstr "Sorting"
+
+#, fuzzy
+msgid "Speed of the slideshow"
+msgstr "Speed of the slideshow"
+
+#, fuzzy
+msgid "Start date"
+msgstr "Start date"
+
+#, fuzzy
+msgid "State"
+msgstr "State"
+
+#, fuzzy
+msgid "Submit"
+msgstr "Submit"
+
+#, fuzzy
+msgid "Submit and approve"
+msgstr "Submit and approve"
+
+#, fuzzy
+msgid "Summary of post"
+msgstr "Summary of post"
+
+#, fuzzy
+msgid "Suspended"
+msgstr "Suspended"
+
+#, fuzzy
+msgid "Switch to administration area."
+msgstr "Switch to administration area."
+
+#, fuzzy
+msgid "Switch to user area."
+msgstr "Switch to user area."
+
+#, fuzzy
+msgid "Template"
+msgstr "Template"
+
+#, fuzzy
+msgid "The amount of posts shown per page"
+msgstr "The amount of posts shown per page"
+
+#, fuzzy
+msgid "The cache directory \"%directory%\" does not exist. Please create it and make it writable for the webserver."
+msgstr "The cache directory \"%directory%\" does not exist. Please create it and make it writable for the webserver."
+
+#, fuzzy
+msgid "The enable shrinking option."
+msgstr "The enable shrinking option."
+
+#, fuzzy
+msgid "The filter data by locale option."
+msgstr "The filter data by locale option."
+
+#, fuzzy
+msgid "The link own posts on account page option."
+msgstr "The link own posts on account page option."
+
+#, fuzzy
+msgid "The maximum amount of items to be shown."
+msgstr "The maximum amount of items to be shown."
+
+#, fuzzy
+msgid "The maximum image height in pixels."
+msgstr "The maximum image height in pixels."
+
+#, fuzzy
+msgid "The maximum image width in pixels."
+msgstr "The maximum image width in pixels."
+
+#, fuzzy
+msgid "The time from item to item."
+msgstr "The time from item to item."
+
+#, fuzzy
+msgid "The upload directories at \"%path%\" can be removed manually."
+msgstr "The upload directories at \"%path%\" can be removed manually."
+
+#, fuzzy
+msgid "The upload directory \"%path%\" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver."
+msgstr "The upload directory \"%path%\" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver."
+
+#, fuzzy
+msgid "The value \"%value%\" is not allowed for the \"%property%\" property."
+msgstr "The value \"%value%\" is not allowed for the \"%property%\" property."
+
+#, fuzzy
+msgid "These options allow you to configure integration aspects."
+msgstr "These options allow you to configure integration aspects."
+
+#, fuzzy
+msgid "These remarks (like a reason for deny) are not stored, but added to any notification emails send to the creator."
+msgstr "These remarks (like a reason for deny) are not stored, but added to any notification emails send to the creator."
+
+#, fuzzy
+msgid "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
+msgstr "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
+
+#, fuzzy
+msgid "This is an optional filter."
+msgstr "This is an optional filter."
+
+#, fuzzy
+msgid "This mail has been sent automatically by %siteName%."
+msgstr "This mail has been sent automatically by %siteName%."
+
+#, fuzzy
+msgid "Thumbnail height display"
+msgstr "Thumbnail height display"
+
+#, fuzzy
+msgid "Thumbnail height edit"
+msgstr "Thumbnail height edit"
+
+#, fuzzy
+msgid "Thumbnail height on display pages in pixels."
+msgstr "Thumbnail height on display pages in pixels."
+
+#, fuzzy
+msgid "Thumbnail height on edit pages in pixels."
+msgstr "Thumbnail height on edit pages in pixels."
+
+#, fuzzy
+msgid "Thumbnail height on view pages in pixels."
+msgstr "Thumbnail height on view pages in pixels."
+
+#, fuzzy
+msgid "Thumbnail height view"
+msgstr "Thumbnail height view"
+
+#, fuzzy
+msgid "Thumbnail mode"
+msgstr "Thumbnail mode"
+
+#, fuzzy
+msgid "Thumbnail mode (inset or outbound)."
+msgstr "Thumbnail mode (inset or outbound)."
+
+#, fuzzy
+msgid "Thumbnail width display"
+msgstr "Thumbnail width display"
+
+#, fuzzy
+msgid "Thumbnail width edit"
+msgstr "Thumbnail width edit"
+
+#, fuzzy
+msgid "Thumbnail width on display pages in pixels."
+msgstr "Thumbnail width on display pages in pixels."
+
+#, fuzzy
+msgid "Thumbnail width on edit pages in pixels."
+msgstr "Thumbnail width on edit pages in pixels."
+
+#, fuzzy
+msgid "Thumbnail width on view pages in pixels."
+msgstr "Thumbnail width on view pages in pixels."
+
+#, fuzzy
+msgid "Thumbnail width view"
+msgstr "Thumbnail width view"
+
+#, fuzzy
+msgid "Title"
+msgstr "Title"
+
+#, fuzzy
+msgid "Unpublish"
+msgstr "Unpublish"
+
+#, fuzzy
+msgid "Update"
+msgstr "Update"
+
+#, fuzzy
+msgid "Update configuration"
+msgstr "Update configuration"
+
+#, fuzzy
+msgid "Update content and approve for immediate publishing."
+msgstr "Update content and approve for immediate publishing."
+
+#, fuzzy
+msgid "Update date"
+msgstr "Update date"
+
+#, fuzzy
+msgid "Updated by %user"
+msgstr "Updated by %user"
+
+#, fuzzy
+msgid "Updated by %user on %date"
+msgstr "Updated by %user on %date"
+
+#, fuzzy
+msgid "Updated on %date"
+msgstr "Updated on %date"
+
+#, fuzzy
+msgid "Updater"
+msgstr "Updater"
+
+#, fuzzy
+msgid "Used to determine moderator user accounts for sending email notifications."
+msgstr "Used to determine moderator user accounts for sending email notifications."
+
+#, fuzzy
+msgid "View detail page"
+msgstr "View detail page"
+
+#, fuzzy
+msgid "Waiting"
+msgstr "Wartend"
+
+#, fuzzy
+msgid "Warning! The upload directory at \"%path%\" exists but is not writable by the webserver."
+msgstr "Warning! The upload directory at \"%path%\" exists but is not writable by the webserver."
+
+#, fuzzy
+msgid "Welcome to the post section of the Blogging application."
+msgstr "Welcome to the post section of the Blogging application."
+
+#, fuzzy
+msgid "Whether automatically filter data in the frontend based on the current locale or not"
+msgstr "Whether automatically filter data in the frontend based on the current locale or not"
+
+#, fuzzy
+msgid "Whether to add a link to posts of the current user on his account page"
+msgstr "Whether to add a link to posts of the current user on his account page"
+
+#, fuzzy
+msgid "Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image."
+msgstr "Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image."
+
+#, fuzzy
+msgid "Which sections are supported in the Finder component (used by Scribite plug-ins)."
+msgstr "Which sections are supported in the Finder component (used by Scribite plug-ins)."
+
+#, fuzzy
+msgid "Will set into the alt tag of this image."
+msgstr "Will set into the alt tag of this image."
+
+#, fuzzy
+msgid "With description"
+msgstr "With description"
+
+#, fuzzy
+msgid "With selected posts"
+msgstr "With selected posts"
+
+#, fuzzy
+msgid "Workflow state"
+msgstr "Workflow state"
+
+#, fuzzy
+msgid "Workflows"
+msgstr "Workflows"
+
+#, fuzzy
+msgid "Your post \"%entity%\" has been changed."
+msgstr "Your post \"%entity%\" has been changed."
+
+#, fuzzy
+msgid "Your submission has been deleted"
+msgstr "Your submission has been deleted"
+
+#, fuzzy
+msgid "Your submission has been updated"
+msgstr "Your submission has been updated"
+
+#, fuzzy
+msgid "mubloggingmodule. Posts Display Hooks"
+msgstr "mubloggingmodule. Posts Display Hooks"
+
+#, fuzzy
+msgid "mubloggingmodule. Posts Filter Hooks"
+msgstr "mubloggingmodule. Posts Filter Hooks"
+
+#, fuzzy
+msgid "pixels"
+msgstr "pixels"
+
+#, fuzzy
+msgid "posts"
+msgstr "posts"

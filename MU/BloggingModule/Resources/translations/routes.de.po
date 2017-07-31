@@ -1,0 +1,99 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 2.0.2\n"
+
+msgid "doc"
+msgstr "/installdoc/{name}"
+
+msgid "fos_js_routing_js"
+msgstr "/js/routing.{_format}"
+
+msgid "home"
+msgstr "start"
+
+msgid "install"
+msgstr "/installieren/{stage}"
+
+msgid "legacy_short_url"
+msgstr "/{path}"
+
+msgid "liip_imagine_filter"
+msgstr "/medien/cache/beseitigen/{filter}/{path}"
+
+msgid "liip_imagine_filter_runtime"
+msgstr "/medien/cache/beseitigen/{filter}/rc/{hash}/{path}"
+
+msgid "mubloggingmodule_ajax_checkforduplicate"
+msgstr "/ajax/checkForDuplicate"
+
+msgid "mubloggingmodule_ajax_getitemlistfinder"
+msgstr "/ajax/getItemListFinder"
+
+msgid "mubloggingmodule_config_config"
+msgstr "/einstellungen/bearbeiten"
+
+msgid "mubloggingmodule_external_display"
+msgstr "/extern/display/{objectType}/{id}/{source}/{displayMode}"
+
+msgid "mubloggingmodule_external_finder"
+msgstr "/extern/finder/{objectType}/{editor}/{sort}/{sortdir}/{pos}/{num}"
+
+msgid "mubloggingmodule_post_admindelete"
+msgstr "/admin/beitrag/delete/{slug}.{_format}"
+
+msgid "mubloggingmodule_post_admindisplay"
+msgstr "/admin/beitrag/{slug}.{_format}"
+
+msgid "mubloggingmodule_post_adminedit"
+msgstr "/admin/beitrag/bearbeiten/{id}.{_format}"
+
+msgid "mubloggingmodule_post_adminhandleselectedentries"
+msgstr "/admin/beitraege/gewaehltebeitraegehandhaben"
+
+msgid "mubloggingmodule_post_adminindex"
+msgstr "/admin/beitraege"
+
+msgid "mubloggingmodule_post_adminview"
+msgstr "/admin/beitraege/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "mubloggingmodule_post_delete"
+msgstr "/beitrag/loeschen/{slug}.{_format}"
+
+msgid "mubloggingmodule_post_display"
+msgstr "/beitrag/{slug}.{_format}"
+
+msgid "mubloggingmodule_post_edit"
+msgstr "/beitrag/bearbeiten/{id}.{_format}"
+
+msgid "mubloggingmodule_post_handleselectedentries"
+msgstr "/beitraege/gewaehlteeintraegehandhaben"
+
+msgid "mubloggingmodule_post_index"
+msgstr "/beitraege"
+
+msgid "mubloggingmodule_post_view"
+msgstr "/beitraege/uebersicht/{sort}/{sortdir}/{pos}/{num}.{_format}"
+
+msgid "upgrade"
+msgstr "/aktualisieren/{stage}"
+
+msgid "zikula_hook_hook_changeproviderareaorder"
+msgstr "/hooks/reihenfolgeaendern"
+
+msgid "zikula_hook_hook_edit"
+msgstr "/hooks/{moduleName}"
+
+msgid "zikula_hook_hook_togglesubscribeareastatus"
+msgstr "/hooks/togglestatus"
+
+msgid "zikula_workflow_editor_index"
+msgstr "/editor/index"
