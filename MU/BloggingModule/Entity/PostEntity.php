@@ -42,7 +42,7 @@ class PostEntity extends BaseEntity
     public function setPermalink($permalink)
     {
         if ($this->permalink !== $permalink) {
-            $this->permalink = isset($permalink) ? $permalink : $this->slug;
+            $this->permalink = isset($permalink) ? str_replace(' ', '-', $permalink) : str_replace(' ', '-', $this->title);
         }
     }
 }
