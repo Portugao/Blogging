@@ -249,10 +249,10 @@ msgid "Create post"
 msgstr "Erstelle Beitrag"
 
 msgid "Created by %user"
-msgstr "Erstellt von Benutzer %user"
+msgstr "Erstellt von %user"
 
 msgid "Created by %user on %date"
-msgstr "Erstellt von Benutzer %user am %date"
+msgstr "Erstellt von %user am %date"
 
 msgid "Created on %date"
 msgstr "Erstellt am %date"
@@ -975,9 +975,8 @@ msgstr "These remarks (like a reason for deny) are not stored, but added to any 
 msgid "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
 msgstr "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
 
-#, fuzzy
 msgid "This is an optional filter."
-msgstr "This is an optional filter."
+msgstr "Dies ist ein optionaler Filter."
 
 #, fuzzy
 msgid "This mail has been sent automatically by %siteName%."
@@ -1004,9 +1003,8 @@ msgstr "Höhe Thumbnail View"
 msgid "Thumbnail mode"
 msgstr "Thumbnail Modus"
 
-#, fuzzy
 msgid "Thumbnail mode (inset or outbound)."
-msgstr "Thumbnail mode (inset or outbound)."
+msgstr "Thumbnail Modus (eingefügt oder auslaufend)."
 
 msgid "Thumbnail width display"
 msgstr "Thumbnail Breite Detailansicht"
@@ -1089,7 +1087,7 @@ msgid "Which sections are supported in the Finder component (used by Scribite pl
 msgstr "Which sections are supported in the Finder component (used by Scribite plug-ins)."
 
 msgid "Will set into the alt tag of this image."
-msgstr "Wird in den Alt Tag des Bildung eingefügt."
+msgstr "Wird in den Alt Tag des Bildes eingefügt."
 
 msgid "With description"
 msgstr "Mit Beschreibung"
