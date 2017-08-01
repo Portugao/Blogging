@@ -449,68 +449,53 @@ msgstr "Gib die Zusammenfassung für den Beitrag ein"
 msgid "Enter the thumbnail height display."
 msgstr "Gib die Höhe für Thumbnails ein."
 
-#, fuzzy
 msgid "Enter the thumbnail height edit."
-msgstr "Enter the thumbnail height edit."
+msgstr "Gib die Höhe für Thumbnails im Bearbeitungstemplate ein."
 
-#, fuzzy
 msgid "Enter the thumbnail height view."
-msgstr "Enter the thumbnail height view."
+msgstr "Gib die Höhe für Thumbnails im Übersichtstemplate ein."
 
-#, fuzzy
 msgid "Enter the thumbnail width display."
-msgstr "Enter the thumbnail width display."
+msgstr "Gib die Breite für Thumbnails im Detailansichtstemplate ein."
 
-#, fuzzy
 msgid "Enter the thumbnail width edit."
-msgstr "Enter the thumbnail width edit."
+msgstr "Gib die Breite des Thumbnails für Bearbeitungen ein."
 
-#, fuzzy
 msgid "Enter the thumbnail width view."
-msgstr "Enter the thumbnail width view."
+msgstr "Gib die Breite des Thumbnails für Übersichten ein."
 
 msgid "Enter the title of the post"
 msgstr "Gib den Titel für den Beitrag ein"
 
-#, fuzzy
 msgid "Error! Could not create a category registry for the %entity% entity."
-msgstr "Error! Could not create a category registry for the %entity% entity."
+msgstr "Fehler! Konnte die Kategoriezuweisung für die %entity% Entität nicht erstellen."
 
-#, fuzzy
 msgid "Error! Could not determine workflow actions."
-msgstr "Error! Could not determine workflow actions."
+msgstr "Fehler! Konnte die Workflow Aktion nicht beenden."
 
-#, fuzzy
 msgid "Error! Creation attempt failed."
-msgstr "Error! Creation attempt failed."
+msgstr "Fehler! Versuch der Erstellung gescheitert."
 
-#, fuzzy
 msgid "Error! Deletion attempt failed."
-msgstr "Error! Deletion attempt failed."
+msgstr "Fehler! Versuch der Löschung gescheitert."
 
-#, fuzzy
 msgid "Error! Invalid object type received."
-msgstr "Error! Invalid object type received."
+msgstr "Fehler! Ungültiger Objekttyp angefordert."
 
-#, fuzzy
 msgid "Error! It is not allowed to delete this post."
-msgstr "Error! It is not allowed to delete this post."
+msgstr "Fehler! Es ist nicht erlaubt, diesen Beitrag zu löschen."
 
-#, fuzzy
 msgid "Error! This file type is not allowed. Please choose another file format."
-msgstr "Error! This file type is not allowed. Please choose another file format."
+msgstr "Fehler! Dieser Dateityp ist nicht erlaubt. Bitte wähle ein anderes Dateiformat."
 
-#, fuzzy
 msgid "Error! This file type seems not to be a valid image."
-msgstr "Error! This file type seems not to be a valid image."
+msgstr "Fehler! Dieser Dateityp scheint kein gültiges Bild zu sein."
 
-#, fuzzy
 msgid "Error! Update attempt failed."
-msgstr "Error! Update attempt failed."
+msgstr "Fehler! Versuch der Aktualisierung gescheitert."
 
-#, fuzzy
 msgid "Error: Invalid editor context given for external controller action."
-msgstr "Error: Invalid editor context given for external controller action."
+msgstr "Fehler! Ungültiger Editor-Kontext für einen externen Controller."
 
 msgid "Error: invalid input."
 msgstr "Fehler: Ungültige Eingabe."
@@ -863,17 +848,14 @@ msgstr "Beschneidungsbreite"
 msgid "Similar articles"
 msgstr "Ähnliche Artikel"
 
-#, fuzzy
 msgid "Sorry, but an error occured during the %action% action."
-msgstr "Sorry, but an error occured during the %action% action."
+msgstr "Entschuldigung, aber ein Fehler ist während der %action% entstanden."
 
-#, fuzzy
 msgid "Sorry, but an error occured during the %action% action. Please apply the changes again!"
-msgstr "Sorry, but an error occured during the %action% action. Please apply the changes again!"
+msgstr "Entschuldigung, aber ein Fehler ist während der %action% Aktion aufgetreten. Bitte stimme den Änderungen erneut zu!"
 
-#, fuzzy
 msgid "Sorry, but you can not create the post yet as other items are required which must be created before!"
-msgstr "Sorry, but you can not create the post yet as other items are required which must be created before!"
+msgstr "Entschuldigung, aber Du kannst einen Beitrag erst erstellen, wenn andere notwendige Elemente vorhanden sind!"
 
 msgid "Sort by"
 msgstr "Sortierung nach"
@@ -920,67 +902,53 @@ msgstr "Template"
 msgid "The amount of posts shown per page"
 msgstr "Die Anzahl der angezeigten Beiträge pro Seite"
 
-#, fuzzy
 msgid "The cache directory \"%directory%\" does not exist. Please create it and make it writable for the webserver."
-msgstr "The cache directory \"%directory%\" does not exist. Please create it and make it writable for the webserver."
+msgstr "Der Cache ordner %Directory% existiert nicht. Bitte erstelle diesen und versehe ihn mit Schreibrechten."
 
-#, fuzzy
 msgid "The enable shrinking option."
-msgstr "The enable shrinking option."
+msgstr "Option das Beschneiden zu aktivieren."
 
 msgid "The filter data by locale option."
 msgstr "Option zur Filterung der Daten per Sprache."
 
-#, fuzzy
 msgid "The link own posts on account page option."
-msgstr "The link own posts on account page option."
+msgstr "Option zur Verlinkung eigener Beiträge im Benutzerbereich."
 
-#, fuzzy
 msgid "The maximum amount of items to be shown."
-msgstr "The maximum amount of items to be shown."
+msgstr "Maximale Anzahl anzuzeigender Elemente."
 
-#, fuzzy
 msgid "The maximum image height in pixels."
-msgstr "The maximum image height in pixels."
+msgstr "Maximale Höhe für Bilder in Pixel."
 
-#, fuzzy
 msgid "The maximum image width in pixels."
-msgstr "The maximum image width in pixels."
+msgstr "Maximale Breite für Bilder in Pixel."
 
-#, fuzzy
 msgid "The time from item to item."
-msgstr "The time from item to item."
+msgstr "Die Zeit zwischen 2 Elementen."
 
-#, fuzzy
 msgid "The upload directories at \"%path%\" can be removed manually."
-msgstr "The upload directories at \"%path%\" can be removed manually."
+msgstr "Der Upload Folder %path% kann gelöscht werden."
 
-#, fuzzy
 msgid "The upload directory \"%path%\" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver."
-msgstr "The upload directory \"%path%\" does not exist and could not be created. Try to create it yourself and make sure that this folder is accessible via the web and writable by the webserver."
+msgstr "Der Upload Ordner %path% existiert nicht und konnte nicht angelegt werden. Versuche dies selbst und stelle sicher, dass er beschreibbar ist."
 
-#, fuzzy
 msgid "The value \"%value%\" is not allowed for the \"%property%\" property."
-msgstr "The value \"%value%\" is not allowed for the \"%property%\" property."
+msgstr "Der Wert \"%value%\" ist nicht erlaubt für die \"%property%\" Eigenschaft."
 
-#, fuzzy
 msgid "These options allow you to configure integration aspects."
-msgstr "These options allow you to configure integration aspects."
+msgstr "Diese Option erlaubt es Integrationsaspekte zu konfigurieren."
 
-#, fuzzy
 msgid "These remarks (like a reason for deny) are not stored, but added to any notification emails send to the creator."
-msgstr "These remarks (like a reason for deny) are not stored, but added to any notification emails send to the creator."
+msgstr "Diese Bemerkungen (wie z.B. ein Grund für eine Ablehnung) werden nicht gespeichert, sondern an den Ersteller per email versandt."
 
-#, fuzzy
 msgid "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
-msgstr "These remarks (like questions about conformance) are not stored, but added to any notification emails send to our moderators."
+msgstr "Diese Bemerkungen (wie z.B. Fragen zur Übereinstimmung) werden nicht gespeichert, sondern an unsere Moderatoren per email versandt."
 
 msgid "This is an optional filter."
 msgstr "Dies ist ein optionaler Filter."
 
-#, fuzzy
 msgid "This mail has been sent automatically by %siteName%."
-msgstr "This mail has been sent automatically by %siteName%."
+msgstr "Diese mail wurde automatisch von %siteName% versendet."
 
 msgid "Thumbnail height display"
 msgstr "Thumbnail Höhe Detailansicht"
@@ -1054,9 +1022,8 @@ msgstr "Aktualisiert am %date"
 msgid "Updater"
 msgstr "Aktualisierer"
 
-#, fuzzy
 msgid "Used to determine moderator user accounts for sending email notifications."
-msgstr "Used to determine moderator user accounts for sending email notifications."
+msgstr "Nutzbar zur Bestimmung von Moderator Benutzerbereichen für die Versendung von mails."
 
 msgid "View detail page"
 msgstr "Detail Ansicht ansehen"
@@ -1067,24 +1034,20 @@ msgstr "Wartend"
 msgid "Warning! The upload directory at \"%path%\" exists but is not writable by the webserver."
 msgstr "Warnung! Der Upload Ordner \"%path%\" ist vorhanden, allerdings nicht beschreibbar."
 
-#, fuzzy
 msgid "Welcome to the post section of the Blogging application."
-msgstr "Welcome to the post section of the Blogging application."
+msgstr "Willkommen zum Beitragsbereich des Moduls Blogging."
 
-#, fuzzy
 msgid "Whether automatically filter data in the frontend based on the current locale or not"
-msgstr "Whether automatically filter data in the frontend based on the current locale or not"
+msgstr "Ob Daten anhand der aktuellen Sprache automatisch im Frontend gefiltert werden sollen"
 
 msgid "Whether to add a link to posts of the current user on his account page"
 msgstr "Ob ein Link zu Beiträgen im Benutzerbereich angezeigt werden soll."
 
-#, fuzzy
 msgid "Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image."
-msgstr "Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image."
+msgstr "Ob Bilder beschnitten werden sollen. Speichert heruntergerechnete Versionen des Originalbildes."
 
-#, fuzzy
 msgid "Which sections are supported in the Finder component (used by Scribite plug-ins)."
-msgstr "Which sections are supported in the Finder component (used by Scribite plug-ins)."
+msgstr "Welche Bereiche im Finder (genutzt vom Scribite Plugin) unterstützt werden sollen."
 
 msgid "Will set into the alt tag of this image."
 msgstr "Wird in den Alt Tag des Bildes eingefügt."
