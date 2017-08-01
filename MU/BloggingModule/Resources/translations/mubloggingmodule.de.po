@@ -42,7 +42,7 @@ msgid "Absolute url to the post"
 msgstr "Absolute url des Posts"
 
 msgid "Actions"
-msgstr "Actionen"
+msgstr "Aktionen"
 
 msgid "Additional remarks"
 msgstr "Zusätzliche Bemerkungen"
@@ -225,118 +225,91 @@ msgstr "Inhalt 6 links"
 msgid "Content 6 right"
 msgstr "Inhalt 6 rechts"
 
-#, fuzzy
 msgid "Content has been approved and is available online."
-msgstr "Content has been approved and is available online."
+msgstr "Inhalt wurde freigegeben und ist nun online verfügbar."
 
-#, fuzzy
 msgid "Content has been approved, but is temporarily offline."
-msgstr "Content has been approved, but is temporarily offline."
+msgstr "Inhalt wurde freigegeben, aber ist zwischenzeitlich offline."
 
-#, fuzzy
 msgid "Content has been deleted"
-msgstr "Content has been deleted"
+msgstr "Inhalt wurde gelöscht."
 
-#, fuzzy
 msgid "Content has been submitted and waits for approval."
-msgstr "Content has been submitted and waits for approval."
+msgstr "Inhalt wurde eingereicht und wartet auf Freigabe."
 
-#, fuzzy
 msgid "Content has been updated"
-msgstr "Content has been updated"
+msgstr "Inhalt wurde aktualisiert."
 
 #, fuzzy
 msgid "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
 msgstr "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
 
-#, fuzzy
 msgid "Create another item after save"
-msgstr "Create another item after save"
+msgstr "Erstelle ein weiteres Element nach dem Speichern"
 
 msgid "Create post"
 msgstr "Erstelle Beitrag"
 
-#, fuzzy
 msgid "Created by %user"
-msgstr "Created by %user"
+msgstr "Erstellt von Benutzer %user"
 
-#, fuzzy
 msgid "Created by %user on %date"
-msgstr "Created by %user on %date"
+msgstr "Erstellt von Benutzer %user am %date"
 
-#, fuzzy
 msgid "Created on %date"
-msgstr "Created on %date"
+msgstr "Erstellt am %date"
 
-#, fuzzy
 msgid "Creation"
-msgstr "Creation"
+msgstr "Erstellung"
 
-#, fuzzy
 msgid "Creation and update"
-msgstr "Creation and update"
+msgstr "Erstellung und Aktualisierung"
 
-#, fuzzy
 msgid "Creation date"
-msgstr "Creation date"
+msgstr "Erstelldatum"
 
-#, fuzzy
 msgid "Creator"
-msgstr "Creator"
+msgstr "Ersteller"
 
-#, fuzzy
 msgid "Current file"
-msgstr "Current file"
+msgstr "Aktuelle Datei"
 
-#, fuzzy
 msgid "Custom template"
-msgstr "Custom template"
+msgstr "Benutzer Template"
 
-#, fuzzy
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
-#, fuzzy
 msgid "Delete"
-msgstr "Delete"
+msgstr "Löschen"
 
-#, fuzzy
 msgid "Delete content permanently."
-msgstr "Delete content permanently."
+msgstr "INhalt dauerhaft löschen."
 
-#, fuzzy
 msgid "Delete existing file"
-msgstr "Delete existing file"
+msgstr "Datei löschen"
 
-#, fuzzy
 msgid "Delete post"
-msgstr "Delete post"
+msgstr "Beitrag löschen"
 
-#, fuzzy
 msgid "Delete this file ?"
-msgstr "Delete this file ?"
+msgstr "Diese Datei löschen?"
 
-#, fuzzy
 msgid "Delete this post"
-msgstr "Delete this post"
+msgstr "Diesen Beitrag löschen"
 
-#, fuzzy
 msgid "Deleted"
-msgstr "Deleted"
+msgstr "Gelöscht"
 
-#, fuzzy
 msgid "Descending"
-msgstr "Descending"
+msgstr "Absteigend"
 
-#, fuzzy
 msgid "Description for google"
-msgstr "Description for google"
+msgstr "Beschreibung für Google"
 
-#, fuzzy
 msgid "Description of image for article"
-msgstr "Description of image for article"
+msgstr "Beschreibung des Bildes für den Artikel"
 
-#, fuzzy
 msgid "Details"
 msgstr "Details"
 
@@ -352,177 +325,134 @@ msgstr "Display or link a single MUBloggingModule object."
 msgid "Do you really want to delete this post: \"%name%\" ?"
 msgstr "Do you really want to delete this post: \"%name%\" ?"
 
-#, fuzzy
 msgid "Doctrine Exception"
-msgstr "Doctrine Exception"
+msgstr "Doctrine Ausnahme"
 
-#, fuzzy
 msgid "Done! Item created."
-msgstr "Done! Item created."
+msgstr "Erledigt! Element erstellt."
 
-#, fuzzy
 msgid "Done! Item deleted."
-msgstr "Done! Item deleted."
+msgstr "Erledigt! Element gelöscht."
 
-#, fuzzy
 msgid "Done! Item updated."
-msgstr "Done! Item updated."
+msgstr "Erledigt! Element aktualisiert."
 
-#, fuzzy
 msgid "Done! Module configuration updated."
-msgstr "Done! Module configuration updated."
+msgstr "Erledigt. Konfiguration aktualisiert."
 
-#, fuzzy
 msgid "Done! Post created."
-msgstr "Done! Post created."
+msgstr "Erledigt! Beitrag erstellt."
 
-#, fuzzy
 msgid "Done! Post deleted."
-msgstr "Done! Post deleted."
+msgstr "Erledigt! Beitrag gelöscht."
 
-#, fuzzy
 msgid "Done! Post updated."
-msgstr "Done! Post updated."
+msgstr "Erledigt! Beitrag aktualisiert."
 
-#, fuzzy
 msgid "Download"
 msgstr "Download"
 
-#, fuzzy
 msgid "Edit"
-msgstr "Edit"
+msgstr "Bearbeiten"
 
-#, fuzzy
 msgid "Edit post"
-msgstr "Edit post"
+msgstr "Beitrag bearbeiten"
 
-#, fuzzy
 msgid "Edit posts workflow"
-msgstr "Edit posts workflow"
+msgstr "Workflow für Beiträge bearbeiten"
 
-#, fuzzy
 msgid "Edit the post:"
-msgstr "Edit the post:"
+msgstr "Beitrag bearbeiten::"
 
-#, fuzzy
 msgid "Edit this post"
-msgstr "Edit this post"
+msgstr "Diesen Beitrag bearbeiten"
 
-#, fuzzy
 msgid "Edit workflow for posts"
-msgstr "Edit workflow for posts"
+msgstr "Workflow für Beiträge bearbeiten"
 
-#, fuzzy
 msgid "Edit your post:"
-msgstr "Edit your post:"
+msgstr "Bearbeite deinen Beitrag:"
 
-#, fuzzy
 msgid "Enable shrinking"
-msgstr "Enable shrinking"
+msgstr "Beschneidung aktivieren"
 
-#, fuzzy
 msgid "Enable this option to insert images"
-msgstr "Enable this option to insert images"
+msgstr "Diese Option zum Einfügen von Bildern aktivieren"
 
-#, fuzzy
 msgid "Enabled finder types"
-msgstr "Enabled finder types"
+msgstr "Aktive Finder Typen"
 
-#, fuzzy
 msgid "End date"
-msgstr "End date"
+msgstr "Enddatum"
 
-#, fuzzy
 msgid "Enter any additions about your changes"
-msgstr "Enter any additions about your changes"
+msgstr "Gib Ergänzungen zu Deinen Änderungen ein"
 
-#, fuzzy
 msgid "Enter any additions about your content"
-msgstr "Enter any additions about your content"
+msgstr "Gib Ergänzungen zu Deinem Inhalt ein"
 
-#, fuzzy
 msgid "Enter the advertising 2 of the post"
-msgstr "Enter the advertising 2 of the post"
+msgstr "Gib die 2. Werbung für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the advertising 3 of the post"
-msgstr "Enter the advertising 3 of the post"
+msgstr "Gib die 3. Werbung für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the advertising of the post"
-msgstr "Enter the advertising of the post"
+msgstr "Gib die Werbung für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the content 2 of the post"
-msgstr "Enter the content 2 of the post"
+msgstr "Gib den 2. Inhalt für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the content 3 of the post"
-msgstr "Enter the content 3 of the post"
+msgstr "Gib den 3. Inhalt für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the content 4 of the post"
-msgstr "Enter the content 4 of the post"
+msgstr "Gib den 4. Inhalt für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the content 5 of the post"
-msgstr "Enter the content 5 of the post"
+msgstr "Gib den 5. Inhalt für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the content 6 of the post"
-msgstr "Enter the content 6 of the post"
+msgstr "Gib den 6. Inhalt für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the content of the post"
-msgstr "Enter the content of the post"
+msgstr "Gib den Inhalt für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the description for google of the post"
-msgstr "Enter the description for google of the post"
+msgstr "Gib die Beschreibung für Google bzgl. des Beitrags ein"
 
-#, fuzzy
 msgid "Enter the description of image for article of the post"
-msgstr "Enter the description of image for article of the post"
+msgstr "Gib die Beschreibung für das Artikelbild ein"
 
-#, fuzzy
 msgid "Enter the end date of the post"
-msgstr "Enter the end date of the post"
+msgstr "Gib das Enddatum ein"
 
-#, fuzzy
 msgid "Enter the image for article of the post"
-msgstr "Enter the image for article of the post"
+msgstr "Wähle ein Bild als Artikelbild"
 
-#, fuzzy
 msgid "Enter the permalink of the post"
-msgstr "Enter the permalink of the post"
+msgstr "Gib den Permalink ein"
 
-#, fuzzy
 msgid "Enter the post entries per page."
-msgstr "Enter the post entries per page."
+msgstr "Wähle die Anzahl der Einträge pro Seite"
 
-#, fuzzy
 msgid "Enter the relevant articles of the post"
-msgstr "Enter the relevant articles of the post"
+msgstr "Gib die relevanten Artikel ein"
 
-#, fuzzy
 msgid "Enter the shrink height."
-msgstr "Enter the shrink height."
+msgstr "Gib die Beschneidungshöhe ein."
 
-#, fuzzy
 msgid "Enter the shrink width."
-msgstr "Enter the shrink width."
+msgstr "Gib die beschneidungsbreite ein."
 
-#, fuzzy
 msgid "Enter the start date of the post"
-msgstr "Enter the start date of the post"
+msgstr "Gib das Startdatum ein"
 
-#, fuzzy
 msgid "Enter the summary of post of the post"
-msgstr "Enter the summary of post of the post"
+msgstr "Gib die Zusammenfassung für den Beitrag ein"
 
-#, fuzzy
 msgid "Enter the thumbnail height display."
-msgstr "Enter the thumbnail height display."
+msgstr "Gib die Höhe für Thumbnails ein."
 
 #, fuzzy
 msgid "Enter the thumbnail height edit."
@@ -544,9 +474,8 @@ msgstr "Enter the thumbnail width edit."
 msgid "Enter the thumbnail width view."
 msgstr "Enter the thumbnail width view."
 
-#, fuzzy
 msgid "Enter the title of the post"
-msgstr "Enter the title of the post"
+msgstr "Gib den Titel für den Beitrag ein"
 
 #, fuzzy
 msgid "Error! Could not create a category registry for the %entity% entity."
@@ -588,49 +517,38 @@ msgstr "Error! Update attempt failed."
 msgid "Error: Invalid editor context given for external controller action."
 msgstr "Error: Invalid editor context given for external controller action."
 
-#, fuzzy
 msgid "Error: invalid input."
-msgstr "Error: invalid input."
+msgstr "Fehler: Ungültige Eingabe."
 
-#, fuzzy
 msgid "Errors"
-msgstr "Errors"
+msgstr "Fehler"
 
-#, fuzzy
 msgid "Example"
-msgstr "Example"
+msgstr "Beispiel"
 
-#, fuzzy
 msgid "Filter"
 msgstr "Filter"
 
-#, fuzzy
 msgid "Filter (expert option)"
-msgstr "Filter (expert option)"
+msgstr "Filter (Optionen für Experten)"
 
-#, fuzzy
 msgid "Filter data by locale"
-msgstr "Filter data by locale"
+msgstr "Filtere Daten per Sprache"
 
-#, fuzzy
 msgid "For which language"
-msgstr "For which language"
+msgstr "Für welche Sprache"
 
-#, fuzzy
 msgid "Frontend"
 msgstr "Frontend"
 
-#, fuzzy
 msgid "Further properties"
-msgstr "Further properties"
+msgstr "Weitere Eigenschaften"
 
-#, fuzzy
 msgid "GB"
 msgstr "GB"
 
-#, fuzzy
 msgid "Hello %recipient%"
-msgstr "Hello %recipient%"
+msgstr "Hallo %recipient%"
 
 #, fuzzy
 msgid "Here you can assign moderation groups for enhanced workflow actions."
@@ -652,33 +570,27 @@ msgstr "Here you can configure parameters for list views."
 msgid "Here you can inspect and amend the existing workflows."
 msgstr "Here you can inspect and amend the existing workflows."
 
-#, fuzzy
 msgid "Hide content temporarily."
-msgstr "Hide content temporarily."
+msgstr "Verstecke Inhalt zwischenzeitlich"
 
-#, fuzzy
 msgid "Hooks"
 msgstr "Hooks"
 
-#, fuzzy
 msgid "ID of post"
-msgstr "ID of post"
+msgstr "ID des Beitrags"
 
 #, fuzzy
 msgid "If you change this please save the block once to reload the parameters below."
 msgstr "If you change this please save the block once to reload the parameters below."
 
-#, fuzzy
 msgid "Image"
-msgstr "Image"
+msgstr "Bild"
 
-#, fuzzy
 msgid "Image for article"
-msgstr "Image for article"
+msgstr "Bild für Artikel"
 
-#, fuzzy
 msgid "Image settings for posts image for article"
-msgstr "Image settings for posts image for article"
+msgstr "Einstellungen für Artikelbilder"
 
 #, fuzzy
 msgid "Image with absolute url to the post"
@@ -688,11 +600,9 @@ msgstr "Image with absolute url to the post"
 msgid "Image with relative link to the post"
 msgstr "Image with relative link to the post"
 
-#, fuzzy
 msgid "Images"
-msgstr "Images"
+msgstr "Bilder"
 
-#, fuzzy
 msgid "Initial"
 msgstr "Initial"
 
@@ -700,7 +610,6 @@ msgstr "Initial"
 msgid "Inset"
 msgstr "Inset"
 
-#, fuzzy
 msgid "Integration"
 msgstr "Integration"
 
@@ -764,54 +673,44 @@ msgstr "Main posts"
 msgid "Make content available again."
 msgstr "Make content available again."
 
-#, fuzzy
 msgid "Manage settings for this application"
-msgstr "Manage settings for this application"
+msgstr "Einstellungen für Blogging vornehmen"
 
 msgid "Moderation"
 msgstr "Moderation"
 
-#, fuzzy
 msgid "Moderation group for posts"
-msgstr "Moderation group for posts"
+msgstr "Moderationsgruppe für Beiträge"
 
 msgid "More about"
 msgstr "Mehr über"
 
-#, fuzzy
 msgid "Move content into the archive."
-msgstr "Move content into the archive."
+msgstr "Inhalt ins Archiv verschieben."
 
 msgid "My posts"
 msgstr "Meine Beiträge"
 
-#, fuzzy
 msgid "New content has been submitted"
-msgstr "New content has been submitted"
+msgstr "Neuer Inhalt wurde eingereicht"
 
-#, fuzzy
 msgid "Newest"
-msgstr "Newest"
+msgstr "Aktuellste"
 
-#, fuzzy
 msgid "No entries found."
-msgstr "No entries found."
+msgstr "Keine Einträge gefunden."
 
-#, fuzzy
 msgid "No item selected."
-msgstr "No item selected."
+msgstr "Kein Element ausgewählt."
 
-#, fuzzy
 msgid "No posts found."
-msgstr "No posts found."
+msgstr "Keine Beiträge gefunden."
 
-#, fuzzy
 msgid "No such item found."
-msgstr "No such item found."
+msgstr "Kein solches Element gefunden."
 
-#, fuzzy
 msgid "No such item."
-msgstr "No such item."
+msgstr "Kein solches Element."
 
 msgid "None"
 msgstr "Nichts"
@@ -824,13 +723,11 @@ msgstr "Note: this value must have a minimum length of %amount% characters."
 msgid "Note: this value must not exceed %amount% characters."
 msgstr "Note: this value must not exceed %amount% characters."
 
-#, fuzzy
 msgid "OK"
 msgstr "OK"
 
-#, fuzzy
 msgid "Object type"
-msgstr "Object type"
+msgstr "Objekttyp"
 
 #, fuzzy
 msgid "One post is waiting for approval.|%amount% posts are waiting for approval."
@@ -840,13 +737,11 @@ msgstr "One post is waiting for approval.|%amount% posts are waiting for approva
 msgid "Only digits are allowed."
 msgstr "Only digits are allowed."
 
-#, fuzzy
 msgid "Only images"
-msgstr "Only images"
+msgstr "Nur Bilder"
 
-#, fuzzy
 msgid "Only item titles"
-msgstr "Only item titles"
+msgstr "Nur Elementtitlel"
 
 #, fuzzy
 msgid "Open file"
@@ -867,47 +762,38 @@ msgstr "Aktion abgebrochen."
 msgid "Outbound"
 msgstr "Outbound"
 
-#, fuzzy
 msgid "Page size"
-msgstr "Page size"
+msgstr "Seitengröße"
 
 msgid "Paste as"
 msgstr "Einfügen als"
 
-#, fuzzy
 msgid "Permalink"
 msgstr "Permalink"
 
-#, fuzzy
 msgid "Position of advertising 1"
-msgstr "Position of advertising 1"
+msgstr "Position der 1. Werbung"
 
-#, fuzzy
 msgid "Position of advertising 2"
-msgstr "Position of advertising 2"
+msgstr "Position der 2. Werbung"
 
-#, fuzzy
 msgid "Position of advertising 3"
-msgstr "Position of advertising 3"
+msgstr "Position der 3. Werbung"
 
-#, fuzzy
 msgid "Position of block"
-msgstr "Position of block"
+msgstr "Position des Blocks"
 
-#, fuzzy
 msgid "Position of block 2"
-msgstr "Position of block 2"
+msgstr "Position des 2. Blocks"
 
-#, fuzzy
 msgid "Position of block 3"
-msgstr "Position of block 3"
+msgstr "Position des 3. Blocks"
 
 msgid "Post"
 msgstr "Beitrag"
 
-#, fuzzy
 msgid "Post entries per page"
-msgstr "Post entries per page"
+msgstr "Beiträge pro Seite"
 
 #, fuzzy
 msgid "Post filter hooks subscriber"
@@ -964,9 +850,8 @@ msgstr "Relative link to the image"
 msgid "Relative link to the post"
 msgstr "Relative link to the post"
 
-#, fuzzy
 msgid "Relevant articles"
-msgstr "Relevant articles"
+msgstr "Relevante Artikel"
 
 msgid "Reset"
 msgstr "Zurücksetzen"
@@ -975,41 +860,32 @@ msgstr "Zurücksetzen"
 msgid "Reset to empty value"
 msgstr "Reset to empty value"
 
-#, fuzzy
 msgid "Return control"
-msgstr "Return control"
+msgstr "Weiterleitungskontrolle"
 
-#, fuzzy
 msgid "Reuse"
-msgstr "Reuse"
+msgstr "Wiederverwenden"
 
-#, fuzzy
 msgid "Reuse for new post"
-msgstr "Reuse for new post"
+msgstr "Für neuen Beitrag wiederverwenden"
 
-#, fuzzy
 msgid "Search"
-msgstr "Search"
+msgstr "Suche"
 
-#, fuzzy
 msgid "Search and select post"
-msgstr "Search and select post"
+msgstr "Beitrag suchen und wählen"
 
-#, fuzzy
 msgid "Search for"
-msgstr "Search for"
+msgstr "Suchen nach"
 
-#, fuzzy
 msgid "Send private message to %userName%"
-msgstr "Send private message to %userName%"
+msgstr "Private Nacchricht an %userName% senden"
 
-#, fuzzy
 msgid "Settings"
-msgstr "Settings"
+msgstr "Einstellungen"
 
-#, fuzzy
 msgid "Show all entries"
-msgstr "Show all entries"
+msgstr "Zeige alle Einträge"
 
 #, fuzzy
 msgid "Shows all items except these which are approved"
@@ -1031,9 +907,8 @@ msgstr "Shrink height"
 msgid "Shrink width"
 msgstr "Shrink width"
 
-#, fuzzy
 msgid "Similar articles"
-msgstr "Similar articles"
+msgstr "Ähnliche Artikel"
 
 #, fuzzy
 msgid "Sorry, but an error occured during the %action% action."
@@ -1047,49 +922,38 @@ msgstr "Sorry, but an error occured during the %action% action. Please apply the
 msgid "Sorry, but you can not create the post yet as other items are required which must be created before!"
 msgstr "Sorry, but you can not create the post yet as other items are required which must be created before!"
 
-#, fuzzy
 msgid "Sort by"
-msgstr "Sort by"
+msgstr "Sortierung nach"
 
-#, fuzzy
 msgid "Sort by %s"
-msgstr "Sort by %s"
+msgstr "Sortierung anhand von %s"
 
-#, fuzzy
 msgid "Sort direction"
-msgstr "Sort direction"
+msgstr "Richtung der Sortierung"
 
-#, fuzzy
 msgid "Sorting"
-msgstr "Sorting"
+msgstr "Sortierung"
 
-#, fuzzy
 msgid "Speed of the slideshow"
-msgstr "Speed of the slideshow"
+msgstr "Geschwindigkeit der Slideshow"
 
-#, fuzzy
 msgid "Start date"
-msgstr "Start date"
+msgstr "Startdatum"
 
-#, fuzzy
 msgid "State"
-msgstr "State"
+msgstr "Status"
 
-#, fuzzy
 msgid "Submit"
-msgstr "Submit"
+msgstr "Abschicken"
 
-#, fuzzy
 msgid "Submit and approve"
-msgstr "Submit and approve"
+msgstr "Abschicken und Freigeben"
 
-#, fuzzy
 msgid "Summary of post"
-msgstr "Summary of post"
+msgstr "Zusammenfassung des Beitrags"
 
-#, fuzzy
 msgid "Suspended"
-msgstr "Suspended"
+msgstr "Abgelehnt"
 
 #, fuzzy
 msgid "Switch to administration area."
@@ -1099,7 +963,6 @@ msgstr "Switch to administration area."
 msgid "Switch to user area."
 msgstr "Switch to user area."
 
-#, fuzzy
 msgid "Template"
 msgstr "Template"
 
@@ -1227,21 +1090,18 @@ msgstr "Thumbnail width on view pages in pixels."
 msgid "Thumbnail width view"
 msgstr "Thumbnail width view"
 
-#, fuzzy
 msgid "Title"
-msgstr "Title"
+msgstr "Titel"
 
 #, fuzzy
 msgid "Unpublish"
 msgstr "Unpublish"
 
-#, fuzzy
 msgid "Update"
-msgstr "Update"
+msgstr "Aktualisierung"
 
-#, fuzzy
 msgid "Update configuration"
-msgstr "Update configuration"
+msgstr "Einstellungen aktualisieren"
 
 #, fuzzy
 msgid "Update content and approve for immediate publishing."
@@ -1263,19 +1123,16 @@ msgstr "Updated by %user on %date"
 msgid "Updated on %date"
 msgstr "Updated on %date"
 
-#, fuzzy
 msgid "Updater"
-msgstr "Updater"
+msgstr "Aktualisierer"
 
 #, fuzzy
 msgid "Used to determine moderator user accounts for sending email notifications."
 msgstr "Used to determine moderator user accounts for sending email notifications."
 
-#, fuzzy
 msgid "View detail page"
-msgstr "View detail page"
+msgstr "Detail Ansicht ansehen"
 
-#, fuzzy
 msgid "Waiting"
 msgstr "Wartend"
 
@@ -1303,37 +1160,29 @@ msgstr "Whether to enable shrinking huge images to maximum dimensions. Stores do
 msgid "Which sections are supported in the Finder component (used by Scribite plug-ins)."
 msgstr "Which sections are supported in the Finder component (used by Scribite plug-ins)."
 
-#, fuzzy
 msgid "Will set into the alt tag of this image."
-msgstr "Will set into the alt tag of this image."
+msgstr "Wird in den Alt Tag des Bildung eingefügt."
 
-#, fuzzy
 msgid "With description"
-msgstr "With description"
+msgstr "Mit Beschreibung"
 
-#, fuzzy
 msgid "With selected posts"
-msgstr "With selected posts"
+msgstr "Die ausgewählten Beiträge"
 
-#, fuzzy
 msgid "Workflow state"
-msgstr "Workflow state"
+msgstr "Workflow Status"
 
-#, fuzzy
 msgid "Workflows"
 msgstr "Workflows"
 
-#, fuzzy
 msgid "Your post \"%entity%\" has been changed."
-msgstr "Your post \"%entity%\" has been changed."
+msgstr "Dein Beitrag \"%entity%\" wurde geändert."
 
-#, fuzzy
 msgid "Your submission has been deleted"
-msgstr "Your submission has been deleted"
+msgstr "Deine Einreichung wurde gelöscht"
 
-#, fuzzy
 msgid "Your submission has been updated"
-msgstr "Your submission has been updated"
+msgstr "Deine Einreichung wurde aktualisiert"
 
 #, fuzzy
 msgid "mubloggingmodule. Posts Display Hooks"
@@ -1343,10 +1192,8 @@ msgstr "mubloggingmodule. Posts Display Hooks"
 msgid "mubloggingmodule. Posts Filter Hooks"
 msgstr "mubloggingmodule. Posts Filter Hooks"
 
-#, fuzzy
 msgid "pixels"
-msgstr "pixels"
+msgstr "Pixel"
 
-#, fuzzy
 msgid "posts"
-msgstr "posts"
+msgstr "Beiträge"
