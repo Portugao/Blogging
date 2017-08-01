@@ -366,7 +366,7 @@ msgid "Edit workflow for posts"
 msgstr "Workflow für Beiträge bearbeiten"
 
 msgid "Edit your post:"
-msgstr "Bearbeite deinen Beitrag:"
+msgstr "Bearbeite Deinen Beitrag:"
 
 msgid "Enable shrinking"
 msgstr "Beschneidung aktivieren"
