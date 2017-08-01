@@ -80,9 +80,8 @@ msgstr "Erlaubte Dateigröße"
 msgid "Amount"
 msgstr "Anzahl"
 
-#, fuzzy
 msgid "An error occured during creation of the .htaccess file in directory \"%path%\"."
-msgstr "An error occured during creation of the .htaccess file in directory \"%path%\"."
+msgstr "Ein Fehler ist während der Erstellung der .htaccess  Datei im Ordner \"%path%\" aufgetreten."
 
 msgid "Approve"
 msgstr "Freigeben"
@@ -240,9 +239,8 @@ msgstr "Inhalt wurde eingereicht und wartet auf Freigabe."
 msgid "Content has been updated"
 msgstr "Inhalt wurde aktualisiert."
 
-#, fuzzy
 msgid "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
-msgstr "Could not inform other persons about your amendments, because the Mailer module is not available - please contact an administrator about that!"
+msgstr "Konnte andere Personen nicht informieren, weil das Mailer Module nicht erreichbar ist - bitte kontakte den Administrator!"
 
 msgid "Create another item after save"
 msgstr "Erstelle ein weiteres Element nach dem Speichern"
@@ -313,17 +311,14 @@ msgstr "Beschreibung des Bildes für den Artikel"
 msgid "Details"
 msgstr "Details"
 
-#, fuzzy
 msgid "Display list of MUBloggingModule objects."
-msgstr "Display list of MUBloggingModule objects."
+msgstr "Liste von MUBloggingModule Objekten anzeigen."
 
-#, fuzzy
 msgid "Display or link a single MUBloggingModule object."
-msgstr "Display or link a single MUBloggingModule object."
+msgstr "Ein Objekt von MUBloggingModule anzeigen oder verlinken."
 
-#, fuzzy
 msgid "Do you really want to delete this post: \"%name%\" ?"
-msgstr "Do you really want to delete this post: \"%name%\" ?"
+msgstr "Willst Du den Beitrag \"%name%\" wirklich löschen ?"
 
 msgid "Doctrine Exception"
 msgstr "Doctrine Ausnahme"
@@ -550,25 +545,20 @@ msgstr "GB"
 msgid "Hello %recipient%"
 msgstr "Hallo %recipient%"
 
-#, fuzzy
 msgid "Here you can assign moderation groups for enhanced workflow actions."
-msgstr "Here you can assign moderation groups for enhanced workflow actions."
+msgstr "Hier kannst Du Moderatorengruppen für erweiterte Workflowaktionen zuweisen."
 
-#, fuzzy
 msgid "Here you can choose a custom creation date"
-msgstr "Here you can choose a custom creation date"
+msgstr "Hier kannst Du ein eigenes Erstelldatum auswählen"
 
-#, fuzzy
 msgid "Here you can choose a user which will be set as creator"
-msgstr "Here you can choose a user which will be set as creator"
+msgstr "Hier kannst Du einen Benutzer als Ersteller festlegen"
 
-#, fuzzy
 msgid "Here you can configure parameters for list views."
-msgstr "Here you can configure parameters for list views."
+msgstr "Hier kannst Du Parameter für die Listenansicht einstellen."
 
-#, fuzzy
 msgid "Here you can inspect and amend the existing workflows."
-msgstr "Here you can inspect and amend the existing workflows."
+msgstr "Hier kannst Du den existierenden Workflow betrachten und abändern."
 
 msgid "Hide content temporarily."
 msgstr "Verstecke Inhalt zwischenzeitlich"
@@ -579,9 +569,8 @@ msgstr "Hooks"
 msgid "ID of post"
 msgstr "ID des Beitrags"
 
-#, fuzzy
 msgid "If you change this please save the block once to reload the parameters below."
-msgstr "If you change this please save the block once to reload the parameters below."
+msgstr "Wenn Du dies änderst, speichere den Block erneut, um die Parameter neu zu laden."
 
 msgid "Image"
 msgstr "Bild"
@@ -592,13 +581,11 @@ msgstr "Bild für Artikel"
 msgid "Image settings for posts image for article"
 msgstr "Einstellungen für Artikelbilder"
 
-#, fuzzy
 msgid "Image with absolute url to the post"
-msgstr "Image with absolute url to the post"
+msgstr "Bild mit absolutem Pfad zum Beitrag"
 
-#, fuzzy
 msgid "Image with relative link to the post"
-msgstr "Image with relative link to the post"
+msgstr "Bild mit relativem Pfad zum Beitrag"
 
 msgid "Images"
 msgstr "Bilder"
@@ -606,24 +593,20 @@ msgstr "Bilder"
 msgid "Initial"
 msgstr "Initial"
 
-#, fuzzy
 msgid "Inset"
-msgstr "Inset"
+msgstr "Eingefügt"
 
 msgid "Integration"
 msgstr "Integration"
 
-#, fuzzy
 msgid "Invalid object type received."
-msgstr "Invalid object type received."
+msgstr "Ungültiger Objekttyp erkannt."
 
-#, fuzzy
 msgid "Invalid user identifier received."
-msgstr "Invalid user identifier received."
+msgstr "Ungültige Benutzerkennung erkannt."
 
-#, fuzzy
 msgid "It's new state is: %state%"
-msgstr "It's new state is: %state%"
+msgstr "Sein neuer Status ist: %state%"
 
 msgid "KB"
 msgstr "KB"
@@ -631,17 +614,14 @@ msgstr "KB"
 msgid "Last update"
 msgstr "Letzte Aktualisierung"
 
-#, fuzzy
 msgid "Link own posts on account page"
-msgstr "Link own posts on account page"
+msgstr "Verlinke eigene Beiträge im Account"
 
-#, fuzzy
 msgid "Link to the post:"
-msgstr "Link to the post:"
+msgstr "Link zum Beitrag:"
 
-#, fuzzy
 msgid "Link to your post:"
-msgstr "Link to your post:"
+msgstr "Link zu Deinem Beitrag:"
 
 msgid "List views"
 msgstr "Listensicht"
@@ -649,29 +629,23 @@ msgstr "Listensicht"
 msgid "MB"
 msgstr "MB"
 
-#, fuzzy
 msgid "MUBloggingModule detail view"
-msgstr "MUBloggingModule detail view"
+msgstr "MUBloggingModule Detailansicht"
 
-#, fuzzy
 msgid "MUBloggingModule items"
-msgstr "MUBloggingModule items"
+msgstr "MUBloggingModule Elemente"
 
-#, fuzzy
 msgid "MUBloggingModule list view"
-msgstr "MUBloggingModule list view"
+msgstr "MUBloggingModule Listenansicht"
 
-#, fuzzy
 msgid "Main post"
-msgstr "Main post"
+msgstr "Haupbeitrag"
 
-#, fuzzy
 msgid "Main posts"
-msgstr "Main posts"
+msgstr "Hauptbeiträge"
 
-#, fuzzy
 msgid "Make content available again."
-msgstr "Make content available again."
+msgstr "Inhalt erneut verfügbar machen."
 
 msgid "Manage settings for this application"
 msgstr "Einstellungen für Blogging vornehmen"
@@ -715,13 +689,11 @@ msgstr "Kein solches Element."
 msgid "None"
 msgstr "Nichts"
 
-#, fuzzy
 msgid "Note: this value must have a minimum length of %amount% characters."
-msgstr "Note: this value must have a minimum length of %amount% characters."
+msgstr "Beachte: Dieser Wert muss mindestens %amount% Zeichen enthalten."
 
-#, fuzzy
 msgid "Note: this value must not exceed %amount% characters."
-msgstr "Note: this value must not exceed %amount% characters."
+msgstr "Beachte: Dieser Wert darf nicht mehr als %amount% Zeichen beinhalten."
 
 msgid "OK"
 msgstr "OK"
@@ -729,13 +701,11 @@ msgstr "OK"
 msgid "Object type"
 msgstr "Objekttyp"
 
-#, fuzzy
 msgid "One post is waiting for approval.|%amount% posts are waiting for approval."
-msgstr "One post is waiting for approval.|%amount% posts are waiting for approval."
+msgstr "Ein Beitrag wartet auf Freigabe.|%amount% Beiträge warten auf Freigabe."
 
-#, fuzzy
 msgid "Only digits are allowed."
-msgstr "Only digits are allowed."
+msgstr "Nur Ziffern sind erlaubt."
 
 msgid "Only images"
 msgstr "Nur Bilder"
@@ -743,24 +713,20 @@ msgstr "Nur Bilder"
 msgid "Only item titles"
 msgstr "Nur Elementtitlel"
 
-#, fuzzy
 msgid "Open file"
-msgstr "Open file"
+msgstr "Datei öffnen"
 
-#, fuzzy
 msgid "Open preview page"
-msgstr "Open preview page"
+msgstr "Vorschau öffnen"
 
-#, fuzzy
 msgid "Open quick view window"
-msgstr "Open quick view window"
+msgstr "Schnellansicht öffnen"
 
 msgid "Operation cancelled."
 msgstr "Aktion abgebrochen."
 
-#, fuzzy
 msgid "Outbound"
-msgstr "Outbound"
+msgstr "Auslaufend"
 
 msgid "Page size"
 msgstr "Seitengröße"
@@ -795,34 +761,29 @@ msgstr "Beitrag"
 msgid "Post entries per page"
 msgstr "Beiträge pro Seite"
 
-#, fuzzy
 msgid "Post filter hooks subscriber"
-msgstr "Post filter hooks subscriber"
+msgstr "beitrag filter hooks subscriber"
 
-#, fuzzy
 msgid "Post form aware subscriber"
-msgstr "Post form aware subscriber"
+msgstr "Beitrag form aware subscriber"
 
 msgid "Post list"
 msgstr "Beitragsliste"
 
-#, fuzzy
 msgid "Post ui hooks subscriber"
-msgstr "Post ui hooks subscriber"
+msgstr "Beitrag ui hooks subscriber"
 
 msgid "Posts"
 msgstr "Beiträge"
 
-#, fuzzy
 msgid "Posts image for article"
-msgstr "Posts image for article"
+msgstr "Bild für Artikel"
 
 msgid "Posts list"
 msgstr "Liste der Beiträge"
 
-#, fuzzy
 msgid "Posts pending approval"
-msgstr "Posts pending approval"
+msgstr "Beiträge warten auf Freigabe"
 
 msgid "Preview"
 msgstr "Vorschau"
@@ -842,13 +803,11 @@ msgstr "Mehr lesen"
 msgid "Read more of"
 msgstr "Mehr lesen von"
 
-#, fuzzy
 msgid "Relative link to the image"
-msgstr "Relative link to the image"
+msgstr "Relativer Link zum Bild"
 
-#, fuzzy
 msgid "Relative link to the post"
-msgstr "Relative link to the post"
+msgstr "Relativer Link zum Beitrag"
 
 msgid "Relevant articles"
 msgstr "Relevante Artikel"
@@ -856,9 +815,8 @@ msgstr "Relevante Artikel"
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#, fuzzy
 msgid "Reset to empty value"
-msgstr "Reset to empty value"
+msgstr "Wert leeren"
 
 msgid "Return control"
 msgstr "Weiterleitungskontrolle"
@@ -887,25 +845,20 @@ msgstr "Einstellungen"
 msgid "Show all entries"
 msgstr "Zeige alle Einträge"
 
-#, fuzzy
 msgid "Shows all items except these which are approved"
-msgstr "Shows all items except these which are approved"
+msgstr "Alle Elemente zeigen außer die, die freigegeben sind"
 
-#, fuzzy
 msgid "Shows all items except these which are suspended"
-msgstr "Shows all items except these which are suspended"
+msgstr "Alle Elemente zeigen außer die, die abgelehnt sind"
 
-#, fuzzy
 msgid "Shows all items except these which are waiting"
-msgstr "Shows all items except these which are waiting"
+msgstr "Alle Elemente zeigen außer die, die warten"
 
-#, fuzzy
 msgid "Shrink height"
-msgstr "Shrink height"
+msgstr "Beschneidungshöhe"
 
-#, fuzzy
 msgid "Shrink width"
-msgstr "Shrink width"
+msgstr "Beschneidungsbreite"
 
 msgid "Similar articles"
 msgstr "Ähnliche Artikel"
@@ -955,20 +908,17 @@ msgstr "Zusammenfassung des Beitrags"
 msgid "Suspended"
 msgstr "Abgelehnt"
 
-#, fuzzy
 msgid "Switch to administration area."
-msgstr "Switch to administration area."
+msgstr "Zum Backend wechseln."
 
-#, fuzzy
 msgid "Switch to user area."
-msgstr "Switch to user area."
+msgstr "Zum Frontend wechseln."
 
 msgid "Template"
 msgstr "Template"
 
-#, fuzzy
 msgid "The amount of posts shown per page"
-msgstr "The amount of posts shown per page"
+msgstr "Die Anzahl der angezeigten Beiträge pro Seite"
 
 #, fuzzy
 msgid "The cache directory \"%directory%\" does not exist. Please create it and make it writable for the webserver."
@@ -978,9 +928,8 @@ msgstr "The cache directory \"%directory%\" does not exist. Please create it and
 msgid "The enable shrinking option."
 msgstr "The enable shrinking option."
 
-#, fuzzy
 msgid "The filter data by locale option."
-msgstr "The filter data by locale option."
+msgstr "Option zur Filterung der Daten per Sprache."
 
 #, fuzzy
 msgid "The link own posts on account page option."
@@ -1034,94 +983,75 @@ msgstr "This is an optional filter."
 msgid "This mail has been sent automatically by %siteName%."
 msgstr "This mail has been sent automatically by %siteName%."
 
-#, fuzzy
 msgid "Thumbnail height display"
-msgstr "Thumbnail height display"
+msgstr "Thumbnail Höhe Detailansicht"
 
-#, fuzzy
 msgid "Thumbnail height edit"
-msgstr "Thumbnail height edit"
+msgstr "Thumbnail Höhe bearbeiten"
 
-#, fuzzy
 msgid "Thumbnail height on display pages in pixels."
-msgstr "Thumbnail height on display pages in pixels."
+msgstr "Thumbnail Höhe in der Detailansicht in Pixel."
 
-#, fuzzy
 msgid "Thumbnail height on edit pages in pixels."
-msgstr "Thumbnail height on edit pages in pixels."
+msgstr "Thumbnail Höhe in der Bearbeitung in Pixel."
 
-#, fuzzy
 msgid "Thumbnail height on view pages in pixels."
-msgstr "Thumbnail height on view pages in pixels."
+msgstr "Thumbnail Höhe in der Seitenübersicht in Pixel."
 
-#, fuzzy
 msgid "Thumbnail height view"
-msgstr "Thumbnail height view"
+msgstr "Höhe Thumbnail View"
 
-#, fuzzy
 msgid "Thumbnail mode"
-msgstr "Thumbnail mode"
+msgstr "Thumbnail Modus"
 
 #, fuzzy
 msgid "Thumbnail mode (inset or outbound)."
 msgstr "Thumbnail mode (inset or outbound)."
 
-#, fuzzy
 msgid "Thumbnail width display"
-msgstr "Thumbnail width display"
+msgstr "Thumbnail Breite Detailansicht"
 
-#, fuzzy
 msgid "Thumbnail width edit"
-msgstr "Thumbnail width edit"
+msgstr "Thumbnail Breite bearbeiten"
 
-#, fuzzy
 msgid "Thumbnail width on display pages in pixels."
-msgstr "Thumbnail width on display pages in pixels."
+msgstr "Thumbnail Breite in der Detailansicht in Pixel."
 
-#, fuzzy
 msgid "Thumbnail width on edit pages in pixels."
-msgstr "Thumbnail width on edit pages in pixels."
+msgstr "Thumbnail Breite in der Bearbeitung in Pixel."
 
-#, fuzzy
 msgid "Thumbnail width on view pages in pixels."
-msgstr "Thumbnail width on view pages in pixels."
+msgstr "Thumbnail Breite in der Seitenübersicht in Pixel."
 
-#, fuzzy
 msgid "Thumbnail width view"
-msgstr "Thumbnail width view"
+msgstr "Breite Thumbnail View"
 
 msgid "Title"
 msgstr "Titel"
 
-#, fuzzy
 msgid "Unpublish"
-msgstr "Unpublish"
+msgstr "Unveröffentlichen"
 
 msgid "Update"
-msgstr "Aktualisierung"
+msgstr "Aktualisieren"
 
 msgid "Update configuration"
 msgstr "Einstellungen aktualisieren"
 
-#, fuzzy
 msgid "Update content and approve for immediate publishing."
-msgstr "Update content and approve for immediate publishing."
+msgstr "Inhalt aktualisieren und freigeben für direkte Veröffentlichung."
 
-#, fuzzy
 msgid "Update date"
-msgstr "Update date"
+msgstr "Aktualisierungsdatum"
 
-#, fuzzy
 msgid "Updated by %user"
-msgstr "Updated by %user"
+msgstr "Aktualisiert von %user"
 
-#, fuzzy
 msgid "Updated by %user on %date"
-msgstr "Updated by %user on %date"
+msgstr "Aktualisiert von %user am %date"
 
-#, fuzzy
 msgid "Updated on %date"
-msgstr "Updated on %date"
+msgstr "Aktualisiert am %date"
 
 msgid "Updater"
 msgstr "Aktualisierer"
@@ -1136,9 +1066,8 @@ msgstr "Detail Ansicht ansehen"
 msgid "Waiting"
 msgstr "Wartend"
 
-#, fuzzy
 msgid "Warning! The upload directory at \"%path%\" exists but is not writable by the webserver."
-msgstr "Warning! The upload directory at \"%path%\" exists but is not writable by the webserver."
+msgstr "Warnung! Der Upload Ordner \"%path%\" ist vorhanden, allerdings nicht beschreibbar."
 
 #, fuzzy
 msgid "Welcome to the post section of the Blogging application."
@@ -1148,9 +1077,8 @@ msgstr "Welcome to the post section of the Blogging application."
 msgid "Whether automatically filter data in the frontend based on the current locale or not"
 msgstr "Whether automatically filter data in the frontend based on the current locale or not"
 
-#, fuzzy
 msgid "Whether to add a link to posts of the current user on his account page"
-msgstr "Whether to add a link to posts of the current user on his account page"
+msgstr "Ob ein Link zu Beiträgen im Benutzerbereich angezeigt werden soll."
 
 #, fuzzy
 msgid "Whether to enable shrinking huge images to maximum dimensions. Stores downscaled version of the original image."
@@ -1184,13 +1112,11 @@ msgstr "Deine Einreichung wurde gelöscht"
 msgid "Your submission has been updated"
 msgstr "Deine Einreichung wurde aktualisiert"
 
-#, fuzzy
 msgid "mubloggingmodule. Posts Display Hooks"
-msgstr "mubloggingmodule. Posts Display Hooks"
+msgstr "mubloggingmodule. Beiträge Display Hooks"
 
-#, fuzzy
 msgid "mubloggingmodule. Posts Filter Hooks"
-msgstr "mubloggingmodule. Posts Filter Hooks"
+msgstr "mubloggingmodule. Beiträge Filter Hooks"
 
 msgid "pixels"
 msgstr "Pixel"
