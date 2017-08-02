@@ -11,31 +11,31 @@
         {{ form_start(form) }}
         <div class="zikula-bootstrap-tab-container">
             <ul class="nav nav-tabs">
-            {% set tabTitle = __('Moderation') %}
-            <li role="presentation" class="active">
-                <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
-            </li>
-            {% set tabTitle = __('List views') %}
-            <li role="presentation">
-                <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
-            </li>
-            {% set tabTitle = __('Images') %}
-            <li role="presentation" class=" dropdown">
-                <a id="imagesTabDrop" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-controls="imagesTabDropSections" aria-expanded="false" title="{{ tabTitle|e('html_attr') }}">{{ tabTitle }}<span class="caret"></span></a>
-                <ul id="imagesTabDropSections" class="dropdown-menu" aria-labelledby="imagesTabDrop">
-                <li>
-                    <a id="imagesPostImageForArticleTab" href="#tabImagesPostImageForArticle" role="tab" data-toggle="tab" aria-controls="tabImagesPostImageForArticle">{{ __('Posts image for article') }}</a>
+                {% set tabTitle = __('Moderation') %}
+                <li role="presentation" class="active">
+                    <a id="vars1Tab" href="#tab1" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
                 </li>
-                </ul>
-            </li>
-            {% set tabTitle = __('Integration') %}
-            <li role="presentation">
-                <a id="vars4Tab" href="#tab4" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
-            </li>
-            {% set tabTitle = __('Workflows') %}
-            <li role="presentation">
-                <a id="workflowsTab" href="#tabWorkflows" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
-            </li>
+                {% set tabTitle = __('List views') %}
+                <li role="presentation">
+                    <a id="vars2Tab" href="#tab2" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('Images') %}
+                <li role="presentation" class=" dropdown">
+                    <a id="imagesTabDrop" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-controls="imagesTabDropSections" aria-expanded="false" title="{{ tabTitle|e('html_attr') }}">{{ tabTitle }}<span class="caret"></span></a>
+                    <ul id="imagesTabDropSections" class="dropdown-menu" aria-labelledby="imagesTabDrop">
+                    <li>
+                        <a id="imagesPostImageForArticleTab" href="#tabImagesPostImageForArticle" role="tab" data-toggle="tab" aria-controls="tabImagesPostImageForArticle">{{ __('Posts image for article') }}</a>
+                    </li>
+                    </ul>
+                </li>
+                {% set tabTitle = __('Integration') %}
+                <li role="presentation">
+                    <a id="vars4Tab" href="#tab4" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
+                {% set tabTitle = __('Workflows') %}
+                <li role="presentation">
+                    <a id="workflowsTab" href="#tabWorkflows" title="{{ tabTitle|e('html_attr') }}" role="tab" data-toggle="tab">{{ tabTitle }}</a>
+                </li>
             </ul>
 
             {{ form_errors(form) }}

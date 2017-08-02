@@ -54,11 +54,11 @@ abstract class AbstractTranslatableHelper
     /**
      * TranslatableHelper constructor.
      *
-     * @param TranslatorInterface $translator    Translator service instance
-     * @param RequestStack        $requestStack  RequestStack service instance
-     * @param VariableApiInterface  $variableApi  VariableApi service instance
-     * @param LocaleApiInterface   $localeApi    LocaleApi service instance
-     * @param EntityFactory       $entityFactory EntityFactory service instance
+     * @param TranslatorInterface  $translator    Translator service instance
+     * @param RequestStack         $requestStack  RequestStack service instance
+     * @param VariableApiInterface $variableApi   VariableApi service instance
+     * @param LocaleApiInterface   $localeApi     LocaleApi service instance
+     * @param EntityFactory        $entityFactory EntityFactory service instance
      */
     public function __construct(
         TranslatorInterface $translator,
