@@ -18,7 +18,7 @@ msgid "fos_js_routing_js"
 msgstr "/js/routing.{_format}"
 
 msgid "home"
-msgstr "start"
+msgstr "/"
 
 msgid "install"
 msgstr "/installieren/{stage}"
