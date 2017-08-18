@@ -47,7 +47,7 @@
                     {% set imageDescription = post|mubloggingmodule_formattedTitle|e('html_attr') %}
                 {% endif %}
                 <div id="blogger-display-image">
-                    <a href="{{ post.imageForArticleUrl }}" title="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
+                    <a href="{{ post.imageForArticleUrl }}" title="{{ imageDescription }}"{% if post.imageForArticleMeta.isImage %} class="image-link"{% endif %}>
                 {% if post.imageForArticleMeta.isImage %}
                 {% set thumbOptions = attribute(thumbRuntimeOptions, 'postImageForArticle') %}
                 <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ imageDescription }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-responsive" /></div>
