@@ -11,8 +11,8 @@ services:
         tags:
             - { name: form.type }
     
-    mu_blogging_module.form.handler.post:
-        class: MU\BloggingModule\Form\Handler\Post\EditHandler
+    mu_blogging_module.form.handler.common:
+        abstract: true
         arguments:
             - "@kernel"
             - "@translator.default"
@@ -33,8 +33,11 @@ services:
             - "@mu_blogging_module.feature_activation_helper"
         calls:
             - [setLockingApi, ["@?zikula_pagelock_module.api.locking"]]
-        tags:
-            - { name: form.type }
+    
+    
+    mu_blogging_module.form.handler.post:
+        class: MU\BloggingModule\Form\Handler\Post\EditHandler
+        parent: mu_blogging_module.form.handler.common
     
     mu_blogging_module.form.type.post:
         class: MU\BloggingModule\Form\Type\PostType
@@ -53,6 +56,15 @@ services:
         class: MU\BloggingModule\Block\Form\Type\ItemListBlockType
         arguments:
             - "@translator.default"
+        tags:
+            - { name: form.type }
+    
+    mu_blogging_module.form.type.block.item:
+        class: MU\BloggingModule\Block\Form\Type\ItemBlockType
+        arguments:
+            - "@translator.default"
+            - "@mu_blogging_module.entity_factory"
+            - "@mu_blogging_module.entity_display_helper"
         tags:
             - { name: form.type }
     

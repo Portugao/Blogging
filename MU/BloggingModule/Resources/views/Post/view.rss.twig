@@ -49,6 +49,6 @@
         ]]>
     </description>
     {% if post.createdDate|default %}
-        <pubDate>{{ post.createdDate|date('a, d b Y T +0100') }}</pubDate>
+        <pubDate>{{ post.createdDate|date('r') }}</pubDate>
     {% endif %}
 {% endblock %}
