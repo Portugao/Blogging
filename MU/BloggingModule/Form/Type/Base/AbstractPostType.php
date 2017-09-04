@@ -534,13 +534,12 @@ abstract class AbstractPostType extends AbstractType
         
         $builder->add('startDate', DateTimeType::class, [
             'label' => $this->__('Start date') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-post',
                 'title' => $this->__('Enter the start date of the post')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -548,13 +547,12 @@ abstract class AbstractPostType extends AbstractType
         
         $builder->add('endDate', DateTimeType::class, [
             'label' => $this->__('End date') . ':',
-            'empty_data' => '',
             'attr' => [
                 'class' => ' validate-daterange-post',
                 'title' => $this->__('Enter the end date of the post')
             ],
             'required' => false,
-            'empty_data' => null,
+            'empty_data' => '',
             'with_seconds' => true,
             'date_widget' => 'single_text',
             'time_widget' => 'single_text'
@@ -641,7 +639,6 @@ abstract class AbstractPostType extends AbstractType
             'label' => $this->__('Creator') . ':',
             'attr' => [
                 'maxlength' => 11,
-                'class' => ' validate-digits',
                 'title' => $this->__('Here you can choose a user which will be set as creator')
             ],
             'empty_data' => 0,

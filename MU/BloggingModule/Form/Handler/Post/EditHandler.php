@@ -15,7 +15,7 @@ namespace MU\BloggingModule\Form\Handler\Post;
 use MU\BloggingModule\Form\Handler\Post\Base\AbstractEditHandler;
 
 /**
- * This handler class handles the page events of the Form called by the mUBloggingModule_post_edit() function.
+ * This handler class handles the page events of editing forms.
  * It aims on the post object type.
  */
 class EditHandler extends AbstractEditHandler

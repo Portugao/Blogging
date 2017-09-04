@@ -402,7 +402,8 @@ abstract class AbstractEditHandler
                 }
             }
         } else {
-            if (!$this->permissionApi->hasPermission($this->permissionComponent, '::', ACCESS_EDIT)) {
+            $permissionLevel = in_array($this->objectType, ['post']) ? ACCESS_COMMENT : ACCESS_EDIT;
+            if (!$this->permissionApi->hasPermission($this->permissionComponent, '::', $permissionLevel)) {
                 throw new AccessDeniedException();
             }
     
@@ -642,17 +643,17 @@ abstract class AbstractEditHandler
             }
         }
     
-        if ($isRegularAction && true === $this->hasTranslatableFields) {
-            if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, $this->objectType)) {
-                $this->processTranslationsForUpdate();
-            }
-        }
-    
         if ($isRegularAction || $action == 'delete') {
             $success = $this->applyAction($args);
             if (!$success) {
                 // the workflow operation failed
                 return false;
+            }
+    
+            if ($isRegularAction && true === $this->hasTranslatableFields) {
+                if ($this->featureActivationHelper->isEnabled(FeatureActivationHelper::TRANSLATIONS, $this->objectType)) {
+                    $this->processTranslationsForUpdate();
+                }
             }
     
             if ($entity->supportsHookSubscribers()) {
