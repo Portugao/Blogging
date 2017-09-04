@@ -152,7 +152,7 @@ abstract class AbstractLinkContainer implements LinkContainerInterface
             $links[] = [
                 'url' => $this->router->generate('mubloggingmodule_post_' . $routeArea . 'view'),
                 'text' => $this->__('Posts', 'mubloggingmodule'),
-                'title' => $this->__('Post list', 'mubloggingmodule')
+                'title' => $this->__('Posts list', 'mubloggingmodule')
             ];
         }
         if ($routeArea == 'admin' && $this->permissionApi->hasPermission($this->getBundleName() . '::', '::', ACCESS_ADMIN)) {
