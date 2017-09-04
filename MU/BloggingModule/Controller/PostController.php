@@ -15,6 +15,8 @@ namespace MU\BloggingModule\Controller;
 use MU\BloggingModule\Controller\Base\AbstractPostController;
 
 use RuntimeException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -33,6 +35,7 @@ class PostController extends AbstractPostController
      * @Route("/admin/posts",
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+7 days", public=true)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -52,6 +55,7 @@ class PostController extends AbstractPostController
      * @Route("/posts",
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -71,6 +75,7 @@ class PostController extends AbstractPostController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -96,6 +101,7 @@ class PostController extends AbstractPostController
      *        defaults = {"sort" = "", "sortdir" = "asc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -119,6 +125,7 @@ class PostController extends AbstractPostController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(expires="+30 minutes", public=false)
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -142,6 +149,7 @@ class PostController extends AbstractPostController
      *        defaults = {"id" = "0", "_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @Cache(expires="+30 minutes", public=false)
      *
      * @param Request $request Current request instance
      *
@@ -163,6 +171,8 @@ class PostController extends AbstractPostController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
+     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -187,6 +197,8 @@ class PostController extends AbstractPostController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET", "POST"}
      * )
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
+     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostEntity $post Treated post instance
@@ -209,6 +221,8 @@ class PostController extends AbstractPostController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
+     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      * @Theme("admin")
      *
      * @param Request $request Current request instance
@@ -232,6 +246,8 @@ class PostController extends AbstractPostController
      *        defaults = {"_format" = "html"},
      *        methods = {"GET"}
      * )
+     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
+     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostEntity $post Treated post instance

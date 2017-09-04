@@ -17,9 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Zikula\Bundle\HookBundle\Category\FormAwareCategory;
 use Zikula\Bundle\HookBundle\Category\UiHooksCategory;
 use Zikula\Component\SortableColumns\Column;
@@ -36,7 +33,6 @@ abstract class AbstractPostController extends AbstractController
 {
     /**
      * This is the default action handling the index admin area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -51,7 +47,6 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This is the default action handling the index area called without defining arguments.
-     * @Cache(expires="+7 days", public=true)
      *
      * @param Request $request Current request instance
      *
@@ -83,7 +78,6 @@ abstract class AbstractPostController extends AbstractController
     }
     /**
      * This action provides an item list overview in the admin area.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -102,7 +96,6 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This action provides an item list overview.
-     * @Cache(expires="+2 hours", public=false)
      *
      * @param Request $request Current request instance
      * @param string $sort         Sorting field
@@ -177,8 +170,6 @@ abstract class AbstractPostController extends AbstractController
     }
     /**
      * This action provides a item detail view in the admin area.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostEntity $post Treated post instance
@@ -195,8 +186,6 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This action provides a item detail view.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostEntity $post Treated post instance
@@ -250,7 +239,6 @@ abstract class AbstractPostController extends AbstractController
     }
     /**
      * This action provides a handling of edit requests in the admin area.
-     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -267,7 +255,6 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This action provides a handling of edit requests.
-     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      *
@@ -314,8 +301,6 @@ abstract class AbstractPostController extends AbstractController
     }
     /**
      * This action provides a handling of simple delete requests in the admin area.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostEntity $post Treated post instance
@@ -333,8 +318,6 @@ abstract class AbstractPostController extends AbstractController
     
     /**
      * This action provides a handling of simple delete requests.
-     * @ParamConverter("post", class="MUBloggingModule:PostEntity", options = {"repository_method" = "selectBySlug", "mapping": {"slug": "slugTitle"}, "map_method_signature" = true})
-     * @Cache(lastModified="post.getUpdatedDate()", ETag="'Post' ~ post.getid() ~ post.getUpdatedDate().format('U')")
      *
      * @param Request $request Current request instance
      * @param PostEntity $post Treated post instance
