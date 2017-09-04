@@ -209,8 +209,10 @@ abstract class AbstractItemListBlockType extends AbstractType
             'label' => $this->__('Filter (expert option)') . ':',
             'required' => false,
             'attr' => [
-                'maxlength' => 255
-            ]
+                'maxlength' => 255,
+                'title' => $this->__('Example') . ': tbl.age >= 18'
+            ],
+            'help' => $this->__('Example') . ': tbl.age >= 18'
         ]);
     }
 
@@ -235,7 +237,7 @@ abstract class AbstractItemListBlockType extends AbstractType
                 'feature_activation_helper' => null
             ])
             ->setRequired(['object_type'])
-            ->setOptional(['is_categorisable', 'category_helper', 'feature_activation_helper'])
+            ->setDefined(['is_categorisable', 'category_helper', 'feature_activation_helper'])
             ->setAllowedTypes('object_type', 'string')
             ->setAllowedTypes('is_categorisable', 'bool')
             ->setAllowedTypes('category_helper', 'object')
