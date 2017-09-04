@@ -181,14 +181,8 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
      */
     protected function updateModVarsTo14()
     {
-        $dbName = $this->getDbName();
         $conn = $this->getConnection();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.module_vars
-            SET modname = 'MUBloggingModule'
-            WHERE modname = 'Blogging';
-        ");
+        $conn->update('module_vars', ['modname' => 'MUBloggingModule'], ['modname' => 'Blogging']);
     }
     
     /**
@@ -197,14 +191,7 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function updateExtensionInfoFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.modules
-            SET name = 'MUBloggingModule',
-                directory = 'MU/BloggingModule'
-            WHERE name = 'Blogging';
-        ");
+        $conn->update('modules', ['name' => 'MUBloggingModule', 'directory' => 'MU/BloggingModule'], ['name' => 'Blogging']);
     }
     
     /**
@@ -213,12 +200,10 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function renamePermissionsFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
         $componentLength = strlen('Blogging') + 1;
     
         $conn->executeQuery("
-            UPDATE $dbName.group_perms
+            UPDATE group_perms
             SET component = CONCAT('MUBloggingModule', SUBSTRING(component, $componentLength))
             WHERE component LIKE 'Blogging%';
         ");
@@ -230,12 +215,10 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function renameCategoryRegistriesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
         $componentLength = strlen('Blogging') + 1;
     
         $conn->executeQuery("
-            UPDATE $dbName.categories_registry
+            UPDATE categories_registry
             SET modname = CONCAT('MUBloggingModule', SUBSTRING(modname, $componentLength))
             WHERE modname LIKE 'Blogging%';
         ");
@@ -247,7 +230,6 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function renameTablesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
     
         $oldPrefix = 'blogging_';
         $oldPrefixLength = strlen($oldPrefix);
@@ -264,8 +246,8 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
             $newTableName = str_replace($oldPrefix, $newPrefix, $tableName);
     
             $conn->executeQuery("
-                RENAME TABLE $dbName.$tableName
-                TO $dbName.$newTableName;
+                RENAME TABLE $tableName
+                TO $newTableName;
             ");
         }
     }
@@ -284,49 +266,32 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function updateHookNamesFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_area
-            SET owner = 'MUBloggingModule'
-            WHERE owner = 'Blogging';
-        ");
+        $conn->update('hook_area', ['owner' => 'MUBloggingModule'], ['owner' => 'Blogging']);
     
         $componentLength = strlen('subscriber.blogging') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_area
+            UPDATE hook_area
             SET areaname = CONCAT('subscriber.mubloggingmodule', SUBSTRING(areaname, $componentLength))
             WHERE areaname LIKE 'subscriber.blogging%';
         ");
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_binding
-            SET sowner = 'MUBloggingModule'
-            WHERE sowner = 'Blogging';
-        ");
+        $conn->update('hook_binding', ['sowner' => 'MUBloggingModule'], ['sowner' => 'Blogging']);
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_runtime
-            SET sowner = 'MUBloggingModule'
-            WHERE sowner = 'Blogging';
-        ");
+        $conn->update('hook_runtime', ['sowner' => 'MUBloggingModule'], ['sowner' => 'Blogging']);
     
         $componentLength = strlen('blogging') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_runtime
+            UPDATE hook_runtime
             SET eventname = CONCAT('mubloggingmodule', SUBSTRING(eventname, $componentLength))
             WHERE eventname LIKE 'blogging%';
         ");
     
-        $conn->executeQuery("
-            UPDATE $dbName.hook_subscriber
-            SET owner = 'MUBloggingModule'
-            WHERE owner = 'Blogging';
-        ");
+        $conn->update('hook_subscriber', ['owner' => 'MUBloggingModule'], ['owner' => 'Blogging']);
     
         $componentLength = strlen('blogging') + 1;
         $conn->executeQuery("
-            UPDATE $dbName.hook_subscriber
+            UPDATE hook_subscriber
             SET eventname = CONCAT('mubloggingmodule', SUBSTRING(eventname, $componentLength))
             WHERE eventname LIKE 'blogging%';
         ");
@@ -338,13 +303,8 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function updateWorkflowsFor14()
     {
         $conn = $this->getConnection();
-        $dbName = $this->getDbName();
-    
-        $conn->executeQuery("
-            UPDATE $dbName.workflows
-            SET module = 'MUBloggingModule'
-            WHERE module = 'Blogging';
-        ");
+        $conn->update('workflows', ['module' => 'MUBloggingModule'], ['module' => 'Blogging']);
+        $conn->update('workflows', ['obj_table' => 'PostEntity'], ['module' => 'MUBloggingModule', 'obj_table' => 'post']);
     }
     
     /**
@@ -355,19 +315,8 @@ abstract class AbstractBloggingModuleInstaller extends AbstractExtensionInstalle
     protected function getConnection()
     {
         $entityManager = $this->container->get('doctrine.orm.default_entity_manager');
-        $connection = $entityManager->getConnection();
     
-        return $connection;
-    }
-    
-    /**
-     * Returns the name of the default system database.
-     *
-     * @return string the database name
-     */
-    protected function getDbName()
-    {
-        return $this->container->getParameter('database_name');
+        return $entityManager->getConnection();
     }
     
     /**
