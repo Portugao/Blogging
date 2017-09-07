@@ -59,7 +59,7 @@
                 <col id="cPositionOfBlock2" />
                 <col id="cAdvertising3" />
                 <col id="cPositionOfBlock3" />
-                <col id="cSimilarArticles" />
+                {#<col id="cSimilarArticles" />#}
                 <col id="cRelevantArticles" />
             </colgroup>
             <thead>
@@ -108,9 +108,9 @@
                 <th id="hPositionOfBlock3" scope="col" class="text-left">
                     <a href="{{ sort.positionOfBlock3.url }}" title="{{ __f('Sort by %s', {'%s': 'position of block 3'}) }}" class="{{ sort.positionOfBlock3.class }}">{{ __('Position of block 3') }}</a>
                 </th>
-                <th id="hSimilarArticles" scope="col" class="text-left">
+                {#<th id="hSimilarArticles" scope="col" class="text-left">
                     <a href="{{ sort.similarArticles.url }}" title="{{ __f('Sort by %s', {'%s': 'similar articles'}) }}" class="{{ sort.similarArticles.class }}">{{ __('Similar articles') }}</a>
-                </th>
+                </th>#}
                 <th id="hRelevantArticles" scope="col" class="text-left">
                     <a href="{{ sort.relevantArticles.url }}" title="{{ __f('Sort by %s', {'%s': 'relevant articles'}) }}" class="{{ sort.relevantArticles.class }}">{{ __('Relevant articles') }}</a>
                 </th>
@@ -177,16 +177,16 @@
                 <td headers="hPositionOfBlock3" class="text-left">
                     {{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}
                 </td>
-                <td headers="hSimilarArticles" class="text-left">
+                {#<td headers="hSimilarArticles" class="text-left">
                     {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
-                </td>
+                </td>#}
                 <td headers="hRelevantArticles" class="text-left">
                     {{ post.relevantArticles }}
                 </td>
             </tr>
         {% else %}
             <tr class="z-{{ routeArea == 'admin' ? 'admin' : 'data' }}tableempty">
-                <td class="text-left" colspan="{% if routeArea == 'admin' %}16{% else %}15{% endif %}">
+                <td class="text-left" colspan="{% if routeArea == 'admin' %}15{% else %}14{% endif %}">
             {{ __('No posts found.') }}
               </td>
             </tr>
