@@ -33,7 +33,6 @@ class PostType extends AbstractPostType
     	parent::addEntityFields($builder, $options);
         
         $postRepository = $this->entityFactory->getRepository('post');
-        $listEntries = $postRepository->selectWhere();
         $listEntries = $this->listHelper->getEntries('post', 'similarArticles');
         $choices = [];
         $choiceAttributes = [];
