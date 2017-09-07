@@ -138,6 +138,18 @@ div.mubloggingmodule-view .avatar img {
 	margin: 0 0 15px 25px;
 }
 
+.blogger-relevant-articles {
+	margin: 25px 0 15px;
+}
+
+.blogger-relevant-articles h3 {
+	margin: 0 0 5px;
+}
+
+.blogger-relevant-title {
+	font-size: 1.4em;
+}
+
 .carousel-inner {
 	padding: 0 0 30px;
 }
@@ -151,7 +163,7 @@ div.mubloggingmodule-view .avatar img {
 .left .carousel-control,
 .right .carousel-control {
 	background: none;
-	backround-image: none;
+	background-image: none;
 }
 
 .carousel-indicators {

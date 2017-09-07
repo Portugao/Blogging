@@ -72,7 +72,13 @@
             {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
                 <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
             {% endif %}
-            {% endif %}        
+            {% endif %}
+            
+            {# Articles in this series #}
+            {% if relevantPosts is defined %}
+                {{ include('@MUBloggingModule/Post/includeRelevantArticles.html.twig', { obj: relevantPosts }) }}
+            {% endif %}
+                    
             <div class="blogger-display blogger-content">{{ post.content|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.content2 != NULL %}
@@ -154,9 +160,6 @@
         {% if post.positionOfBlock3 != 'none' %}
             <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
         {% endif %}
-        {% if post.similarArticles != '###none###' and post.similarArticles != '###all###' %}
-            {{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}
-        {% endif %}
         {% if post.post|default %}
             {{ __('Main post') }}</dt>
               {% if not isQuickView %}
@@ -168,13 +171,18 @@
                   {{ post.post.getTitleFromDisplayPattern() }}
               {% endif %}
         {% endif %}
+        
+        {% if post.similarArticles is not empty %}
+            <dt>{{ __('Similar articles') }}</dt>
+            <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
+        {% endif %}
 
-    {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
-        {{ include('@MUBloggingModule/Helper/includeCategoriesDisplay.html.twig', { obj: post }) }}
-    {% endif %}
-    {#{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }#}
+        {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}
+            {{ include('@MUBloggingModule/Helper/includeCategoriesDisplay.html.twig', { obj: post }) }}
+        {% endif %}
+        {#{ include('@MUBloggingModule/Helper/includeStandardFieldsDisplay.html.twig', { obj: post }) }#}
 
-    {{ block('display_hooks') }}
+        {{ block('display_hooks') }}
         </div>
     </div>
     </div>

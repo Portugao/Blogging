@@ -59,6 +59,8 @@ services:
         class: MU\BloggingModule\Helper\ListEntriesHelper
         arguments:
             - "@translator.default"
+        calls:
+            - [setEntityFactory, ["@?mu_blogging_module.entity_factory"]]
     
     mu_blogging_module.model_helper:
         class: MU\BloggingModule\Helper\ModelHelper

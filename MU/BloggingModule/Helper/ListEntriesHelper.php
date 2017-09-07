@@ -13,12 +13,18 @@
 namespace MU\BloggingModule\Helper;
 
 use MU\BloggingModule\Helper\Base\AbstractListEntriesHelper;
+use MU\BloggingModule\Entity\Factory\EntityFactory;
 
 /**
  * Helper implementation class for list field entries related methods.
  */
 class ListEntriesHelper extends AbstractListEntriesHelper
-{
+{	
+	/**
+	 * @var EntityFactory
+	 */
+	protected $entityfactory;
+	
     /**
      * Get 'similar articles' list entries.
      *
@@ -26,23 +32,27 @@ class ListEntriesHelper extends AbstractListEntriesHelper
      */
     public function getSimilarArticlesEntriesForPost()
     {
-    	$posts = 
+    	$postRepository = $this->entityFactory->getRepository('post');
+    	$posts = $postRepository->selectWhere();
+
         $states = [];
-        $states[] = [
-            'value'   => 'all',
-            'text'    => $this->__('All'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
-        $states[] = [
-            'value'   => 'none',
-            'text'    => $this->__('None'),
-            'title'   => '',
-            'image'   => '',
-            'default' => false
-        ];
+    	foreach ($posts as $post) {    	
+    		$thisPost = $postRepository->find($post['id']);
+        
+            $states[] = [
+                'value'   => $thisPost['id'],
+                'text'    => $thisPost['title'],
+                'title'   => '',
+                'image'   => '',
+                'default' => false
+            ];
+    	}
     
         return $states;
+    }
+    
+    public function setEntityFactory(EntityFactory $entityFactory)
+    {
+    	$this->entityFactory = $entityFactory;
     }
 }
