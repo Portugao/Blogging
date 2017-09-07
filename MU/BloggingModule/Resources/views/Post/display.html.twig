@@ -172,9 +172,14 @@
               {% endif %}
         {% endif %}
         
-        {% if post.similarArticles is not empty %}
-            <dt>{{ __('Similar articles') }}</dt>
-            <dd>{{ post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') }}</dd>
+        {% if post.similarArticles != '###none###' %}
+
+            {% set similarPosts = post.similarArticles|mubloggingmodule_listEntry('post', 'similarArticles') %}
+            <div class="blogging-similar-articles">
+            {% if similarPosts is defined %}
+                {{ include('@MUBloggingModule/Post/includeSimilarArticles.html.twig', { obj: similarPosts }) }}
+            {% endif %}
+            </div>
         {% endif %}
 
         {% if featureActivationHelper.isEnabled(constant('MU\\BloggingModule\\Helper\\FeatureActivationHelper::CATEGORIES'), 'post') %}

@@ -1,0 +1,11 @@
+{# purpose of this template: reusable display of entity categories #}
+{% if obj is defined %}
+    <div class="alert alert-info blogger-similar-articles">
+    <span class="blogger-info-icon"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></span>
+    <h3>{{ __('Similar articles with corresponding issues') }}</h3>
+    {% for post in obj %}
+        <div class="blogger-similar-title">{{ post.title }}</div>
+        <div class="blogger-similar-summaryofpost">{{ post.summaryOfPost|truncate(100)|safeHtml }} <a href="{{ path('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug })}}">{{ __('More') }}</a></div>
+    {% endfor %}
+    </div>
+{% endif %}

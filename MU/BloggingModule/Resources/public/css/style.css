@@ -150,6 +150,26 @@ div.mubloggingmodule-view .avatar img {
 	font-size: 1.4em;
 }
 
+.blogger-similar-articles {
+	margin: 25px 0 15px;
+}
+
+.blogger-similar-articles h3 {
+	margin: 0 0 5px;
+}
+
+.blogger-similar-title {
+	font-size: 1.4em;
+}
+
+.blogger-info-icon {
+	float: left;
+}
+
+.blogger-info-icon::after {
+	content: "\00A0";
+}
+
 .carousel-inner {
 	padding: 0 0 30px;
 }
