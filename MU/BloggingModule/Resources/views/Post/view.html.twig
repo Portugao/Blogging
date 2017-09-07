@@ -20,7 +20,7 @@
 						   <img src="{{ post.imageForArticle.getPathname()|imagine_filter('zkroot', thumbOptions) }}" alt="{{ post|mubloggingmodule_formattedTitle|e('html_attr') }}" width="{{ thumbOptions.thumbnail.size[0] }}" height="{{ thumbOptions.thumbnail.size[1] }}" class="img-thumbnail" /></a>
                         {% endif %}
                     {% endif %}
-                    {{ post.summaryOfPost|safeHtml }}</div>
+                    {{ post.summaryOfPost|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
                     {% endif %}
                     {% if post.content is not empty %}
 					<div class="blogger-view-item-content"><a class="btn btn-danger" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ __('Read more of') }} {{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a></div>

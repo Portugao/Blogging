@@ -59,7 +59,7 @@
             </dd>
         {% endif %}
         {% if post.summaryOfPost != NULL %}
-            <div class="blogger-display blogger-summary">{{ post.summaryOfPost|safeHtml }}</div>
+            <div class="blogger-display blogger-summary">{{ post.summaryOfPost|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.content != NULL %}
         {% if post.advertising != NULL %}
@@ -73,7 +73,7 @@
                 <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
             {% endif %}
             {% endif %}        
-            <div class="blogger-display blogger-content">{{ post.content|safeHtml }}</div>
+            <div class="blogger-display blogger-content">{{ post.content|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.content2 != NULL %}
             {% if post.advertising != NULL %}
@@ -87,7 +87,7 @@
                     <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
                     {% endif %}
                 {% endif %} 
-            <div class="blogger-display blogger-content2">{{ post.content2|safeHtml }}</div>
+            <div class="blogger-display blogger-content2">{{ post.content2|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.positionOfBlock != 'none' %}
             {{ showblockposition (post.positionOfBlock|mubloggingmodule_listEntry('post', 'positionOfBlock')) }}
@@ -104,7 +104,7 @@
                     <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising2|safeHtml }}</div>
                     {% endif %}
                 {% endif %}         
-            <div class="blogger-display blogger-content3">{{ post.content3|safeHtml }}</div>
+            <div class="blogger-display blogger-content3">{{ post.content3|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.content4 is not empty %}
             {% if post.advertising2 != NULL %}
@@ -118,7 +118,7 @@
                     <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising2|safeHtml }}</div>
                     {% endif %}
                 {% endif %} 
-            <div class="blogger-display blogger-content4">{{ post.content4|safeHtml }}</div>
+            <div class="blogger-display blogger-content4">{{ post.content4|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.positionOfBlock2 != 'none' %}
             <dd>{{ post.positionOfBlock2|mubloggingmodule_listEntry('post', 'positionOfBlock2') }}</dd>
@@ -135,7 +135,7 @@
                     <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising3|safeHtml }}</div>
                 {% endif %}
             {% endif %} 
-            <div class="blogger-display blogger-content5">{{ post.content5|safeHtml }}</div>
+            <div class="blogger-display blogger-content5">{{ post.content5|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.content6 is not empty %}
             {% if post.advertising3 != NULL %}
@@ -149,7 +149,7 @@
                     <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising3|safeHtml }}</div>
                 {% endif %}
             {% endif %} 
-            <div class="blogger-display blogger-content6">{{ post.content6|safeHtml }}</div>
+            <div class="blogger-display blogger-content6">{{ post.content6|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
         {% endif %}
         {% if post.positionOfBlock3 != 'none' %}
             <dd>{{ post.positionOfBlock3|mubloggingmodule_listEntry('post', 'positionOfBlock3') }}</dd>
@@ -196,9 +196,5 @@
     
 {% endblock %}
 {% block display_hooks %}
-    {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.id, urlObject=currentUrlObject) %}
-    {% for providerArea, hook in hooks if providerArea != 'provider.scribite.ui_hooks.editor' %}
-        <h4>{{ providerArea }}</h4>
-        {{ hook }}
-    {% endfor %}
+    {{ notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.display_view', id=post.getKey(), urlObject=currentUrlObject) }}
 {% endblock %}
