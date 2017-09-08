@@ -98,7 +98,13 @@ class ListEntriesHelper extends AbstractListEntriesHelper
     	$postRepository = $this->entityFactory->getRepository('post');
     	$posts = $postRepository->selectWhere();
 
-        $states = [];
+        $states[] = [
+        		'value' => 'none',
+        		'text' => 'None',
+        		'title'   => '',
+                'image'   => '',
+                'default' => false
+        ];
     	foreach ($posts as $post) {    	
     		$thisPost = $postRepository->find($post['id']);
         
