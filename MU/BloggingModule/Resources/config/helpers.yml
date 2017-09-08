@@ -24,7 +24,6 @@ services:
         arguments:
             - "@translator.default"
             - "@request_stack"
-            - "@logger"
             - "@form.factory"
             - "@zikula_extensions_module.api.variable"
             - "@mu_blogging_module.entity_factory"
@@ -110,6 +109,7 @@ services:
         class: MU\BloggingModule\Helper\UploadHelper
         arguments:
             - "@translator.default"
+            - "@filesystem"
             - "@session"
             - "@logger"
             - "@zikula_users_module.current_user"
