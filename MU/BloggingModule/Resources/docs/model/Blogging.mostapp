@@ -41,8 +41,9 @@ application "Blogging" {
                 },
                 string "descriptionForGoogle" translatable {
                     dbName "description"
-                    cssClass "bloggerdescription"
-                    minLength 155
+                    mandatory false
+                    cssClass "blogger-description"
+                    minLength 150
                     length 170
                 },
                 string "forWhichLanguage" nullable {
@@ -164,6 +165,7 @@ application "Blogging" {
                     }
                 },
                 list "similarArticles" multiple {
+                    documentation "Choose articles with similar issues."
                     defaultValue "none"
                     mandatory false
                     items {
@@ -180,6 +182,7 @@ application "Blogging" {
                 displayType NONE
                 },
                 string "relevantArticles" {
+                    documentation "Coma seperated without space.\r\nHere you can enter the id\'s of articles in the same series."
                     mandatory false
                 }
             }
