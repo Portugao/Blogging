@@ -14,22 +14,26 @@ function getMUBloggingModulePopupAttributes()
     pWidth = screen.width * 0.75;
     pHeight = screen.height * 0.66;
 
-    return 'width=' + pWidth + ',height=' + pHeight + ',scrollbars,resizable';
+    return 'width=' + pWidth + ',height=' + pHeight + ',location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes';
 }
 
 /**
- * Open a popup window with the finder triggered by a CKEditor button.
+ * Open a popup window with the finder triggered by an editor button.
  */
-function MUBloggingModuleFinderCKEditor(editor, bloggingUrl)
+function MUBloggingModuleFinderOpenPopup(editor, editorName)
 {
+    var popupUrl;
+
     // Save editor for access in selector window
     currentMUBloggingModuleEditor = editor;
 
-    editor.popup(
-        Routing.generate('mubloggingmodule_external_finder', { objectType: 'post', editor: 'ckeditor' }),
-        /*width*/ '80%', /*height*/ '70%',
-        'location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes'
-    );
+    popupUrl = Routing.generate('mubloggingmodule_external_finder', { objectType: 'post', editor: editorName });
+
+    if (editorName == 'ckeditor') {
+        editor.popup(popupUrl, /*width*/ '80%', /*height*/ '70%', getMUBloggingModulePopupAttributes());
+    } else {
+        window.open(popupUrl, '_blank', getMUBloggingModulePopupAttributes());
+    }
 }
 
 
@@ -79,9 +83,13 @@ mUBloggingModule.finder.handleCancel = function (event)
 
     event.preventDefault();
     editor = jQuery("[id$='editor']").first().val();
-    if ('tinymce' === editor) {
+    if ('ckeditor' === editor) {
         mUBloggingClosePopup();
-    } else if ('ckeditor' === editor) {
+    } else if ('quill' === editor) {
+        mUBloggingClosePopup();
+    } else if ('summernote' === editor) {
+        mUBloggingClosePopup();
+    } else if ('tinymce' === editor) {
         mUBloggingClosePopup();
     } else {
         alert('Close Editor: ' + editor);
@@ -148,17 +156,23 @@ mUBloggingModule.finder.selectItem = function (itemId)
 {
     var editor, html;
 
+    html = mUBloggingGetPasteSnippet('html', itemId);
     editor = jQuery("[id$='editor']").first().val();
-    if ('tinymce' === editor) {
-        html = mUBloggingGetPasteSnippet('html', itemId);
-        tinyMCE.activeEditor.execCommand('mceInsertContent', false, html);
-        // other tinymce commands: mceImage, mceInsertLink, mceReplaceContent, see http://www.tinymce.com/wiki.php/Command_identifiers
-    } else if ('ckeditor' === editor) {
+    if ('ckeditor' === editor) {
         if (null !== window.opener.currentMUBloggingModuleEditor) {
-            html = mUBloggingGetPasteSnippet('html', itemId);
-
             window.opener.currentMUBloggingModuleEditor.insertHtml(html);
         }
+    } else if ('quill' === editor) {
+        if (null !== window.opener.currentMUBloggingModuleEditor) {
+            window.opener.currentMUBloggingModuleEditor.clipboard.dangerouslyPasteHTML(window.opener.currentMUBloggingModuleEditor.getLength(), html);
+        }
+    } else if ('summernote' === editor) {
+        if (null !== window.opener.currentMUBloggingModuleEditor) {
+            html = jQuery(html).get(0);
+            window.opener.currentMUBloggingModuleEditor.invoke('insertNode', html);
+        }
+    } else if ('tinymce' === editor) {
+        window.opener.currentMUBloggingModuleEditor.insertContent(html);
     } else {
         alert('Insert into Editor: ' + editor);
     }
