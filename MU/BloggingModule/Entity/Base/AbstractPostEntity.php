@@ -84,8 +84,8 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * @Gedmo\Translatable
      * @ORM\Column(name="description", length=170)
-     * @Assert\NotBlank()
-     * @Assert\Length(min="155", max="170")
+     * @Assert\NotNull()
+     * @Assert\Length(min="150", max="170")
      * @var string $descriptionForGoogle
      */
     protected $descriptionForGoogle = '';
@@ -267,6 +267,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $positionOfBlock3 = 'none';
     
     /**
+     * Choose articles with similar issues.
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @BloggingAssert\ListEntry(entityName="post", propertyName="similarArticles", multiple=true)
@@ -290,6 +291,8 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $endDate;
     
     /**
+     * Coma seperated without space.
+     Here you can enter the id's of articles in the same series.
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")

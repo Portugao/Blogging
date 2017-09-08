@@ -183,14 +183,14 @@ abstract class AbstractPostType extends AbstractType
         
         $builder->add('descriptionForGoogle', TextType::class, [
             'label' => $this->__('Description for google') . ':',
-            'help' => $this->__f('Note: this value must have a minimum length of %amount% characters.', ['%amount%' => 155]),
+            'help' => $this->__f('Note: this value must have a minimum length of %amount% characters.', ['%amount%' => 150]),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 170,
-                'class' => ' bloggerdescription',
+                'class' => ' blogger-description',
                 'title' => $this->__('Enter the description for google of the post')
             ],
-            'required' => true,
+            'required' => false,
         ]);
         
         $builder->add('descriptionOfImageForArticle', TextType::class, [
@@ -518,6 +518,11 @@ abstract class AbstractPostType extends AbstractType
         }
         $builder->add('similarArticles', MultiListType::class, [
             'label' => $this->__('Similar articles') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Choose articles with similar issues.')
+            ],
+            'help' => $this->__('Choose articles with similar issues.'),
             'empty_data' => 'none',
             'attr' => [
                 'class' => '',
@@ -560,6 +565,13 @@ abstract class AbstractPostType extends AbstractType
         
         $builder->add('relevantArticles', TextType::class, [
             'label' => $this->__('Relevant articles') . ':',
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('Coma seperated without space.
+                Here you can enter the id"s of articles in the same series.')
+            ],
+            'help' => $this->__('Coma seperated without space.
+            Here you can enter the id"s of articles in the same series.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 255,
