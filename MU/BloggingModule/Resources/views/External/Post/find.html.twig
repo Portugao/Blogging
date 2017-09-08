@@ -56,7 +56,7 @@
                                     <input type="hidden" id="desc{{ itemId }}" value="{% set description %}{% if post.summaryOfPost is not empty %}{{ post.summaryOfPost }}{% endif %}
                                     {% endset %}{{ description|striptags|e('html_attr') }}" />
                                     {% if onlyImages %}
-                                        <input type="hidden" id="imagePath{{ itemId }}" value="/{{ attribute(post, imageField).getPathname() }}" />
+                                        <input type="hidden" id="imagePath{{ itemId }}" value="{{ app.request.basePath }}/{{ attribute(post, imageField).getPathname() }}" />
                                     {% endif %}
                                 {% if not onlyImages %}
                                     </li>
