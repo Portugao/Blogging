@@ -134,6 +134,9 @@ msgstr "Auswahlaktion"
 msgid "Choose an option"
 msgstr "Wähle eine Option"
 
+msgid "Choose articles with similar issues."
+msgstr "Wähle ähnliche Artikel"
+
 msgid "Choose the enabled finder types."
 msgstr "Wähle die aktivierten Finder Typen."
 
@@ -166,6 +169,9 @@ msgstr "Wähle ähnliche Artikel"
 
 msgid "Choose the thumbnail mode."
 msgstr "Wähle den Thumbnail Modus"
+
+msgid "Comma seperated without space."
+msgstr "Here you can enter the ids of articles in the same series."
 
 msgid "Communication"
 msgstr "Kommunikation"
