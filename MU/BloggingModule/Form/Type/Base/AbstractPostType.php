@@ -568,10 +568,10 @@ abstract class AbstractPostType extends AbstractType
             'label' => $this->__('Relevant articles') . ':',
             'label_attr' => [
                 'class' => 'tooltips',
-                'title' => $this->__('Coma seperated without space.
+                'title' => $this->__('Comma seperated without space.
                 Here you can enter the id"s of articles in the same series.')
             ],
-            'help' => $this->__('Coma seperated without space.
+            'help' => $this->__('Comma seperated without space.
             Here you can enter the id"s of articles in the same series.'),
             'empty_data' => '',
             'attr' => [
