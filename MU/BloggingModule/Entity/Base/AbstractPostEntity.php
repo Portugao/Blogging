@@ -74,6 +74,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $title = '';
     
     /**
+     * If you leave this empty, the url of this item will be build with the title.
      * @Gedmo\Translatable
      * @ORM\Column(length=100, nullable=true)
      * @Assert\Length(min="0", max="100")
@@ -291,7 +292,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $endDate;
     
     /**
-     * Coma seperated without space.
+     * Comma seperated without space.
      Here you can enter the id's of articles in the same series.
      * @ORM\Column(length=255)
      * @Assert\NotNull()

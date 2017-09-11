@@ -172,7 +172,11 @@ abstract class AbstractPostType extends AbstractType
         
         $builder->add('permalink', TextType::class, [
             'label' => $this->__('Permalink') . ':',
-        	'help' => $this->__('If you leave this empty, the url of this item will be build with the title.'),
+            'label_attr' => [
+                'class' => 'tooltips',
+                'title' => $this->__('If you leave this empty, the url of this item will be build with the title.')
+            ],
+            'help' => $this->__('If you leave this empty, the url of this item will be build with the title.'),
             'empty_data' => '',
             'attr' => [
                 'maxlength' => 100,
