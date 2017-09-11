@@ -72,6 +72,8 @@ services:
     mu_blogging_module.thirdparty_listener:
         class: MU\BloggingModule\Listener\ThirdPartyListener
         arguments:
+            - "@filesystem"
+            - "@request_stack"
             - "@mu_blogging_module.workflow_helper"
         tags:
             - { name: kernel.event_subscriber }
