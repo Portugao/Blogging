@@ -18,7 +18,7 @@ application "Blogging" {
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
     skipFiles "composer.json,\r\nREADME.md"
-        markFiles "zikula.manifest.json,\r\nBlock/Form/Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+        markFiles "zikula.manifest.json,\r\nBlock/Form/Type/ItemListBlockType.php,\r\nEntity/PostEntity.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/config/helpers.yml,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
     }
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
@@ -34,6 +34,7 @@ application "Blogging" {
                     length 57
                 },
                 string "permalink" nullable translatable {
+                    documentation "If you leave this empty, the url of this item will be build with the title."
                     mandatory false
                     displayType NONE
                     sluggablePosition 1
@@ -182,7 +183,7 @@ application "Blogging" {
                 displayType NONE
                 },
                 string "relevantArticles" {
-                    documentation "Coma seperated without space.\r\nHere you can enter the id\'s of articles in the same series."
+                    documentation "Comma seperated without space.\r\nHere you can enter the id\'s of articles in the same series."
                     mandatory false
                 }
             }
