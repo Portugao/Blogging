@@ -2,7 +2,9 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUBloggingModule::' ~ baseTemplate ~ '.html.twig' %}
 {% block pageTitle %}{{ post|mubloggingmodule_formattedTitle|default(__('Post')) }}
+{% if post.descriptionForGoogle != '' %}
 {{ pageSetVar('meta.description', post.descriptionForGoogle) }}
+{% endif %}
 {% endblock %}
 
 {% block title %}
@@ -72,14 +74,14 @@
             {% if post.positionOfAdvertising1 == 1 or post.positionOfAdvertising1 == 2 %}
                 <div class="blogger-display blogger-advertising {{ bloggerfloat }}">{{ __('Advertising') }}<br />{{ post.advertising|safeHtml }}</div>
             {% endif %}
-            {% endif %}
-            
-            {# Articles in this series #}
-            {% if relevantPosts is defined %}
-                {{ include('@MUBloggingModule/Post/includeRelevantArticles.html.twig', { obj: relevantPosts }) }}
-            {% endif %}
+        {% endif %}
                     
-            <div class="blogger-display blogger-content">{{ post.content|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
+        <div class="blogger-display blogger-content">{{ post.content|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}
+        </div>
+        {% endif %}
+        {# Articles in this series #}
+        {% if relevantPosts is defined %}
+            {{ include('@MUBloggingModule/Post/includeRelevantArticles.html.twig', { obj: relevantPosts }) }}
         {% endif %}
         {% if post.content2 != NULL %}
             {% if post.advertising != NULL %}
