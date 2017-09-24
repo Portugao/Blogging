@@ -615,6 +615,10 @@ abstract class AbstractEditHandler
                 $args['commandName'] = $action['id'];
             }
         }
+        if ($this->templateParameters['mode'] == 'create' && $this->form->get('submitrepeat')->isClicked()) {
+            $args['commandName'] = 'submit';
+            $this->repeatCreateAction = true;
+        }
         if ($this->form->get('cancel')->isClicked()) {
             $args['commandName'] = 'cancel';
         }
@@ -772,10 +776,6 @@ abstract class AbstractEditHandler
             if (true === $this->hasSlugUpdatableField && isset($entityData['slug'])) {
                 $entityData['slug'] = iconv('UTF-8', 'ASCII//TRANSLIT', $entityData['slug']);
             }
-        }
-    
-        if ($this->templateParameters['mode'] == 'create' && isset($this->form['repeatCreation']) && $this->form['repeatCreation']->getData() == 1) {
-            $this->repeatCreateAction = true;
         }
     
         if (method_exists($this->entityRef, 'getCreatedBy')) {
