@@ -92,7 +92,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $descriptionForGoogle = '';
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(length=255)
      * @Assert\Regex(pattern="/\s/", match=false, message="This value must not contain space chars.")
      * @Assert\Length(min="0", max="255")
      * @Assert\Locale()
