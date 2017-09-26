@@ -124,14 +124,13 @@ div.mubloggingmodule-view .avatar img {
 	float: left;
 	margin: 0 25px 10px 0;
 	font-size: 0.9em;
-	width: 50%;
 }
 
 .blogger-right {
 	float: right;
 	margin: 0 0 10px 25px;
 	font-size: 0.9em;
-	width: 50%;
+	text-align: right;
 }
 
 .blogger-right img {

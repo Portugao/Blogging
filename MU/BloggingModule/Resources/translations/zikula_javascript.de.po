@@ -21,7 +21,7 @@ msgid "Please select a valid file extension."
 msgstr "Bitte wähle eine gültige Dateiendung."
 
 msgid "Previous (Left arrow key)"
-msgstr "Vorgheriger (Linke Pfeiltaste)"
+msgstr "Vorheriger (Linke Pfeiltaste)"
 
 msgid "The start must be before the end."
 msgstr "Der Start muss vor dem Ende liegen."
