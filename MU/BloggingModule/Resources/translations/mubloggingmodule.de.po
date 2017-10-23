@@ -92,7 +92,7 @@ msgid "Approved"
 msgstr "Freigegeben"
 
 msgid "Archive"
-msgstr "Archiv"
+msgstr "Archivieren"
 
 msgid "Ascending"
 msgstr "Aufsteigend"
