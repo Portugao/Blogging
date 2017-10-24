@@ -1143,5 +1143,8 @@ msgstr "Wenn Du dieses Feld leer läßt, wird der Url für dieses Element aus de
 msgid "Here you can enter the ids of articles in the same series."
 msgstr "Hier kannst Du die Ids von Artikeln aus derselben Artikelserie eingeben."
 
+msgid "Submit and repeat"
+msgstr "Abschicken und wiederholen"
+
 #~ msgid "Hooks"
 #~ msgstr "Hooks"
