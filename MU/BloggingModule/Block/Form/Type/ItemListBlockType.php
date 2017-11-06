@@ -29,15 +29,8 @@ class ItemListBlockType extends AbstractItemListBlockType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$this->addObjectTypeField($builder, $options);
-		if ($options['feature_activation_helper']->isEnabled(FeatureActivationHelper::CATEGORIES, $options['object_type'])) {
-			$this->addCategoriesField($builder, $options);
-		}
-		$this->addSortingField($builder, $options);
-		$this->addAmountField($builder, $options);
-		$this->addTemplateFields($builder, $options);
-		$this->addFilterField($builder, $options);
-		$this->addSlideShowOptionFields($builder, $options);
+        parent::buildForm($builder, $options);
+        $this->addSlideShowOptionFields($builder, $options);
 	}
 	
 	/**
