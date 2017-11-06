@@ -169,7 +169,7 @@ div.mubloggingmodule-view .avatar img {
 	content: "\00A0";
 }
 
-.carousel-inner {
+/*.carousel-inner {
 	padding: 0 0 30px;
 }
 
@@ -187,9 +187,7 @@ div.mubloggingmodule-view .avatar img {
 
 .carousel-indicators {
 	bottom: -20px;
-}
-
-
+}*/
 
 @media (max-width: 800px) {
 	.blogger-left {
