@@ -936,7 +936,7 @@ msgid ""
 "The cache directory \"%directory%\" does not exist. Please create it and make it writable "
 "for the webserver."
 msgstr ""
-"Der Cache ordner %Directory% existiert nicht. Bitte erstelle diesen und versehe ihn mit "
+"Der Cache Ordner \"%directory%\" existiert nicht. Bitte erstelle diesen und versehe ihn mit "
 "Schreibrechten."
 
 msgid "The enable shrinking option."
