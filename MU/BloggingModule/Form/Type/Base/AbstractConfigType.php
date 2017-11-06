@@ -53,7 +53,7 @@ abstract class AbstractConfigType extends AbstractType
 
         // prepare group selector values
         foreach (['moderationGroupForPosts'] as $groupFieldName) {
-            $groupId = intval($this->moduleVars[$groupFieldName]);
+            $groupId = isset($this->moduleVars[$groupFieldName]) ? intval($this->moduleVars[$groupFieldName]) : 0;
             if ($groupId < 1) {
                 // fallback to admin group
                 $groupId = GroupsConstant::GROUP_ID_ADMIN;

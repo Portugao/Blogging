@@ -278,28 +278,28 @@ abstract class AbstractListEntriesHelper
         $states = [];
         $states[] = [
             'value'   => '1',
-            'text'    => $this->__('Content 1 left'),
+            'text'    => $this->__('Content1Left'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '2',
-            'text'    => $this->__('Content 1 right'),
+            'text'    => $this->__('Content1Right'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '3',
-            'text'    => $this->__('Content 2 left'),
+            'text'    => $this->__('Content2Left'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '4',
-            'text'    => $this->__('Content 2 right'),
+            'text'    => $this->__('Content2Right'),
             'title'   => '',
             'image'   => '',
             'default' => false
@@ -337,28 +337,28 @@ abstract class AbstractListEntriesHelper
         $states = [];
         $states[] = [
             'value'   => '1',
-            'text'    => $this->__('Content 3 left'),
+            'text'    => $this->__('Content3Left'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '2',
-            'text'    => $this->__('Content 3 right'),
+            'text'    => $this->__('Content3Right'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '3',
-            'text'    => $this->__('Content 4 left'),
+            'text'    => $this->__('Content4Left'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '4',
-            'text'    => $this->__('Content 4 right'),
+            'text'    => $this->__('Content4Right'),
             'title'   => '',
             'image'   => '',
             'default' => false
@@ -396,28 +396,28 @@ abstract class AbstractListEntriesHelper
         $states = [];
         $states[] = [
             'value'   => '1',
-            'text'    => $this->__('Content 5 left'),
+            'text'    => $this->__('Content5Left'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '2',
-            'text'    => $this->__('Content 5 right'),
+            'text'    => $this->__('Content5Right'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '3',
-            'text'    => $this->__('Content 6 left'),
+            'text'    => $this->__('Content6Left'),
             'title'   => '',
             'image'   => '',
             'default' => false
         ];
         $states[] = [
             'value'   => '4',
-            'text'    => $this->__('Content 6 right'),
+            'text'    => $this->__('Content6Right'),
             'title'   => '',
             'image'   => '',
             'default' => false

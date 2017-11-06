@@ -259,16 +259,29 @@ abstract class AbstractCollectionFilterHelper
                    ->setParameter('currentForWhichLanguage', $allowedLocales);
             }
         }
-        
-        $startDate = $this->request->query->get('startDate', date('Y-m-d H:i:s'));
-        $qb->andWhere('(tbl.startDate <= :startDate OR tbl.startDate IS NULL)')
-           ->setParameter('startDate', $startDate);
-        
-        $endDate = $this->request->query->get('endDate', date('Y-m-d H:i:s'));
-        $qb->andWhere('(tbl.endDate >= :endDate OR tbl.endDate IS NULL)')
-           ->setParameter('endDate', $endDate);
+    
+        $qb = $this->applyDateRangeFilterForPost($qb);
     
         return $qb;
+    }
+    
+    /**
+     * Applies start and end date filters for selecting posts.
+     *
+     * @param QueryBuilder $qb    Query builder to be enhanced
+     * @param string       $alias Table alias
+     *
+     * @return QueryBuilder Enriched query builder instance
+     */
+    protected function applyDateRangeFilterForPost(QueryBuilder $qb, $alias = 'tbl')
+    {
+        $startDate = $this->request->query->get('startDate', date('Y-m-d H:i:s'));
+        $qb->andWhere('(' . $alias . '.startDate <= :startDate OR ' . $alias . '.startDate IS NULL)')
+           ->setParameter('startDate', $startDate);
+    
+        $endDate = $this->request->query->get('endDate', date('Y-m-d H:i:s'));
+        $qb->andWhere('(' . $alias . '.endDate >= :endDate OR ' . $alias . '.endDate IS NULL)')
+           ->setParameter('endDate', $endDate);
     }
     
     /**

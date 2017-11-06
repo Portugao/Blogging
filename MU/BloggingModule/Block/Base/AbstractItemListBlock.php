@@ -78,7 +78,7 @@ abstract class AbstractItemListBlock extends AbstractBlockHandler
     
         // create query
         $orderBy = $this->get('mu_blogging_module.model_helper')->resolveSortParameter($objectType, $properties['sorting']);
-        $qb = $repository->genericBaseQuery($properties['filter'], $orderBy);
+        $qb = $repository->getListQueryBuilder($properties['filter'], $orderBy);
     
         // fetch category registries
         $catProperties = null;
