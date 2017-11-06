@@ -3,6 +3,7 @@ application "Blogging" {
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
     url "https://homepages-mit-zikula.de"
+    version "1.0.1"
     prefix "blogging"
     generatorSettings {
         settingsContainer "Settings"

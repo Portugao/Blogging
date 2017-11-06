@@ -1,6 +1,6 @@
 {
     "name": "mu/blogging-module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Blogging is a module for publishing.",
     "type": "zikula-module",
     "license": "LGPL-3.0+",
