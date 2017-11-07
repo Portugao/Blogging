@@ -17,8 +17,6 @@ use MU\BloggingModule\Block\Form\Type\Base\AbstractItemListBlockType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-use MU\BloggingModule\Helper\FeatureActivationHelper;
-
 /**
  * List block form type implementation class.
  */
@@ -45,7 +43,7 @@ class ItemListBlockType extends AbstractItemListBlockType
 		$builder->add('slideshowspeed', IntegerType::class, [
 				'label' => $this->__('Speed of the slideshow') . ':',
 				'help' => $this->__('The time from item to item.') . ' ' . $this->__('Only digits are allowed.'),
-				'empty_data' => 0,
+				'empty_data' => 1000,
 				'required' => false,
 				'scale' => 0
 		]);
