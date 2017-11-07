@@ -282,6 +282,7 @@ abstract class AbstractCollectionFilterHelper
         $endDate = $this->request->query->get('endDate', date('Y-m-d H:i:s'));
         $qb->andWhere('(' . $alias . '.endDate >= :endDate OR ' . $alias . '.endDate IS NULL)')
            ->setParameter('endDate', $endDate);
+        return $qb;
     }
     
     /**
