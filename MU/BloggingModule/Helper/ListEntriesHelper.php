@@ -25,69 +25,6 @@ class ListEntriesHelper extends AbstractListEntriesHelper
 	 */
 	protected $entityFactory;
 	
-	
-	/**
-	 * Return the name or names for a given list item.
-	 *
-	 * @param string $value      The dropdown value to process
-	 * @param string $objectType The treated object type
-	 * @param string $fieldName  The list field's name
-	 * @param string $delimiter  String used as separator for multiple selections
-	 * @return string List item name
-	 */
-	public function resolve($value, $objectType = '', $fieldName = '', $delimiter = ', ')
-	{
-		if ((empty($value) && $value != '0') || empty($objectType) || empty($fieldName)) {
-			return $value;
-		}
-	
-		$isMulti = $this->hasMultipleSelection($objectType, $fieldName);
-		if (true === $isMulti) {
-			$value = $this->extractMultiList($value);
-		}
-	
-		$options = $this->getEntries($objectType, $fieldName);
-		$result = '';
-		
-		$repository = $this->entityFactory->getRepository('post');
-	
-		if (true === $isMulti) {
-			if ($fieldName != 'similarArticles') {
-			foreach ($options as $option) {
-				if (!in_array($option['value'], $value)) {
-					continue;
-				}
-				if (!empty($result)) {
-					$result .= $delimiter;
-				}
-				$result .= $option['text'];
-			}
-			} else {
-				foreach ($options as $option) {
-					if (!in_array($option['value'], $value)) {
-						continue;
-					}
-					/*if (!empty($result)) {
-						$result .= $delimiter;
-					}*/
-
-					$post = $repository->find($option['value']);
-					$result[] = $post;
-				}				
-			}
-		} else {
-			foreach ($options as $option) {
-				if ($option['value'] != $value) {
-					continue;
-				}
-				$result = $option['text'];
-				break;
-			}
-		}
-	
-		return $result;
-	}
-	
     /**
      * Get 'similar articles' list entries.
      *
@@ -100,10 +37,10 @@ class ListEntriesHelper extends AbstractListEntriesHelper
 
         $states[] = [
         		'value' => 'none',
-        		'text' => 'None',
+        		'text' => $this->__('None'),
         		'title'   => '',
                 'image'   => '',
-                'default' => false
+                'default' => true
         ];
     	foreach ($posts as $post) {    	
     		$thisPost = $postRepository->find($post['id']);
