@@ -3,7 +3,7 @@
     {% for post in items %}
         <dt>{{ post|mubloggingmodule_formattedTitle }}</dt>
         {% if post.summaryOfPost %}
-            <dd>{{ post.summaryOfPost|striptags|truncate(200, true, '&hellip;') }}</dd>
+            <dd>{{ post.summaryOfPost|striptags|truncate(200, true) }}</dd>
         {% endif %}
         <dd><a href="{{ path('mubloggingmodule_post_display', {'slug': post.slug}) }}" title="{{ __('Read more')|e('html_attr') }}">{{ __('Read more') }}</a>
         </dd>
