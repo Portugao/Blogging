@@ -26,6 +26,14 @@ class ListEntriesHelper extends AbstractListEntriesHelper {
 	protected $entityFactory;
 	
 	/**
+	 * Return the name or names for a given list item.
+	 *
+	 * @param string $value The dropdown value to process
+	 * @param string $objectType The treated object type
+	 * @param string $fieldName The list field's name
+	 * @param string $delimiter String used as separator for multiple selections
+	 * @return string List item name
+	 *
 	 */
 	public function resolve($value, $objectType = '', $fieldName = '', $delimiter = ', ') {
 		if ((empty ( $value ) && $value != '0') || empty ( $objectType ) || empty ( $fieldName )) {
