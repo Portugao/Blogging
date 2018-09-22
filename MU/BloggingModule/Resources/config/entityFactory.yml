@@ -12,4 +12,6 @@ services:
     mu_blogging_module.entity_initialiser:
         class: MU\BloggingModule\Entity\Factory\EntityInitialiser
         arguments:
-        - "@mu_blogging_module.listentries_helper"
+            - "@request_stack"
+            - "@mu_blogging_module.permission_helper"
+            - "@mu_blogging_module.listentries_helper"

@@ -7,8 +7,7 @@ mUBloggingModule.itemSelector.items = {};
 mUBloggingModule.itemSelector.baseId = 0;
 mUBloggingModule.itemSelector.selectedId = 0;
 
-mUBloggingModule.itemSelector.onLoad = function (baseId, selectedId)
-{
+mUBloggingModule.itemSelector.onLoad = function (baseId, selectedId) {
     mUBloggingModule.itemSelector.baseId = baseId;
     mUBloggingModule.itemSelector.selectedId = selectedId;
 
@@ -26,15 +25,13 @@ mUBloggingModule.itemSelector.onLoad = function (baseId, selectedId)
     mUBloggingModule.itemSelector.getItemList();
 };
 
-mUBloggingModule.itemSelector.onParamChanged = function ()
-{
+mUBloggingModule.itemSelector.onParamChanged = function () {
     jQuery('#ajaxIndicator').removeClass('hidden');
 
     mUBloggingModule.itemSelector.getItemList();
 };
 
-mUBloggingModule.itemSelector.getItemList = function ()
-{
+mUBloggingModule.itemSelector.getItemList = function () {
     var baseId;
     var params;
 
@@ -51,7 +48,7 @@ mUBloggingModule.itemSelector.getItemList = function ()
         params[catidsMain] = jQuery('#' + baseId + '_catidsMain').val();
     }
 
-    jQuery.getJSON(Routing.generate('mubloggingmodule_ajax_getitemlistfinder'), params, function( data ) {
+    jQuery.getJSON(Routing.generate('mubloggingmodule_ajax_getitemlistfinder'), params, function (data) {
         var baseId;
 
         baseId = mUBloggingModule.itemSelector.baseId;
@@ -62,8 +59,7 @@ mUBloggingModule.itemSelector.getItemList = function ()
     });
 };
 
-mUBloggingModule.itemSelector.updateItemDropdownEntries = function ()
-{
+mUBloggingModule.itemSelector.updateItemDropdownEntries = function () {
     var baseId, itemSelector, items, i, item;
 
     baseId = mUBloggingModule.itemSelector.baseId;
@@ -81,8 +77,7 @@ mUBloggingModule.itemSelector.updateItemDropdownEntries = function ()
     }
 };
 
-mUBloggingModule.itemSelector.updatePreview = function ()
-{
+mUBloggingModule.itemSelector.updatePreview = function () {
     var baseId, items, selectedElement, i;
 
     baseId = mUBloggingModule.itemSelector.baseId;
@@ -112,8 +107,7 @@ mUBloggingModule.itemSelector.updatePreview = function ()
     }
 };
 
-mUBloggingModule.itemSelector.onItemChanged = function ()
-{
+mUBloggingModule.itemSelector.onItemChanged = function () {
     var baseId, itemSelector, preview;
 
     baseId = mUBloggingModule.itemSelector.baseId;
@@ -125,7 +119,7 @@ mUBloggingModule.itemSelector.onItemChanged = function ()
     mUBloggingInitImageViewer();
 };
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     var infoElem;
 
     infoElem = jQuery('#itemSelectorInfo');

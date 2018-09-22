@@ -1,8 +1,5 @@
 {# purpose of this template: general base layout #}
 {% block header %}
-    {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
-    {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
-    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.js')) }}
 {% endblock %}
 
 {% block appTitle %}
@@ -21,4 +18,8 @@
 {% block content %}{% endblock %}
 
 {% block footer %}
+    {{ pageAddAsset('stylesheet', zasset('@MUBloggingModule:css/custom.css'), 120) }}
+    {{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js'), 90) }}
+    {{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css'), 90) }}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.js')) }}
 {% endblock %}

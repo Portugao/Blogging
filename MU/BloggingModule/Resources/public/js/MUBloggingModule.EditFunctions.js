@@ -3,8 +3,7 @@
 /**
  * Resets the value of an upload / file input field.
  */
-function mUBloggingResetUploadField(fieldName)
-{
+function mUBloggingResetUploadField(fieldName) {
     jQuery('#' + fieldName).attr('type', 'input');
     jQuery('#' + fieldName).attr('type', 'file');
 }
@@ -12,8 +11,7 @@ function mUBloggingResetUploadField(fieldName)
 /**
  * Initialises the reset button for a certain upload input.
  */
-function mUBloggingInitUploadField(fieldName)
-{
+function mUBloggingInitUploadField(fieldName) {
     jQuery('#' + fieldName + 'ResetVal').click(function (event) {
         event.preventDefault();
         mUBloggingResetUploadField(fieldName);
@@ -23,11 +21,14 @@ function mUBloggingInitUploadField(fieldName)
 /**
  * Initialises the reset button for a certain date input.
  */
-function mUBloggingInitDateField(fieldName)
-{
+function mUBloggingInitDateField(fieldName) {
     jQuery('#' + fieldName + 'ResetVal').click(function (event) {
         event.preventDefault();
-        jQuery('#' + fieldName).val('');
+        if ('DIV' == jQuery('#' + fieldName).prop('tagName')) {
+            jQuery('#' + fieldName + '_date, #' + fieldName + '_time').val('');
+        } else {
+            jQuery('#' + fieldName + ', #' + fieldName + '').val('');
+        }
     }).removeClass('hidden');
 }
 
@@ -37,8 +38,7 @@ var editForm;
 var formButtons;
 var triggerValidation = true;
 
-function mUBloggingTriggerFormValidation()
-{
+function mUBloggingTriggerFormValidation() {
     mUBloggingExecuteCustomValidationConstraints(editedObjectType, editedEntityId);
 
     if (!editForm.get(0).checkValidity()) {
@@ -48,7 +48,7 @@ function mUBloggingTriggerFormValidation()
     }
 }
 
-function mUBloggingHandleFormSubmit (event) {
+function mUBloggingHandleFormSubmit(event) {
     if (triggerValidation) {
         mUBloggingTriggerFormValidation();
         if (!editForm.get(0).checkValidity()) {
@@ -68,8 +68,7 @@ function mUBloggingHandleFormSubmit (event) {
 /**
  * Initialises an entity edit form.
  */
-function mUBloggingInitEditForm(mode, entityId)
-{
+function mUBloggingInitEditForm(mode, entityId) {
     if (jQuery('.mublogging-edit-form').length < 1) {
         return;
     }
@@ -97,13 +96,15 @@ function mUBloggingInitEditForm(mode, entityId)
     });
 
     formButtons = editForm.find('.form-buttons input');
-    editForm.find('.btn-danger').first().bind('click keypress', function (event) {
-        if (!window.confirm(Translator.__('Do you really want to delete this entry?'))) {
-            event.preventDefault();
-        }
-    });
+    if (editForm.find('.btn-danger').length > 0) {
+        editForm.find('.btn-danger').first().bind('click keypress', function (event) {
+            if (!window.confirm(Translator.__('Do you really want to delete this entry?'))) {
+                event.preventDefault();
+            }
+        });
+    }
     editForm.find('button[type=submit]').bind('click keypress', function (event) {
-        triggerValidation = !jQuery(this).prop('formnovalidate');
+        triggerValidation = !jQuery(this).attr('formnovalidate');
     });
     editForm.submit(mUBloggingHandleFormSubmit);
 

@@ -1,6 +1,6 @@
 {# Purpose of this template: Display one certain post within an external context #}
-{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js')) }}
-{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css')) }}
+{{ pageAddAsset('javascript', asset('magnific-popup/jquery.magnific-popup.min.js'), 90) }}
+{{ pageAddAsset('stylesheet', asset('magnific-popup/magnific-popup.css'), 90) }}
 {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.js')) }}
 <div id="post{{ post.getKey() }}" class="mubloggingmodule-external-post">
 {% if displayMode == 'link' %}
@@ -33,6 +33,10 @@
         </a>
         {% else %}&nbsp;{% endif %}
     </div>
+
+    {# you can embed the display template like this: #}
+    {#{ app.request.query.set('raw', 1) }}
+    {{ include('@MUBloggingModule/Post/display.html.twig', {post: post, routeArea: ''}) }#}
 
     {# you can distinguish the context like this: #}
     {# % if source == 'block' %}

@@ -2,11 +2,6 @@
 {% set baseTemplate = app.request.query.getBoolean('raw', false) ? 'raw' : (routeArea == 'admin' ? 'adminBase' : 'base') %}
 {% extends 'MUBloggingModule::' ~ baseTemplate ~ '.html.twig' %}
 
-{% block header %}
-    {{ parent() }}
-    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.Validation.js'), 98) }}
-    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.EditFunctions.js'), 99) }}
-{% endblock %}
 {% block title mode == 'create' ? __('Create post') : __('Edit post') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
@@ -52,6 +47,7 @@
                                     {{ form_row(form.content5) }}
                                     {{ form_row(form.content6) }}
                                     {{ form_row(form.advertising3) }}
+                                    {{ form_row(form.slug) }}
                                 {% else %}
                                     {{ form_row(attribute(form, 'translations' ~ language)) }}
                                 {% endif %}
@@ -78,6 +74,7 @@
                 {{ form_row(form.content5) }}
                 {{ form_row(form.content6) }}
                 {{ form_row(form.advertising3) }}
+                {{ form_row(form.slug) }}
             </fieldset>
         {% endif %}
         <fieldset>
@@ -103,7 +100,7 @@
             {{ include('@MUBloggingModule/Helper/includeStandardFieldsEdit.html.twig', {obj: post}) }}
         {% endif %}
         
-        {% if formHookTemplates|length > 0 %}
+        {% if supportsHookSubscribers and formHookTemplates|length > 0 %}
             <fieldset>
                 {% for hookTemplate in formHookTemplates %}
                     {{ include(hookTemplate.0, hookTemplate.1, ignore_missing = true) }}
@@ -116,12 +113,16 @@
             {{ form_row(form.additionalNotificationRemarks) }}
         </fieldset>
         
-        {% if form.moderationSpecificCreator is defined %}
+        {% if form.moderationSpecificCreator is defined or form.moderationSpecificCreationDate is defined %}
             <fieldset id="moderationFieldsSection">
                 <legend>{{ __('Moderation') }} <i class="fa fa-expand"></i></legend>
                 <div id="moderationFieldsContent">
-                    {{ form_row(form.moderationSpecificCreator) }}
-                    {{ form_row(form.moderationSpecificCreationDate) }}
+                    {% if form.moderationSpecificCreator is defined %}
+                        {{ form_row(form.moderationSpecificCreator) }}
+                    {% endif %}
+                    {% if form.moderationSpecificCreationDate is defined %}
+                        {{ form_row(form.moderationSpecificCreationDate) }}
+                    {% endif %}
                 </div>
             </fieldset>
         {% endif %}
@@ -141,32 +142,35 @@
             </div>
         </div>
         {{ form_end(form) }}
-        {% set hookId = mode != 'create' ? post.id : null %}
-        {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.form_edit', id=hookId, outputAsArray=true) %}
-        {% if hooks is iterable and hooks|length > 0 %}
-            {% for area, hook in hooks %}
-                <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
-            {% endfor %}
+        {% if supportsHookSubscribers %}
+            {% set hookId = mode != 'create' ? post.id : null %}
+            {% set hooks = notifyDisplayHooks(eventName='mubloggingmodule.ui_hooks.posts.form_edit', id=hookId, outputAsArray=true) %}
+            {% if hooks is iterable and hooks|length > 0 %}
+                {% for area, hook in hooks %}
+                    <div class="z-displayhook" data-area="{{ area|e('html_attr') }}">{{ hook|raw }}</div>
+                {% endfor %}
+            {% endif %}
         {% endif %}
         
     </div>
 {% endblock %}
 {% block footer %}
     {{ parent() }}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.Validation.js'), 98) }}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/MUBloggingModule.EditFunctions.js'), 99) }}
     {% set formInitScript %}
-        <script type="text/javascript">
+        <script>
         /* <![CDATA[ */
             
             ( function($) {
                 $(document).ready(function() {
-                    // initialise auto completion for user fields
-                    {% if form.moderationSpecificCreator is defined %}
-                        initUserLiveSearch('mubloggingmodule_post_moderationSpecificCreator');
-                    {% endif %}
                     mUBloggingInitEditForm('{{ mode }}', '{% if mode != 'create' %}{{ post.id }}{% endif %}');
                     mUBloggingInitUploadField('mubloggingmodule_post_imageForArticle_imageForArticle');
                     mUBloggingInitDateField('mubloggingmodule_post_startDate');
                     mUBloggingInitDateField('mubloggingmodule_post_endDate');
+                    {% if form.moderationSpecificCreator is defined %}
+                        initUserLiveSearch('mubloggingmodule_post_moderationSpecificCreator');
+                    {% endif %}
                 });
             })(jQuery);
         /* ]]> */

@@ -1,4 +1,4 @@
-workflow:
+framework:
     workflows:
         mubloggingmodule_standard:
             type: state_machine
@@ -13,29 +13,42 @@ workflow:
                 - waiting
                 - approved
                 - suspended
+                - trashed
                 - deleted
             transitions:
-                updatewaiting:
-                    from: waiting
-                    to: waiting
-                submit:
-                    from: initial
-                    to: waiting
-                approve:
-                    from: [initial, waiting]
-                    to: approved
-                unpublish:
-                    from: approved
-                    to: suspended
-                publish:
-                    from: suspended
-                    to: approved
-                updateapproved:
-                    from: approved
-                    to: approved
-                updatesuspended:
-                    from: suspended
-                    to: suspended
-                delete:
-                    from: [waiting, approved, suspended]
-                    to: deleted
+                - name: update
+                  from: waiting
+                  to: waiting
+                - name: submit
+                  from: initial
+                  to: waiting
+                - name: approve
+                  from: [initial, waiting]
+                  to: approved
+                - name: unpublish
+                  from: approved
+                  to: suspended
+                - name: publish
+                  from: suspended
+                  to: approved
+                - name: update
+                  from: approved
+                  to: approved
+                - name: trash
+                  from: waiting
+                  to: trashed
+                - name: recover
+                  from: trashed
+                  to: waiting
+                - name: update
+                  from: suspended
+                  to: suspended
+                - name: trash
+                  from: suspended
+                  to: trashed
+                - name: delete
+                  from: [waiting, approved, suspended, trashed]
+                  to: deleted
+                - name: trash
+                  from: approved
+                  to: trashed

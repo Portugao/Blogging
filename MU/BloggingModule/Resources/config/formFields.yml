@@ -5,20 +5,16 @@ services:
         class: MU\BloggingModule\Form\Type\Field\MultiListType
         arguments:
             - "@mu_blogging_module.listentries_helper"
-        tags:
-            - { name: form.type }
+        tags: ['form.type']
     
     mu_blogging_module.form.type.field.translation:
         class: MU\BloggingModule\Form\Type\Field\TranslationType
-        tags:
-            - { name: form.type }
+        tags: ['form.type']
     
     mu_blogging_module.form.type.field.upload:
         class: MU\BloggingModule\Form\Type\Field\UploadType
         arguments:
             - "@translator.default"
-            - "@request_stack"
             - "@mu_blogging_module.image_helper"
             - "@mu_blogging_module.upload_helper"
-        tags:
-            - { name: form.type }
+        tags: ['form.type']

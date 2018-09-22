@@ -1,7 +1,6 @@
 'use strict';
 
-function mUBloggingToday(format)
-{
+function mUBloggingToday(format) {
     var timestamp, todayDate, month, day, hours, minutes, seconds;
 
     timestamp = new Date();
@@ -40,8 +39,7 @@ function mUBloggingToday(format)
 }
 
 // returns YYYY-MM-DD even if date is in DD.MM.YYYY
-function mUBloggingReadDate(val, includeTime)
-{
+function mUBloggingReadDate(val, includeTime) {
     // look if we have YYYY-MM-DD
     if (val.substr(4, 1) === '-' && val.substr(7, 1) === '-') {
         return val;
@@ -58,16 +56,14 @@ function mUBloggingReadDate(val, includeTime)
     }
 }
 
-function mUBloggingValidateNoSpace(val)
-{
+function mUBloggingValidateNoSpace(val) {
     var valStr;
     valStr = new String(val);
 
     return (valStr.indexOf(' ') === -1);
 }
 
-function mUBloggingValidateUploadExtension(val, elem)
-{
+function mUBloggingValidateUploadExtension(val, elem) {
     var fileExtension, allowedExtensions;
     if (val === '') {
         return true;
@@ -81,13 +77,15 @@ function mUBloggingValidateUploadExtension(val, elem)
     return allowedExtensions.test(val);
 }
 
-function mUBloggingValidateDateRangePost(val)
-{
+function mUBloggingValidateDateRangePost(val) {
     var cmpVal, cmpVal2, result;
-    cmpVal = mUBloggingReadDate(jQuery("[id$='startDate']").val(), true);
-    cmpVal2 = mUBloggingReadDate(jQuery("[id$='endDate']").val(), true);
+
+    cmpVal = jQuery("[id$='startDate_date']").val() + ' ' + jQuery("[id$='startDate_time']").val();
+    cmpVal2 = jQuery("[id$='endDate_date']").val() + ' ' + jQuery("[id$='endDate_time']").val();
 
     if (typeof cmpVal == 'undefined' && typeof cmpVal2 == 'undefined') {
+        result = true;
+    } else if ('' == jQuery.trim(cmpVal) || '' == jQuery.trim(cmpVal2)) {
         result = true;
     } else {
         result = (cmpVal <= cmpVal2);
@@ -99,25 +97,17 @@ function mUBloggingValidateDateRangePost(val)
 /**
  * Runs special validation rules.
  */
-function mUBloggingExecuteCustomValidationConstraints(objectType, currentEntityId)
-{
-    jQuery('.validate-nospace').each( function() {
-        if (!mUBloggingValidateNoSpace(jQuery(this).val())) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('This value must not contain spaces.'));
-        } else {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
-        }
-    });
-    jQuery('.validate-upload').each( function() {
+function mUBloggingExecuteCustomValidationConstraints(objectType, currentEntityId) {
+    jQuery('.validate-upload').each(function () {
         if (!mUBloggingValidateUploadExtension(jQuery(this).val(), jQuery(this))) {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('Please select a valid file extension.'));
+            jQuery(this).get(0).setCustomValidity(Translator.__('Please select a valid file extension.'));
         } else {
-            document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+            jQuery(this).get(0).setCustomValidity('');
         }
     });
-    jQuery('.validate-daterange-post').each( function() {
-        if (typeof jQuery(this).attr('id') != 'undefined') {
-            if (jQuery(this).prop('tagName') == 'DIV') {
+    jQuery('.validate-daterange-post').each(function () {
+        if ('undefined' != typeof jQuery(this).attr('id')) {
+            if ('DIV' == jQuery(this).prop('tagName')) {
                 if (!mUBloggingValidateDateRangePost()) {
                     document.getElementById(jQuery(this).attr('id') + '_date').setCustomValidity(Translator.__('The start must be before the end.'));
                     document.getElementById(jQuery(this).attr('id') + '_time').setCustomValidity(Translator.__('The start must be before the end.'));
@@ -125,13 +115,13 @@ function mUBloggingExecuteCustomValidationConstraints(objectType, currentEntityI
                     document.getElementById(jQuery(this).attr('id') + '_date').setCustomValidity('');
                     document.getElementById(jQuery(this).attr('id') + '_time').setCustomValidity('');
                 }
-        	} else {
+            } else {
                 if (!mUBloggingValidateDateRangePost()) {
-                    document.getElementById(jQuery(this).attr('id')).setCustomValidity(Translator.__('The start must be before the end.'));
+                    jQuery(this).get(0).setCustomValidity(Translator.__('The start must be before the end.'));
                 } else {
-                    document.getElementById(jQuery(this).attr('id')).setCustomValidity('');
+                    jQuery(this).get(0).setCustomValidity('');
                 }
-    		}
+            }
         }
     });
 }

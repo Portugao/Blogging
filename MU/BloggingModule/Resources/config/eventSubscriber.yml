@@ -6,43 +6,35 @@ services:
             - "@service_container"
             - "@event_dispatcher"
             - "@logger"
-        tags:
-            - { name: doctrine.event_subscriber }
+        tags: ['doctrine.event_subscriber']
     
     mu_blogging_module.kernel_listener:
         class: MU\BloggingModule\Listener\KernelListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.installer_listener:
         class: MU\BloggingModule\Listener\InstallerListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.moduledispatch_listener:
         class: MU\BloggingModule\Listener\ModuleDispatchListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.mailer_listener:
         class: MU\BloggingModule\Listener\MailerListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.theme_listener:
         class: MU\BloggingModule\Listener\ThemeListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.userlogin_listener:
         class: MU\BloggingModule\Listener\UserLoginListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.userlogout_listener:
         class: MU\BloggingModule\Listener\UserLogoutListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.user_listener:
         class: MU\BloggingModule\Listener\UserListener
@@ -51,23 +43,19 @@ services:
             - "@mu_blogging_module.entity_factory"
             - "@zikula_users_module.current_user"
             - "@logger"
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.userregistration_listener:
         class: MU\BloggingModule\Listener\UserRegistrationListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.users_listener:
         class: MU\BloggingModule\Listener\UsersListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.group_listener:
         class: MU\BloggingModule\Listener\GroupListener
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.thirdparty_listener:
         class: MU\BloggingModule\Listener\ThirdPartyListener
@@ -75,16 +63,15 @@ services:
             - "@filesystem"
             - "@request_stack"
             - "@mu_blogging_module.workflow_helper"
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     mu_blogging_module.workflow_events_listener:
         class: MU\BloggingModule\Listener\WorkflowEventsListener
         arguments:
-            - "@zikula_permissions_module.api.permission"
+            - "@mu_blogging_module.entity_factory"
+            - "@mu_blogging_module.permission_helper"
             - "@mu_blogging_module.notification_helper"
-        tags:
-            - { name: kernel.event_subscriber }
+        tags: ['kernel.event_subscriber']
     
     stof_doctrine_extensions.listener.sluggable:
         class: '%stof_doctrine_extensions.listener.sluggable.class%'

@@ -1,7 +1,9 @@
 {# purpose of this template: posts index view #}
 {% extends routeArea == 'admin' ? 'MUBloggingModule::adminBase.html.twig' : 'MUBloggingModule::base.html.twig' %}
-{% block title __('posts') %}
+{% block title __('Posts') %}
 {% block admin_page_icon 'home' %}
 {% block content %}
-    <p>{{ __('Welcome to the post section of the Blogging application.') }}</p>
+    <div class="mubloggingmodule-post mubloggingmodule-index">
+        <p>{{ __('Welcome to the post section of the Blogging application.') }}</p>
+    </div>
 {% endblock %}

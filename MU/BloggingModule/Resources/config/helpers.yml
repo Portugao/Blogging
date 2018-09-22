@@ -14,6 +14,7 @@ services:
         class: MU\BloggingModule\Helper\CollectionFilterHelper
         arguments:
             - "@request_stack"
+            - "@mu_blogging_module.permission_helper"
             - "@zikula_users_module.current_user"
             - "@mu_blogging_module.category_helper"
             - "@=service('zikula_extensions_module.api.variable').get('MUBloggingModule', 'showOnlyOwnEntries', false)"
@@ -28,6 +29,7 @@ services:
             - "@zikula_extensions_module.api.variable"
             - "@mu_blogging_module.entity_factory"
             - "@mu_blogging_module.collection_filter_helper"
+            - "@mu_blogging_module.permission_helper"
             - "@mu_blogging_module.model_helper"
             - "@mu_blogging_module.image_helper"
             - "@mu_blogging_module.feature_activation_helper"
@@ -80,17 +82,26 @@ services:
             - "@zikula_groups_module.group_repository"
             - "@mu_blogging_module.entity_display_helper"
             - "@mu_blogging_module.workflow_helper"
+            
+    mu_blogging_module.permission_helper:
+        class: MU\BloggingModule\Helper\PermissionHelper
+        arguments:
+            - "@service_container"
+            - "@request_stack"
+            - "@zikula_permissions_module.api.permission"
+            - "@zikula_users_module.current_user"
+            - "@zikula_users_module.user_repository"
     
     mu_blogging_module.search_helper:
         class: MU\BloggingModule\Helper\SearchHelper
         arguments:
             - "@translator.default"
-            - "@zikula_permissions_module.api.permission"
             - "@session"
             - "@request_stack"
             - "@mu_blogging_module.entity_factory"
             - "@mu_blogging_module.controller_helper"
             - "@mu_blogging_module.entity_display_helper"
+            - "@mu_blogging_module.permission_helper"
             - "@mu_blogging_module.feature_activation_helper"
             - "@mu_blogging_module.category_helper"
         tags:
@@ -122,10 +133,10 @@ services:
             - "@twig"
             - "@twig.loader"
             - "@request_stack"
-            - "@zikula_permissions_module.api.permission"
             - "@zikula_extensions_module.api.variable"
             - "@zikula_core.common.theme.pagevars"
             - "@mu_blogging_module.controller_helper"
+            - "@mu_blogging_module.permission_helper"
     
     mu_blogging_module.workflow_helper:
         class: MU\BloggingModule\Helper\WorkflowHelper
@@ -133,7 +144,7 @@ services:
             - "@translator.default"
             - "@workflow.registry"
             - "@logger"
-            - "@zikula_permissions_module.api.permission"
             - "@zikula_users_module.current_user"
             - "@mu_blogging_module.entity_factory"
             - "@mu_blogging_module.listentries_helper"
+            - "@mu_blogging_module.permission_helper"

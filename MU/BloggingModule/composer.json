@@ -1,47 +1,50 @@
 {
-    "name": "mu/blogging-module",
-    "version": "1.0.1",
-    "description": "Blogging is a module for publishing.",
-    "type": "zikula-module",
-    "license": "LGPL-3.0+",
-    "authors": [
-        {
-            "name": "Michael Ueberschaer",
-            "email": "info@homepages-mit-zikula.de",
-            "homepage": "https://homepages-mit-zikula.de",
-            "role": "owner"
-        }
-    ],
-    "autoload": {
-        "psr-4": { "MU\\BloggingModule\\": "" }
-    },
-    "require": {
-        "php": ">=5.5.9"
-    },
-    "suggest": {
-    },
-    "extra": {
-        "zikula": {
-            "core-compatibility": ">=1.5.2 <3.0",
-            "class": "MU\\BloggingModule\\MUBloggingModule",
-            "displayname": "Blogging",
-            "url": "blogging",
-            "capabilities": {
-                "user": {"route": "mubloggingmodule_post_index"},
-                "admin": {"route": "mubloggingmodule_post_adminindex"},
-                "categorizable": {
-                    "entities": [
-                        "MU\\BloggingModule\\Entity\\PostEntity"
-                    ]
-                }
-            },
-            "securityschema": {
-                "MUBloggingModule::": "::",
-                "MUBloggingModule:ItemListBlock:": "Block title::",
-                "MUBloggingModule:ModerationBlock:": "Block title::",
-                "MUBloggingModule:Post:": "Post ID::",
-                "MUBloggingModule::Ajax": "::"
-            }
-        }
-    }
+	"name" : "mu/blogging-module",
+	"version" : "1.1.0",
+	"description" : "Blogging is a module for publishing.",
+	"type" : "zikula-module",
+	"license" : "LGPL-3.0+",
+	"authors" : [{
+			"name" : "Michael Ueberschaer",
+			"email" : "info@homepages-mit-zikula.de",
+			"homepage" : "https://homepages-mit-zikula.de",
+			"role" : "owner"
+		}
+	],
+	"autoload" : {
+		"psr-4" : {
+			"MU\\BloggingModule\\" : ""
+		}
+	},
+	"require" : {
+		"php" : ">=5.5.9"
+	},
+	"extra" : {
+		"zikula" : {
+			"core-compatibility" : ">=1.5.2 <3.0",
+			"class" : "MU\\BloggingModule\\MUBloggingModule",
+			"displayname" : "Blogging",
+			"url" : "blogging",
+			"capabilities" : {
+				"user" : {
+					"route" : "mubloggingmodule_post_index"
+				},
+				"admin" : {
+					"route" : "mubloggingmodule_post_adminindex"
+				},
+				"categorizable" : {
+					"entities" : [
+						"MU\\BloggingModule\\Entity\\PostEntity"
+					]
+				}
+			},
+			"securityschema" : {
+				"MUBloggingModule::" : "::",
+				"MUBloggingModule:ItemListBlock:" : "Block title::",
+				"MUBloggingModule:ModerationBlock:" : "Block title::",
+				"MUBloggingModule:Post:" : "Post ID::",
+				"MUBloggingModule::Ajax" : "::"
+			}
+		}
+	}
 }

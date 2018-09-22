@@ -1,13 +1,10 @@
-application "Blogging" {
+application "Blogging" targets ZK20 {
     vendor "MU"
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
     url "https://homepages-mit-zikula.de"
-    version "1.0.1"
+    version "1.1.0"
     prefix "blogging"
-    generatorSettings {
-        settingsContainer "Settings"
-        targetCoreVersion ZK15
         generateAtomTemplates false
         generateCsvTemplates false
         generateXmlTemplates false
@@ -18,9 +15,9 @@ application "Blogging" {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    skipFiles "composer.json,\r\nREADME.md"
-        markFiles "zikula.manifest.json,\r\nBlock/Form/Type/ItemListBlockType.php,\r\nController/PostController.php,\r\nEntity/PostEntity.php,\r\nEntity/Repository/PostRepository.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\nResources/config/helpers.yml,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
-    }
+    skipFiles "Block/Form/Type/ItemListBlockType.php,\r\nBloggingModuleInstaller.php,\r\nController/PostController.php,\r\nEntity/PostEntity.php,\r\nEntity/Repository/PostRepository.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\ncomposer.json,\r\nzikula.manifest.json,\r\nREADME.md"
+        markFiles "Resources/config/helpers.yml,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
             nameMultiple "posts"
@@ -166,13 +163,12 @@ application "Blogging" {
                         listItem  "None" ( "none" )
                     }
                 },
-                list "similarArticles" multiple {
+                list "similarArticles" nullable multiple {
                     documentation "Choose articles with similar issues."
                     defaultValue "none"
                     mandatory false
                     items {
-                        listItem  "All" ( "all" ),
-                        listItem  "None" ( "none" )
+                        listItem   "None" ( "0" )
                     }
                 },
                 datetime "startDate" nullable startDate {

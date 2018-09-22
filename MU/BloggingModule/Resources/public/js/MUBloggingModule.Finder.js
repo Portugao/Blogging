@@ -7,8 +7,7 @@ var currentMUBloggingModuleInput = null;
  * Returns the attributes used for the popup window. 
  * @return {String}
  */
-function getMUBloggingModulePopupAttributes()
-{
+function getMUBloggingModulePopupAttributes() {
     var pWidth, pHeight;
 
     pWidth = screen.width * 0.75;
@@ -20,8 +19,7 @@ function getMUBloggingModulePopupAttributes()
 /**
  * Open a popup window with the finder triggered by an editor button.
  */
-function MUBloggingModuleFinderOpenPopup(editor, editorName)
-{
+function MUBloggingModuleFinderOpenPopup(editor, editorName) {
     var popupUrl;
 
     // Save editor for access in selector window
@@ -41,8 +39,7 @@ var mUBloggingModule = {};
 
 mUBloggingModule.finder = {};
 
-mUBloggingModule.finder.onLoad = function (baseId, selectedId)
-{
+mUBloggingModule.finder.onLoad = function (baseId, selectedId) {
     var imageModeEnabled;
 
     if (jQuery('#mUBloggingModuleSelectorForm').length < 1) {
@@ -72,13 +69,11 @@ mUBloggingModule.finder.onLoad = function (baseId, selectedId)
     });
 };
 
-mUBloggingModule.finder.onParamChanged = function ()
-{
+mUBloggingModule.finder.onParamChanged = function () {
     jQuery('#mUBloggingModuleSelectorForm').submit();
 };
 
-mUBloggingModule.finder.handleCancel = function (event)
-{
+mUBloggingModule.finder.handleCancel = function (event) {
     var editor;
 
     event.preventDefault();
@@ -97,8 +92,7 @@ mUBloggingModule.finder.handleCancel = function (event)
 };
 
 
-function mUBloggingGetPasteSnippet(mode, itemId)
-{
+function mUBloggingGetPasteSnippet(mode, itemId) {
     var quoteFinder;
     var itemPath;
     var itemUrl;
@@ -152,8 +146,7 @@ function mUBloggingGetPasteSnippet(mode, itemId)
 
 
 // User clicks on "select item" button
-mUBloggingModule.finder.selectItem = function (itemId)
-{
+mUBloggingModule.finder.selectItem = function (itemId) {
     var editor, html;
 
     html = mUBloggingGetPasteSnippet('html', itemId);
@@ -179,12 +172,11 @@ mUBloggingModule.finder.selectItem = function (itemId)
     mUBloggingClosePopup();
 };
 
-function mUBloggingClosePopup()
-{
+function mUBloggingClosePopup() {
     window.opener.focus();
     window.close();
 }
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     mUBloggingModule.finder.onLoad();
 });
