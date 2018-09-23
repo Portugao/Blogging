@@ -136,7 +136,7 @@
                     {{ post.workflowState|mubloggingmodule_objectState }}
                 </td>
                 {% endif %}<td headers="hTitle" class="text-left">
-                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a>
+                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a>
                 </td>
                 <td headers="hDescriptionForGoogle" class="text-left">
                     {{ post.descriptionForGoogle|truncate(50) }}
