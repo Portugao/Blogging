@@ -192,57 +192,5 @@ class PostController extends AbstractPostController
         return parent::handleSelectedEntriesAction($request);
     }
     
-    /**
-     * This method includes the common implementation code for adminDisplay() and display().
-     */
-    protected function displayInternal(Request $request, PostEntity $post, $isAdmin = false)
-    {
-    	// parameter specifying which type of objects we are treating
-    	$objectType = 'post';
-    	$permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
-    	if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
-    		throw new AccessDeniedException();
-    	}
-    	// create identifier for permission check
-    	$instanceId = $post->getKey();
-    	if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
-    		throw new AccessDeniedException();
-    	}
-    
-    	$templateParameters = [
-    			'routeArea' => $isAdmin ? 'admin' : '',
-    			$objectType => $post
-    	];
-    
-    	$featureActivationHelper = $this->get('mu_blogging_module.feature_activation_helper');
-    	if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
-    	    if (!$this->get('mu_blogging_module.category_helper')->hasPermission($post)) {
-    	        throw new AccessDeniedException();
-    	    }
-    	}
-    
-    	$controllerHelper = $this->get('mu_blogging_module.controller_helper');
-    	$templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
-    	 
-    	$entityFactory = $this->container->get('mu_blogging_module.entity_factory');
-    	$repository = $entityFactory->getRepository('post');
-    
-    	$articles = $post['relevantArticles'];
-    	if ($articles != '') {
-    		$relevantArticles = array();
-    		$relevantArticlesArray = explode(',', $articles);
-    		foreach ($relevantArticlesArray as $post) {
-    			$thisPost = $repository->find($post);
-    			$relevantArticles[] = $thisPost;
-    		}
-    		$templateParameters['relevantPosts'] = $relevantArticles;
-    	}
-    
-    	// fetch and return the appropriate template
-    	$response = $this->get('mu_blogging_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
-    
-    	return $response;
-    }
-
     // feel free to add your own controller methods here
 }

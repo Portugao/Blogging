@@ -28,11 +28,10 @@ class PostType extends AbstractPostType
      * @param FormBuilderInterface $builder The form builder
      * @param array                $options The options
      */
-    public function addEntityFields(FormBuilderInterface $builder, array $options)
+    public function addEntityFields(FormBuilderInterface $builder, array $options = [])
     {
     	parent::addEntityFields($builder, $options);
         
-        $postRepository = $this->entityFactory->getRepository('post');
         $listEntries = $this->listHelper->getEntries('post', 'similarArticles');
         $choices = [];
         $choiceAttributes = [];

@@ -201,11 +201,12 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $positionOfAdvertising1 = '';
     
     /**
-     * @ORM\Column(length=255, nullable=true)
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
      * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfBlock", multiple=false)
      * @var string $positionOfBlock
      */
-    protected $positionOfBlock = null;
+    protected $positionOfBlock = 'none';
     
     /**
      * @Gedmo\Translatable
@@ -245,7 +246,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfBlock2", multiple=false)
      * @var string $positionOfBlock2
      */
-    protected $positionOfBlock2 = '';
+    protected $positionOfBlock2 = 'none';
     
     /**
      * @Gedmo\Translatable
@@ -285,7 +286,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * @BloggingAssert\ListEntry(entityName="post", propertyName="positionOfBlock3", multiple=false)
      * @var string $positionOfBlock3
      */
-    protected $positionOfBlock3 = '';
+    protected $positionOfBlock3 = 'none';
     
     /**
      * Choose articles with similar issues.
@@ -871,7 +872,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function setPositionOfBlock($positionOfBlock)
     {
         if ($this->positionOfBlock !== $positionOfBlock) {
-            $this->positionOfBlock = $positionOfBlock;
+            $this->positionOfBlock = isset($positionOfBlock) ? $positionOfBlock : '';
         }
     }
     

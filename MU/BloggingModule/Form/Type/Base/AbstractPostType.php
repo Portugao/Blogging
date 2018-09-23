@@ -405,7 +405,7 @@ abstract class AbstractPostType extends AbstractType
         }
         $builder->add('positionOfBlock', ChoiceType::class, [
             'label' => $this->__('Position of block') . ':',
-            'empty_data' => null,
+            'empty_data' => 'none',
             'attr' => [
                 'class' => 'bloggerblock',
                 'title' => $this->__('Choose the position of block.')
@@ -448,7 +448,7 @@ abstract class AbstractPostType extends AbstractType
         }
         $builder->add('positionOfBlock2', ChoiceType::class, [
             'label' => $this->__('Position of block 2') . ':',
-            'empty_data' => '',
+            'empty_data' => 'none',
             'attr' => [
                 'class' => 'bloggerblock2',
                 'title' => $this->__('Choose the position of block 2.')
@@ -491,7 +491,7 @@ abstract class AbstractPostType extends AbstractType
         }
         $builder->add('positionOfBlock3', ChoiceType::class, [
             'label' => $this->__('Position of block 3') . ':',
-            'empty_data' => '',
+            'empty_data' => 'none',
             'attr' => [
                 'class' => 'bloggerblock3',
                 'title' => $this->__('Choose the position of block 3.')

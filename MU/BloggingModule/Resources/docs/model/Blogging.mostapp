@@ -15,7 +15,7 @@ application "Blogging" targets ZK20 {
         versionAllGeneratedFiles false
         generatePoweredByBacklinksIntoFooterTemplates false
         generateTests false
-    skipFiles "Block/Form/Type/ItemListBlockType.php,\r\nBloggingModuleInstaller.php,\r\nController/PostController.php,\r\nEntity/PostEntity.php,\r\nEntity/Repository/PostRepository.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\ncomposer.json,\r\nzikula.manifest.json,\r\nREADME.md"
+    skipFiles "Block/Form/Type/ItemListBlockType.php,\r\nBloggingModuleInstaller.php,\r\nEntity/PostEntity.php,\r\nEntity/Repository/PostRepository.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\ncomposer.json,\r\nzikula.manifest.json,\r\nREADME.md"
         markFiles "Resources/config/helpers.yml,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
 
     entities {
@@ -84,13 +84,13 @@ application "Blogging" targets ZK20 {
                         listItem "content2Right" ( "4" )
                     }
                 },
-                list "positionOfBlock" nullable {
+                list "positionOfBlock" {
                     dbName ""
                     defaultValue "none"
                     mandatory false
                     cssClass "bloggerblock"
                     items {
-                        listItem  "None" ( "none" )
+                        default listItem "None" ( "none" )
                     }
                 },
                 text "content3" nullable translatable {
@@ -125,7 +125,7 @@ application "Blogging" targets ZK20 {
                     mandatory false
                     cssClass "bloggerblock2"
                     items {
-                        listItem  "None" ( "none" )
+                        default listItem "None" ( "none" )
                     }
                 },
                 text "content5" nullable translatable {
@@ -160,7 +160,7 @@ application "Blogging" targets ZK20 {
                     mandatory false
                     cssClass "bloggerblock3"
                     items {
-                        listItem  "None" ( "none" )
+                        default listItem "None" ( "none" )
                     }
                 },
                 list "similarArticles" nullable multiple {
