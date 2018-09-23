@@ -23,7 +23,7 @@
                     {{ post.summaryOfPost|notifyFilters('mubloggingmodule.filter_hooks.posts.filter')|safeHtml }}</div>
                     {% endif %}
                     {% if post.content is not empty %}
-					<div class="blogger-view-item-content"><a class="btn btn-danger" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ __('Read more of') }} {{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a></div>
+					<div class="blogger-view-item-content"><a class="btn btn-danger" href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ __('Read more of') }} {{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a></div>
                     {% endif %}
                 </div>           
             {% endfor %}       
@@ -136,7 +136,7 @@
                     {{ post.workflowState|mubloggingmodule_objectState }}
                 </td>
                 {% endif %}<td headers="hTitle" class="text-left">
-                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', {'slug': post.slug}) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts')|safeHtml }}</a>
+                    <a href="{{ path('mubloggingmodule_post_' ~ routeArea ~ 'display', { 'id': post.id, 'slug': post.slug }) }}" title="{{ __('View detail page')|e('html_attr') }}">{{ post.title|notifyFilters('mubloggingmodule.filterhook.posts') }}</a>
                 </td>
                 <td headers="hDescriptionForGoogle" class="text-left">
                     {{ post.descriptionForGoogle|truncate(50) }}
