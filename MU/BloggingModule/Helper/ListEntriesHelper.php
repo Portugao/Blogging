@@ -50,6 +50,8 @@ class ListEntriesHelper extends AbstractListEntriesHelper {
 		
 		$repository = $this->entityFactory->getRepository ( 'post' );
 		
+		$result = array();
+		
 		if (true === $isMulti) {
 			if ($fieldName != 'similarArticles') {
 				foreach ( $options as $option ) {

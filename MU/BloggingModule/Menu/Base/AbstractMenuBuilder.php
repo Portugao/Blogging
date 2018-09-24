@@ -137,6 +137,7 @@ class AbstractMenuBuilder
                 ]);
                 $menu[$title]->setLinkAttribute('target', '_blank');
                 $menu[$title]->setLinkAttribute('title', $this->__('Open preview page', 'mubloggingmodule'));
+                $menu[$title]->setLinkAttribute('class', 'btn btn-sm btn-default');
                 $menu[$title]->setAttribute('icon', 'fa fa-search-plus');
             }
             if ($context != 'display') {
@@ -146,6 +147,7 @@ class AbstractMenuBuilder
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
                 $menu[$title]->setLinkAttribute('title', str_replace('"', '', $this->entityDisplayHelper->getFormattedTitle($entity)));
+                $menu[$title]->setLinkAttribute('class', 'btn btn-sm btn-default');
                 $menu[$title]->setAttribute('icon', 'fa fa-eye');
             }
             if ($this->permissionHelper->mayEdit($entity)) {
@@ -155,6 +157,7 @@ class AbstractMenuBuilder
                     'routeParameters' => $entity->createUrlArgs(true)
                 ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Edit this post', 'mubloggingmodule'));
+                $menu[$title]->setLinkAttribute('class', 'btn btn-sm btn-default');
                 $menu[$title]->setAttribute('icon', 'fa fa-pencil-square-o');
                 $title = $this->__('Reuse', 'mubloggingmodule');
                 $menu->addChild($title, [
@@ -162,6 +165,7 @@ class AbstractMenuBuilder
                     'routeParameters' => ['astemplate' => $entity->getKey()]
                 ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Reuse for new post', 'mubloggingmodule'));
+                $menu[$title]->setLinkAttribute('class', 'btn btn-sm btn-default');
                 $menu[$title]->setAttribute('icon', 'fa fa-files-o');
             }
             if ($this->permissionHelper->mayDelete($entity)) {
@@ -171,6 +175,7 @@ class AbstractMenuBuilder
                     'routeParameters' => $entity->createUrlArgs()
                 ]);
                 $menu[$title]->setLinkAttribute('title', $this->__('Delete this post', 'mubloggingmodule'));
+                $menu[$title]->setLinkAttribute('class', 'btn btn-sm btn-danger');
                 $menu[$title]->setAttribute('icon', 'fa fa-trash-o');
             }
             if ($context == 'display') {
@@ -179,6 +184,7 @@ class AbstractMenuBuilder
                     'route' => $routePrefix . $routeArea . 'view'
                 ]);
                 $menu[$title]->setLinkAttribute('title', $title);
+                $menu[$title]->setLinkAttribute('class', 'btn btn-sm btn-default');
                 $menu[$title]->setAttribute('icon', 'fa fa-reply');
             }
         }

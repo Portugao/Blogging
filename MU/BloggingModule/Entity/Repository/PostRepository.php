@@ -24,5 +24,5 @@ class PostRepository extends AbstractPostRepository
     /**
      * @var string The default sorting field/expression
      */
-    protected $defaultSortingField = 'createdDate';
+    protected $defaultSortingField = 'startDate';
 }

@@ -8,10 +8,9 @@
 {% endblock %}
 
 {% block title %}
- {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], { entity: post, area: routeArea, context: 'display' }) %}
-    <div class="dropdown">
-        <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> {{ __('Actions') }} <span class="caret"></span></a>
-        {{ knp_menu_render(itemActions, { template: 'ZikulaMenuModule:Override:actions.html.twig' }) }}
+    {% set itemActions = knp_menu_get('mUBloggingMenuItemActions', [], {entity: post, area: routeArea, context: 'display'}) %}
+    <div class="btn-group btn-group-sm item-actions" role="group" aria-label="{{ __('Actions') }}">
+        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
     </div>
 {% endblock %}
 {% block admin_page_icon 'eye' %}

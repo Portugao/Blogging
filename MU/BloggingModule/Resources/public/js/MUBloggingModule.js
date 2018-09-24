@@ -65,30 +65,11 @@ function mUBloggingInitMassToggle() {
  * Creates a dropdown menu for the item actions.
  */
 function mUBloggingInitItemActions(context) {
-    var containerSelector;
-    var containers;
-    
-    containerSelector = '';
-    if (context == 'view') {
-        containerSelector = '.mubloggingmodule-view';
-    } else if (context == 'display') {
-        containerSelector = 'h2, h3';
-    }
-    
-    if (containerSelector == '') {
-        return;
-    }
-    
-    containers = jQuery(containerSelector);
-    if (containers.length < 1) {
-        return;
-    }
-    
-    containers.find('.dropdown > ul').removeClass('list-inline').addClass('list-unstyled dropdown-menu');
-    containers.find('.dropdown > ul a i').addClass('fa-fw');
-    if (containers.find('.dropdown-toggle').length > 0) {
-        containers.find('.dropdown-toggle').removeClass('hidden').dropdown();
-    }
+    jQuery('.btn-group-sm.item-actions').each(function (index) {
+        var innerList;
+        innerList = jQuery(this).children('ul.list-inline').first().detach();
+        jQuery(this).append(innerList.find('a.btn'));
+    });
 }
 
 /**
