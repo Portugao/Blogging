@@ -126,10 +126,9 @@
                     </td>
                 {% endif %}
                 <td id="itemActions{{ post.getKey() }}" headers="hItemActions" class="fixed-column actions nowrap z-w02">
-                    {% set itemActions = knp_menu_get('MUBloggingModule:ItemActionsMenu:menu', [], {entity: post, area: routeArea, context: 'view'}) %}
-                    <div class="dropdown">
-                        <a id="itemActions{{ post.getKey() }}DropDownToggle" role="button" data-toggle="dropdown" data-target="#" href="javascript:void(0);" class="hidden dropdown-toggle"><i class="fa fa-tasks"></i> <span class="caret"></span></a>
-                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:actions.html.twig'}) }}
+                    {% set itemActions = knp_menu_get('mUBloggingMenuItemActions', [], {entity: post, area: routeArea, context: 'view'}) %}
+                    <div class="btn-group-vertical btn-group-sm item-actions" role="group" aria-label="{{ __('Actions') }}">
+                        {{ knp_menu_render(itemActions, {template: 'ZikulaMenuModule:Override:bootstrap_fontawesome.html.twig'}) }}
                     </div>
                 </td>
                 {% if routeArea == 'admin' %}<td headers="hWorkflowState" class="text-left nowrap">
