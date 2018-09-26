@@ -32,17 +32,5 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class PostEntity extends BaseEntity
 {
-    /**
-     * Sets the permalink.
-     *
-     * @param string $permalink
-     *
-     * @return void
-     */
-    public function setPermalink($permalink)
-    {
-        if ($this->permalink !== $permalink) {
-            $this->permalink = isset($permalink) ? str_replace(' ', '-', $permalink) : str_replace(' ', '-', $this->title);
-        }
-    }
+
 }

@@ -88,7 +88,8 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
      * If you leave this empty, the url of this item will be build with the title.
      *
      * @Gedmo\Translatable
-     * @ORM\Column(length=100, nullable=true)
+     * @ORM\Column(length=100)
+     * @Assert\NotBlank()
      * @Assert\Length(min="0", max="100")
      * @var string $permalink
      */
@@ -529,7 +530,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     public function setPermalink($permalink)
     {
         if ($this->permalink !== $permalink) {
-            $this->permalink = $permalink;
+            $this->permalink = isset($permalink) ? $permalink : '';
         }
     }
     

@@ -34,9 +34,9 @@ application "Blogging" targets ZK20 {
                     sluggablePosition 0
                     length 57
                 },
-                string "permalink" nullable translatable {
+                string "permalink" translatable {
                     documentation "If you leave this empty, the url of this item will be build with the title."
-                    mandatory false
+                    mandatory true
                     displayType NONE
                     sluggablePosition 1
                     length 100

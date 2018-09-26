@@ -165,7 +165,7 @@ abstract class AbstractPostType extends AbstractType
                 'class' => '',
                 'title' => $this->__('Enter the permalink of the post.')
             ],
-            'required' => false,
+            'required' => true,
         ]);
         
         $builder->add('descriptionForGoogle', TextType::class, [
