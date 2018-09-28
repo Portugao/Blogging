@@ -178,7 +178,7 @@
         /* ]]> */
         </script>
     {% endset %}
-        {% set formInitChosen %}
+    {% set formInitChosen %}
         <script>
         /* <![CDATA[ */
             
@@ -190,6 +190,21 @@
         /* ]]> */
         </script>
     {% endset %}
+    {% set formInitAutofill %}
+        <script>
+        /* <![CDATA[ */        
+            ( function($) {
+                $(document).ready(function() {
+                    $('#mubloggingmodule_post_title').blur(function() {
+                        var title = $('#mubloggingmodule_post_title').val();
+                        $('#mubloggingmodule_post_permalink').val(title);
+                    });
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
     {{ pageAddAsset('footer', formInitScript) }}
     {{ pageAddAsset('footer', formInitChosen) }}
+    {{ pageAddAsset('footer', formInitAutofill) }}
 {% endblock %}
