@@ -5,6 +5,8 @@
 {% block title mode == 'create' ? __('Create post') : __('Edit post') %}
 {% block admin_page_icon mode == 'create' ? 'plus' : 'pencil-square-o' %}
 {% block content %}
+    {{ pageAddAsset('javascript', zasset('@MUBloggingModule:js/chosen/chosen.jquery.js')) }}
+    {{ pageAddAsset('stylesheet', zasset('@MUBloggingModule:js/chosen/chosen.css'), 120) }}
     <div class="mubloggingmodule-post mubloggingmodule-edit">
         {% form_theme form with [
             '@MUBloggingModule/Form/bootstrap_3.html.twig',
@@ -176,5 +178,18 @@
         /* ]]> */
         </script>
     {% endset %}
+        {% set formInitChosen %}
+        <script>
+        /* <![CDATA[ */
+            
+            ( function($) {
+                $(document).ready(function() {
+                    $('#mubloggingmodule_post_similarArticles').chosen();
+                });
+            })(jQuery);
+        /* ]]> */
+        </script>
+    {% endset %}
     {{ pageAddAsset('footer', formInitScript) }}
+    {{ pageAddAsset('footer', formInitChosen) }}
 {% endblock %}
