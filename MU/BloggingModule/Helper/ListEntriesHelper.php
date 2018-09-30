@@ -96,6 +96,8 @@ class ListEntriesHelper extends AbstractListEntriesHelper {
 		$postRepository = $this->entityFactory->getRepository ( 'post' );
 		$posts = $postRepository->selectWhere ();
 		
+		$states = array();
+		
 		$states [] = [ 
 				'value' => 'none',
 				'text' => $this->__ ( 'None' ),
@@ -117,6 +119,26 @@ class ListEntriesHelper extends AbstractListEntriesHelper {
 		
 		return $states;
 	}
+	
+	/**
+	 * Get 'position of block' list entries.
+	 *
+	 * @return array Array with desired list entries
+	 */
+	public function getPositionOfBlockEntriesForPost()
+	{
+	    $states = [];
+	    $states[] = [
+	        'value'   => 'none',
+	        'text'    => $this->__('None'),
+	        'title'   => '',
+	        'image'   => '',
+	        'default' => true
+	    ];
+	    
+	    return $states;
+	}
+	
 	public function setEntityFactory(EntityFactory $entityFactory) {
 		$this->entityFactory = $entityFactory;
 	}
