@@ -37,7 +37,6 @@ abstract class AbstractPostController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -51,7 +50,6 @@ abstract class AbstractPostController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -89,7 +87,6 @@ abstract class AbstractPostController extends AbstractController
      * @param int    $pos          Current pager position
      * @param int    $num          Amount of entries to display
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -107,7 +104,6 @@ abstract class AbstractPostController extends AbstractController
      * @param int    $pos          Current pager position
      * @param int    $num          Amount of entries to display
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
@@ -191,7 +187,6 @@ abstract class AbstractPostController extends AbstractController
      * @param Request $request Current request instance
      * @param string $slug Slug of treated post instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws NotFoundHttpException Thrown if post to be displayed isn't found
@@ -212,7 +207,6 @@ abstract class AbstractPostController extends AbstractController
      * @param Request $request Current request instance
      * @param string $slug Slug of treated post instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws NotFoundHttpException Thrown if post to be displayed isn't found
@@ -270,7 +264,6 @@ abstract class AbstractPostController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
@@ -285,7 +278,6 @@ abstract class AbstractPostController extends AbstractController
      *
      * @param Request $request Current request instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws RuntimeException      Thrown if another critical error occurs (e.g. workflow actions not available)
@@ -334,7 +326,6 @@ abstract class AbstractPostController extends AbstractController
      * @param Request $request Current request instance
      * @param string $slug Slug of treated post instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws NotFoundHttpException Thrown if post to be deleted isn't found
@@ -351,7 +342,6 @@ abstract class AbstractPostController extends AbstractController
      * @param Request $request Current request instance
      * @param string $slug Slug of treated post instance
      *
-     * @return Response Output
      *
      * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      * @throws NotFoundHttpException Thrown if post to be deleted isn't found
