@@ -2,10 +2,10 @@
 {% if obj is defined %}
     <div class="alert alert-info blogger-relevant-articles">
     <span class="blogger-info-icon"><i class="fa fa-info-circle fa-2x" aria-hidden="true"></i></span>
-    <h3>{{ __('Other articles in this series of articles') }}</h3>
+    <h3>{{ __('Other articles in this series of articles') }}</h3><br style="clear: both;" />
     {% for post in obj %}
         <div class="blogger-relevant-title">{{ post.title }}</div>
-        <div class="blogger-relevant-summaryofpost">{{ post.summaryOfPost|truncate(100)|safeHtml }} <a href="{{ path('mubloggingmodule_post_display', { 'id': post.id, 'slug': post.slug })}}">{{ __('More') }}</a></div>
+        <div class="blogger-relevant-summaryofpost">{{ post.summaryOfPost|striptags|truncate(100, true, '...') }} <a href="{{ path('mubloggingmodule_post_display', { 'slug': post.slug })}}">{{ __('More') }}</a></div>
     {% endfor %}
     </div>
 {% endif %}

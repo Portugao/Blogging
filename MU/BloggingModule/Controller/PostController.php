@@ -22,6 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 use MU\BloggingModule\Entity\PostEntity;
+use MU\BloggingModule\Helper\FeatureActivationHelper;
 
 /**
  * Post controller class providing navigation and interaction functionality.
@@ -190,6 +191,64 @@ class PostController extends AbstractPostController
     public function handleSelectedEntriesAction(Request $request)
     {
         return parent::handleSelectedEntriesAction($request);
+    }
+    
+    
+    /**
+     * This method includes the common implementation code for adminDisplay() and display().
+     */
+    protected function displayInternal(Request $request, PostEntity $post, $isAdmin = false)
+    {
+        // parameter specifying which type of objects we are treating
+        $objectType = 'post';
+        $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
+        if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
+            throw new AccessDeniedException();
+        }
+        // create identifier for permission check
+        $instanceId = $post->getKey();
+        if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
+            throw new AccessDeniedException();
+        }
+        
+        $templateParameters = [
+            'routeArea' => $isAdmin ? 'admin' : '',
+            $objectType => $post
+        ];
+        
+        $featureActivationHelper = $this->get('mu_blogging_module.feature_activation_helper');
+        if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
+            if (!$this->get('mu_blogging_module.category_helper')->hasPermission($post)) {
+                throw new AccessDeniedException();
+            }
+        }
+        
+        $controllerHelper = $this->get('mu_blogging_module.controller_helper');
+        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
+        
+        $repository = $this->get('mu_blogging_module.entity_factory')->getRepository('post');
+        
+        $articles = $post['relevantArticles'];
+
+        if ($articles != '') {
+            $relevantArticles = array();
+            $relevantArticlesArray = explode(',', $articles);  
+            foreach ($relevantArticlesArray as $postId) {
+                $thisPost = $repository->selectById($postId);
+                if (isset($thisPost)) {
+                $relevantArticles[] = $thisPost;
+                }
+            }
+            if(count($relevantArticles) > 0) {
+                $templateParameters['relevantPosts'] = $relevantArticles;
+            }
+
+        }
+        
+        // fetch and return the appropriate template
+        $response = $this->get('mu_blogging_module.view_helper')->processTemplate($objectType, 'display', $templateParameters);
+        
+        return $response;
     }
     
     // feel free to add your own controller methods here
