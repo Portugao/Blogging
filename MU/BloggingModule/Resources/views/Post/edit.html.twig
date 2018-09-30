@@ -206,5 +206,7 @@
     {% endset %}
     {{ pageAddAsset('footer', formInitScript) }}
     {{ pageAddAsset('footer', formInitChosen) }}
-    {{ pageAddAsset('footer', formInitAutofill) }}
+    {% if mode == 'create' %}
+        {{ pageAddAsset('footer', formInitAutofill) }}
+    {% endif %}
 {% endblock %}
