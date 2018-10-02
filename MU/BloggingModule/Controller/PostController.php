@@ -193,7 +193,6 @@ class PostController extends AbstractPostController
         return parent::handleSelectedEntriesAction($request);
     }
     
-    
     /**
      * This method includes the common implementation code for adminDisplay() and display().
      */
@@ -232,17 +231,17 @@ class PostController extends AbstractPostController
 
         if ($articles != '') {
             $relevantArticles = array();
-            $relevantArticlesArray = explode(',', $articles);  
+            $relevantArticlesArray = explode(',', $articles);
             foreach ($relevantArticlesArray as $postId) {
                 $thisPost = $repository->selectById($postId);
                 if (isset($thisPost)) {
-                $relevantArticles[] = $thisPost;
+                    $relevantArticles[] = $thisPost;
                 }
             }
             if(count($relevantArticles) > 0) {
                 $templateParameters['relevantPosts'] = $relevantArticles;
             }
-
+            
         }
         
         // fetch and return the appropriate template
