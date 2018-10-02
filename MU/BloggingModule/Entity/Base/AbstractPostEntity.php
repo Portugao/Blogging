@@ -614,7 +614,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     /**
      * Sets the image for article.
      *
-     * @param File $imageForArticle
+     * @param File|null $imageForArticle
      *
      * @return void
      */
