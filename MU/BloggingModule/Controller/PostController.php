@@ -64,6 +64,15 @@ class PostController extends AbstractPostController
      *        methods = {"GET"}
      * )
      * @Theme("admin")
+     *
+     * @param Request $request Current request instance
+     * @param string $sort         Sorting field
+     * @param string $sortdir      Sorting direction
+     * @param int    $pos          Current pager position
+     * @param int    $num          Amount of entries to display
+     *
+     *
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function adminViewAction(Request $request, $sort, $sortdir, $pos, $num)
     {

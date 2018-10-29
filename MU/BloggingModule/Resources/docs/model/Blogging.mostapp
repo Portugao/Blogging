@@ -18,8 +18,8 @@ application "Blogging" targets ZK20 {
     viewActionsStyle BUTTON_GROUP
     displayActionsPosition BOTH
     displayActionsStyle BUTTON_GROUP
-    skipFiles "Block/Form/Type/ItemListBlockType.php,\r\nBloggingModuleInstaller.php,\r\nEntity/PostEntity.php,\r\nEntity/Repository/PostRepository.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\ncomposer.json,\r\nzikula.manifest.json,\r\nREADME.md"
-        markFiles "Resources/config/helpers.yml,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/view.html.twig"
+    skipFiles "Block/Form/Type/ItemListBlockType.php,\r\nBloggingModuleInstaller.php,\r\nController/PostController.php,\r\nEntity/PostEntity.php,\r\nEntity/Repository/PostRepository.php,\r\nForm/Type/PostType.php,\r\nHelper/ListEntriesHelper.php,\r\nHelper/ModelHelper.php,\r\ncomposer.json,\r\nzikula.manifest.json,\r\nREADME.md"
+        markFiles "Resources/config/helpers.yml,\r\nResources/public/css/style.css,\r\nResources/views/Post/display.html.twig,\r\nResources/views/Post/edit.html.twig,\r\nResources/views/Post/view.html.twig"
 
     entities {
         entity "post" leading categorisable categorisableMultiSelection {
