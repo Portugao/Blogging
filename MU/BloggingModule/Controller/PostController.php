@@ -16,10 +16,11 @@ use MU\BloggingModule\Controller\Base\AbstractPostController;
 
 use RuntimeException;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Zikula\ThemeModule\Engine\Annotation\Theme;
 use MU\BloggingModule\Entity\PostEntity;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
@@ -77,6 +78,15 @@ class PostController extends AbstractPostController
      *        defaults = {"sort" = "", "sortdir" = "desc", "pos" = 1, "num" = 10, "_format" = "html"},
      *        methods = {"GET"}
      * )
+     *
+     * @param Request $request Current request instance
+     * @param string $sort         Sorting field
+     * @param string $sortdir      Sorting direction
+     * @param int    $pos          Current pager position
+     * @param int    $num          Amount of entries to display
+     *
+     *
+     * @throws AccessDeniedException Thrown if the user doesn't have required permissions
      */
     public function viewAction(Request $request, $sort, $sortdir, $pos, $num)
     {
@@ -198,22 +208,17 @@ class PostController extends AbstractPostController
      */
     protected function displayInternal(Request $request, PostEntity $post, $isAdmin = false)
     {
-        // parameter specifying which type of objects we are treating
         $objectType = 'post';
+        // permission check
         $permLevel = $isAdmin ? ACCESS_ADMIN : ACCESS_READ;
-        if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', '::', $permLevel)) {
-            throw new AccessDeniedException();
-        }
-        // create identifier for permission check
-        $instanceId = $post->getKey();
-        if (!$this->hasPermission('MUBloggingModule:' . ucfirst($objectType) . ':', $instanceId . '::', $permLevel)) {
+        $permissionHelper = $this->get('mu_blogging_module.permission_helper');
+        if (!$permissionHelper->hasEntityPermission($post, $permLevel)) {
             throw new AccessDeniedException();
         }
         
-        $templateParameters = [
-            'routeArea' => $isAdmin ? 'admin' : '',
-            $objectType => $post
-        ];
+        if ($post->getWorkflowState() != 'approved' && !$permissionHelper->hasEntityPermission($post, ACCESS_ADMIN)) {
+            throw new AccessDeniedException();
+        }
         
         $featureActivationHelper = $this->get('mu_blogging_module.feature_activation_helper');
         if ($featureActivationHelper->isEnabled(FeatureActivationHelper::CATEGORIES, $objectType)) {
@@ -222,8 +227,13 @@ class PostController extends AbstractPostController
             }
         }
         
+        $templateParameters = [
+            'routeArea' => $isAdmin ? 'admin' : '',
+            $objectType => $post
+        ];
+        
         $controllerHelper = $this->get('mu_blogging_module.controller_helper');
-        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, true);
+        $templateParameters = $controllerHelper->processDisplayActionParameters($objectType, $templateParameters, $post->supportsHookSubscribers());
         
         $repository = $this->get('mu_blogging_module.entity_factory')->getRepository('post');
         

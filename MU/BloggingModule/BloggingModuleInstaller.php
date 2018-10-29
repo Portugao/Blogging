@@ -13,6 +13,7 @@
 namespace MU\BloggingModule;
 
 use MU\BloggingModule\Base\AbstractBloggingModuleInstaller;
+use RuntimeException;
 
 /**
  * Installer implementation class.
@@ -37,8 +38,6 @@ class BloggingModuleInstaller extends AbstractBloggingModuleInstaller
         // Upgrade dependent on old version number
         switch ($oldVersion) {
             case '1.0.0':
-                // do something
-                // ...
                 // update the database schema
                 try {
                     $this->schemaTool->update($this->listEntityClasses());
@@ -49,7 +48,18 @@ class BloggingModuleInstaller extends AbstractBloggingModuleInstaller
                     return false;
                 }
             case '1.0.1':
-            	// for later use
+                // update the database schema
+                try {
+                    $this->schemaTool->update($this->listEntityClasses());
+                } catch (\Exception $exception) {
+                    $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
+                    $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'MUBloggingModule', 'errorMessage' => $exception->getMessage()]);
+                    
+                    return false;
+                }
+            	
+            case '1.1.0':
+                // for later use
         }
     
         // Note there are several helpers available for making migrating your extension from Zikula 1.3 to 1.4 easier.
