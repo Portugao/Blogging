@@ -534,7 +534,10 @@ abstract class AbstractPostRepository extends EntityRepository
         if (!$isPaginated) {
             $result = $query->getResult();
         } else {
-            $paginator = new Paginator($query, false);
+            $paginator = new Paginator($query, true);
+            if (true === $this->translationsEnabled) {
+                $paginator->setUseOutputWalkers(true);
+            }
     
             $count = count($paginator);
             $result = $paginator;
