@@ -334,6 +334,10 @@ abstract class AbstractCollectionFilterHelper
             $parameters['searchPermalink'] = '%' . $fragment . '%';
             $filters[] = 'tbl.descriptionForGoogle LIKE :searchDescriptionForGoogle';
             $parameters['searchDescriptionForGoogle'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.textForSimilar LIKE :searchTextForSimilar';
+            $parameters['searchTextForSimilar'] = '%' . $fragment . '%';
+            $filters[] = 'tbl.textForRelevant LIKE :searchTextForRelevant';
+            $parameters['searchTextForRelevant'] = '%' . $fragment . '%';
             $filters[] = 'tbl.forWhichLanguage LIKE :searchForWhichLanguage';
             $parameters['searchForWhichLanguage'] = '%' . $fragment . '%';
             $filters[] = 'tbl.imageForArticleFileName = :searchImageForArticle';

@@ -88,7 +88,7 @@ abstract class AbstractEntityFactory
     /**
      * Creates a new post instance.
      *
-     * @return MU\BloggingModule\Entity\postEntity The newly created entity instance
+     * @return \MU\BloggingModule\Entity\PostEntity The newly created entity instance
      */
     public function createPost()
     {

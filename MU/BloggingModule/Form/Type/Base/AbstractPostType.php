@@ -37,6 +37,7 @@ use MU\BloggingModule\Form\Type\Field\UploadType;
 use MU\BloggingModule\Helper\FeatureActivationHelper;
 use MU\BloggingModule\Helper\ListEntriesHelper;
 use MU\BloggingModule\Helper\TranslatableHelper;
+use MU\BloggingModule\Helper\UploadHelper;
 use MU\BloggingModule\Traits\ModerationFormFieldsTrait;
 use MU\BloggingModule\Traits\WorkflowFormFieldsTrait;
 
@@ -70,6 +71,11 @@ abstract class AbstractPostType extends AbstractType
     protected $listHelper;
 
     /**
+     * @var UploadHelper
+     */
+    protected $uploadHelper;
+
+    /**
      * @var LocaleApiInterface
      */
     protected $localeApi;
@@ -87,6 +93,7 @@ abstract class AbstractPostType extends AbstractType
      * @param VariableApiInterface $variableApi VariableApi service instance
      * @param TranslatableHelper $translatableHelper TranslatableHelper service instance
      * @param ListEntriesHelper $listHelper ListEntriesHelper service instance
+     * @param UploadHelper $uploadHelper UploadHelper service instance
      * @param LocaleApiInterface $localeApi LocaleApi service instance
      * @param FeatureActivationHelper $featureActivationHelper FeatureActivationHelper service instance
      */
@@ -96,6 +103,7 @@ abstract class AbstractPostType extends AbstractType
         VariableApiInterface $variableApi,
         TranslatableHelper $translatableHelper,
         ListEntriesHelper $listHelper,
+        UploadHelper $uploadHelper,
         LocaleApiInterface $localeApi,
         FeatureActivationHelper $featureActivationHelper
     ) {
@@ -104,6 +112,7 @@ abstract class AbstractPostType extends AbstractType
         $this->variableApi = $variableApi;
         $this->translatableHelper = $translatableHelper;
         $this->listHelper = $listHelper;
+        $this->uploadHelper = $uploadHelper;
         $this->localeApi = $localeApi;
         $this->featureActivationHelper = $featureActivationHelper;
     }
@@ -176,6 +185,28 @@ abstract class AbstractPostType extends AbstractType
                 'maxlength' => 170,
                 'class' => 'blogger-description',
                 'title' => $this->__('Enter the description for google of the post.')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('textForSimilar', TextType::class, [
+            'label' => $this->__('Text for similar') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the text for similar of the post.')
+            ],
+            'required' => false,
+        ]);
+        
+        $builder->add('textForRelevant', TextType::class, [
+            'label' => $this->__('Text for relevant') . ':',
+            'empty_data' => '',
+            'attr' => [
+                'maxlength' => 255,
+                'class' => '',
+                'title' => $this->__('Enter the text for relevant of the post.')
             ],
             'required' => false,
         ]);
@@ -371,7 +402,7 @@ abstract class AbstractPostType extends AbstractType
             ],
             'required' => false && $options['mode'] == 'create',
             'entity' => $options['entity'],
-            'allowed_extensions' => 'gif, jpeg, jpg, png',
+            'allowed_extensions' => implode(', ', $this->uploadHelper->getAllowedFileExtensions('post', 'imageForArticle')),
             'allowed_size' => ''
         ]);
         

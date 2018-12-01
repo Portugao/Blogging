@@ -186,6 +186,8 @@ abstract class AbstractSearchHelper implements SearchableInterface
                     $whereArray[] = 'tbl.title';
                     $whereArray[] = 'tbl.permalink';
                     $whereArray[] = 'tbl.descriptionForGoogle';
+                    $whereArray[] = 'tbl.textForSimilar';
+                    $whereArray[] = 'tbl.textForRelevant';
                     $whereArray[] = 'tbl.forWhichLanguage';
                     $whereArray[] = 'tbl.imageForArticle';
                     $whereArray[] = 'tbl.descriptionOfImageForArticle';

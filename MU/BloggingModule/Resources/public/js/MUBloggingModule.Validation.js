@@ -65,7 +65,7 @@ function mUBloggingValidateNoSpace(val) {
 
 function mUBloggingValidateUploadExtension(val, elem) {
     var fileExtension, allowedExtensions;
-    if (val === '') {
+    if ('' == val) {
         return true;
     }
 

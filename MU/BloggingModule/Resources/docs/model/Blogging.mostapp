@@ -3,7 +3,7 @@ application "Blogging" targets ZK20 {
     author "Michael Ueberschaer"
     email "info@homepages-mit-zikula.de"
     url "https://homepages-mit-zikula.de"
-    version "1.1.0"
+    version "1.2.0"
     prefix "blogging"
         generateAtomTemplates false
         generateCsvTemplates false
@@ -47,6 +47,12 @@ application "Blogging" targets ZK20 {
                     cssClass "blogger-description"
                     minLength 150
                     length 170
+                },
+                string "textForSimilar" translatable {
+                    mandatory false
+                },
+                string "textForRelevant" translatable {
+                    mandatory false
                 },
                 string "forWhichLanguage" {
                     mandatory false

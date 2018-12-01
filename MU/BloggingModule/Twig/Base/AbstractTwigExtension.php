@@ -227,6 +227,8 @@ abstract class AbstractTwigExtension extends Twig_Extension
             return $value;
         }
     
+        $this->translator->setDomain('mubloggingmodule');
+    
         return $this->listHelper->resolve($value, $objectType, $fieldName, $delimiter);
     }
     

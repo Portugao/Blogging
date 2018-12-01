@@ -270,16 +270,6 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
         }
-    
-        $workflowShortName = 'none';
-        if (in_array($entity->get_objectType(), ['post'])) {
-            $workflowShortName = 'standard';
-        } elseif (in_array($entity->get_objectType(), [''])) {
-            $workflowShortName = 'enterprise';
-        }
-        if ($workflowShortName != 'none') {
-            $this->sendNotifications($entity, $event->getTransition()->getName(), $workflowShortName);
-        }
     }
     
     /**
@@ -309,6 +299,16 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
         $entity = $event->getSubject();
         if (!$this->isEntityManagedByThisBundle($entity) || !method_exists($entity, 'get_objectType')) {
             return;
+        }
+    
+        $workflowShortName = 'none';
+        if (in_array($entity->get_objectType(), ['post'])) {
+            $workflowShortName = 'standard';
+        } elseif (in_array($entity->get_objectType(), [''])) {
+            $workflowShortName = 'enterprise';
+        }
+        if ('none' != $workflowShortName) {
+            $this->sendNotifications($entity, $event->getTransition()->getName(), $workflowShortName);
         }
     }
     
@@ -357,7 +357,7 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
     
         $entityClassParts = explode('\\', get_class($entity));
     
-        return ($entityClassParts[0] == 'MU' && $entityClassParts[1] == 'BloggingModule');
+        return ('MU' == $entityClassParts[0] && 'BloggingModule' == $entityClassParts[1]);
     }
     
     /**
@@ -375,16 +375,20 @@ abstract class AbstractWorkflowEventsListener implements EventSubscriberInterfac
         $sendToCreator = true;
         $sendToModerator = false;
         $sendToSuperModerator = false;
-        if ($actionId == 'submit' && $newState == 'waiting'
-            || $actionId == 'demote' && $newState == 'accepted') {
+        if ('submit' == $actionId && 'waiting' == $newState
+            || 'demote' == $actionId && 'accepted' == $newState) {
             // only to moderator
             $sendToCreator = false;
             $sendToModerator = true;
-        } elseif ($actionId == 'accept' && $newState == 'accepted') {
+        } elseif ('accept' == $actionId && 'accepted' == $newState) {
             // to creator and super moderator
             $sendToSuperModerator = true;
-        } elseif ($actionId == 'approve' && $newState == 'approved' && $workflowShortName == 'enterprise') {
+        } elseif ('approve' == $actionId && 'approved' == $newState && 'enterprise' == $workflowShortName) {
             // to creator and moderator
+            $sendToModerator = true;
+        } elseif ('update' == $actionId && 'waiting' == $newState) {
+            // only to moderator
+            $sendToCreator = false;
             $sendToModerator = true;
         }
         $recipientTypes = [];

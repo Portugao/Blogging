@@ -46,6 +46,7 @@ services:
             - "@zikula_extensions_module.api.variable"
             - "@mu_blogging_module.translatable_helper"
             - "@mu_blogging_module.listentries_helper"
+            - "@mu_blogging_module.upload_helper"
             - "@zikula_settings_module.locale_api"
             - "@mu_blogging_module.feature_activation_helper"
         tags: ['form.type']

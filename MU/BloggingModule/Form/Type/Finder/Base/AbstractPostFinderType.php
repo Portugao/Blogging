@@ -187,6 +187,8 @@ abstract class AbstractPostFinderType extends AbstractType
                     $this->__('Workflow state') => 'workflowState',
                     $this->__('Title') => 'title',
                     $this->__('Description for google') => 'descriptionForGoogle',
+                    $this->__('Text for similar') => 'textForSimilar',
+                    $this->__('Text for relevant') => 'textForRelevant',
                     $this->__('For which language') => 'forWhichLanguage',
                     $this->__('Image for article') => 'imageForArticle',
                     $this->__('Description of image for article') => 'descriptionOfImageForArticle',

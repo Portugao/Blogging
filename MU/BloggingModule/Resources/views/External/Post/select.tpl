@@ -47,6 +47,8 @@
                     <option value="workflowState"{if $sort eq 'workflowState'} selected="selected"{/if}>{gt text='Workflow state'}</option>
                     <option value="title"{if $sort eq 'title'} selected="selected"{/if}>{gt text='Title'}</option>
                     <option value="descriptionForGoogle"{if $sort eq 'descriptionForGoogle'} selected="selected"{/if}>{gt text='Description for google'}</option>
+                    <option value="textForSimilar"{if $sort eq 'textForSimilar'} selected="selected"{/if}>{gt text='Text for similar'}</option>
+                    <option value="textForRelevant"{if $sort eq 'textForRelevant'} selected="selected"{/if}>{gt text='Text for relevant'}</option>
                     <option value="forWhichLanguage"{if $sort eq 'forWhichLanguage'} selected="selected"{/if}>{gt text='For which language'}</option>
                     <option value="imageForArticle"{if $sort eq 'imageForArticle'} selected="selected"{/if}>{gt text='Image for article'}</option>
                     <option value="descriptionOfImageForArticle"{if $sort eq 'descriptionOfImageForArticle'} selected="selected"{/if}>{gt text='Description of image for article'}</option>

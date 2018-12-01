@@ -63,6 +63,8 @@ abstract class AbstractPostRepository extends EntityRepository
             'workflowState',
             'title',
             'descriptionForGoogle',
+            'textForSimilar',
+            'textForRelevant',
             'forWhichLanguage',
             'imageForArticle',
             'descriptionOfImageForArticle',

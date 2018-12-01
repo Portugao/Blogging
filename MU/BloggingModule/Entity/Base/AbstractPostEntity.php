@@ -105,6 +105,24 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     protected $descriptionForGoogle = '';
     
     /**
+     * @Gedmo\Translatable
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $textForSimilar
+     */
+    protected $textForSimilar = '';
+    
+    /**
+     * @Gedmo\Translatable
+     * @ORM\Column(length=255)
+     * @Assert\NotNull()
+     * @Assert\Length(min="0", max="255")
+     * @var string $textForRelevant
+     */
+    protected $textForRelevant = '';
+    
+    /**
      * @ORM\Column(length=255)
      * @Assert\NotNull()
      * @Assert\Length(min="0", max="255")
@@ -559,6 +577,54 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
     }
     
     /**
+     * Returns the text for similar.
+     *
+     * @return string
+     */
+    public function getTextForSimilar()
+    {
+        return $this->textForSimilar;
+    }
+    
+    /**
+     * Sets the text for similar.
+     *
+     * @param string $textForSimilar
+     *
+     * @return void
+     */
+    public function setTextForSimilar($textForSimilar)
+    {
+        if ($this->textForSimilar !== $textForSimilar) {
+            $this->textForSimilar = isset($textForSimilar) ? $textForSimilar : '';
+        }
+    }
+    
+    /**
+     * Returns the text for relevant.
+     *
+     * @return string
+     */
+    public function getTextForRelevant()
+    {
+        return $this->textForRelevant;
+    }
+    
+    /**
+     * Sets the text for relevant.
+     *
+     * @param string $textForRelevant
+     *
+     * @return void
+     */
+    public function setTextForRelevant($textForRelevant)
+    {
+        if ($this->textForRelevant !== $textForRelevant) {
+            $this->textForRelevant = isset($textForRelevant) ? $textForRelevant : '';
+        }
+    }
+    
+    /**
      * Returns the for which language.
      *
      * @return string
@@ -628,7 +694,7 @@ abstract class AbstractPostEntity extends EntityAccess implements Translatable
         }
         $this->imageForArticle = $imageForArticle;
     
-        if (null === $this->imageForArticle) {
+        if (null === $this->imageForArticle || '' == $this->imageForArticle) {
             $this->setImageForArticleFileName('');
             $this->setImageForArticleUrl('');
             $this->setImageForArticleMeta([]);

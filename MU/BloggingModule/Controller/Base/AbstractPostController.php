@@ -146,6 +146,8 @@ abstract class AbstractPostController extends AbstractController
             new Column('workflowState'),
             new Column('title'),
             new Column('descriptionForGoogle'),
+            new Column('textForSimilar'),
+            new Column('textForRelevant'),
             new Column('forWhichLanguage'),
             new Column('imageForArticle'),
             new Column('descriptionOfImageForArticle'),
@@ -241,7 +243,7 @@ abstract class AbstractPostController extends AbstractController
             throw new AccessDeniedException();
         }
         
-        if ($post->getWorkflowState() != 'approved' && !$permissionHelper->hasEntityPermission($post, ACCESS_ADMIN)) {
+        if ($post->getWorkflowState() != 'approved' && !$permissionHelper->hasEntityPermission($post, ACCESS_EDIT)) {
             throw new AccessDeniedException();
         }
         

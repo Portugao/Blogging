@@ -72,7 +72,7 @@
             </tr>
             <tr>
                 <th id="hVersion" scope="row" headers="hBasicField">Version</th>
-                <td headers="hBasicValue hVersion">1.1.0</td>
+                <td headers="hBasicValue hVersion">1.2.0</td>
             </tr>
             <tr>
                 <th id="hLicense" scope="row" headers="hBasicField">License</th>
@@ -260,6 +260,42 @@
                     <ul>
                         <li>This field is not unique and allows no null values.</li>
                         <li>Stored as "description" in the database.</li>
+                        <li>This field is translatable.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityPostFieldTextForSimilar" scope="row" headers="hEntityPostFieldName">Text for similar</th>
+                <td headers="hEntityPostFieldTextForSimilar hEntityPostFieldType">String</td>
+                <td headers="hEntityPostFieldTextForSimilar hEntityPostFieldMandatory">false</td>
+                <td headers="hEntityPostFieldTextForSimilar hEntityPostFieldDefault"></td>
+                <td headers="hEntityPostFieldTextForSimilar hEntityPostFieldDisplayType">ALL</td>
+                <td headers="hEntityPostFieldTextForSimilar hEntityPostFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityPostFieldTextForSimilar hEntityPostFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
+                        <li>This field is translatable.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th id="hEntityPostFieldTextForRelevant" scope="row" headers="hEntityPostFieldName">Text for relevant</th>
+                <td headers="hEntityPostFieldTextForRelevant hEntityPostFieldType">String</td>
+                <td headers="hEntityPostFieldTextForRelevant hEntityPostFieldMandatory">false</td>
+                <td headers="hEntityPostFieldTextForRelevant hEntityPostFieldDefault"></td>
+                <td headers="hEntityPostFieldTextForRelevant hEntityPostFieldDisplayType">ALL</td>
+                <td headers="hEntityPostFieldTextForRelevant hEntityPostFieldConstraints">
+                    <ul>
+                        <li>Has a length of 255 chars.</li>
+                    </ul>
+                </td>
+                <td headers="hEntityPostFieldTextForRelevant hEntityPostFieldRemarks">
+                    <ul>
+                        <li>This field is not unique and allows no null values.</li>
                         <li>This field is translatable.</li>
                     </ul>
                 </td>
