@@ -929,6 +929,12 @@ msgstr "Zum Frontend wechseln."
 msgid "Template"
 msgstr "Template"
 
+msgid "Text for relevant"
+msgstr "Text für relevante Artikel"
+
+msgid "Text for similar"
+msgstr "Text für ähnliche Artikel"
+
 msgid "The amount of posts shown per page"
 msgstr "Die Anzahl der angezeigten Beiträge pro Seite"
 
