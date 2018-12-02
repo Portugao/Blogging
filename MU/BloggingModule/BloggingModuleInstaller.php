@@ -59,6 +59,17 @@ class BloggingModuleInstaller extends AbstractBloggingModuleInstaller
                 }
             	
             case '1.1.0':
+                // update the database schema
+                try {
+                    $this->schemaTool->update($this->listEntityClasses());
+                } catch (\Exception $exception) {
+                    $this->addFlash('error', $this->__('Doctrine Exception') . ': ' . $exception->getMessage());
+                    $logger->error('{app}: Could not update the database tables during the upgrade. Error details: {errorMessage}.', ['app' => 'MUBloggingModule', 'errorMessage' => $exception->getMessage()]);
+                    
+                    return false;
+                }
+                
+            case '1.2.0':
                 // for later use
         }
     
